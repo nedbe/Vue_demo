@@ -1,4 +1,4 @@
-# vue_nap
+# vue_demo
 
 ## Project setup
 ```
