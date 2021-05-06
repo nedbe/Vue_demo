@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-dark">
+  <div class="bg-warm fixed-top">
     <nav class="navbar navbar-expand-sm navbar-dark container">
       <!-- Brand -->
       <router-link class="navbar-brand" :to="{ name: 'Home' }"
@@ -71,5 +71,4 @@ export default {
   height: 30px;
   margin: 0 7.5px;
 }
-
 </style>

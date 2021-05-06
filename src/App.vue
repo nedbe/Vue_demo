@@ -1,10 +1,14 @@
 <template>
-  <div id="app">
+  <div id="app" class="bg-grape">
     <router-view/>
   </div>
 </template>
 
 <style lang="scss">
 /* 引入bootstrap自定義樣式 */
-@import "./assets/all";
+@import "./assets/style/all";
+
+#app{
+  height: 1500px;
+}
 </style>

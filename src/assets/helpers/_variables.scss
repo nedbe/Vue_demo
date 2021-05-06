@@ -44,6 +44,11 @@ $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 
+//自定義顏色
+$grape:    #cacd4a !default;
+$classic:   #6c3411 !default; 
+$warm:  #da471d !default; 
+
 $colors: () !default;
 $colors: map-merge(
   (
@@ -77,14 +82,17 @@ $theme-colors: () !default;
 $theme-colors: map-merge(
   (
     "primary":    $primary,
-    "primary1":   $orange, //自定義測試
     "secondary":  $secondary,
     "success":    $success,
     "info":       $info,
     "warning":    $warning,
     "danger":     $danger,
     "light":      $light,
-    "dark":       $dark
+    "dark":       $dark,
+    //自定義顏色
+    "grape":   $grape, 
+    "classic":   $classic, 
+    "warm":   $warm, 
   ),
   $theme-colors
 );
