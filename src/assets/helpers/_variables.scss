@@ -48,6 +48,7 @@ $cyan:    #17a2b8 !default;
 $grape:    #cacd4a !default;
 $classic:   #6c3411 !default; 
 $warm:  #da471d !default; 
+$night:  #262626 !default; 
 
 $colors: () !default;
 $colors: map-merge(
@@ -93,6 +94,7 @@ $theme-colors: map-merge(
     "grape":   $grape, 
     "classic":   $classic, 
     "warm":   $warm, 
+    "night":   $night, 
   ),
   $theme-colors
 );

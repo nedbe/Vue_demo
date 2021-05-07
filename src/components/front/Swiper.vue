@@ -14,7 +14,7 @@
           歡慶開幕 全館八折起
         </p>
         <p class="content" data-swiper-parallax="-140" v-show="index === 1">
-          - NEW ARRIVAL -
+          - NATURAL STYLE -
         </p>
         <router-link class="btn btn-lg pick_btn" :to="{ name: 'Products' }"
           >挑選商品</router-link
@@ -60,12 +60,12 @@ export default {
           bulletActiveClass: 'my-bullet-active',
         },
         // 自動撥放設定
-        // autoplay: {
-        //   // 秒數
-        //   delay: 5000,
-        //   // 被操作後重新啟動 autoplay
-        //   disableOnInteraction: false,
-        // },
+        autoplay: {
+          // 秒數
+          delay: 5000,
+          // 被操作後重新啟動 autoplay
+          disableOnInteraction: false,
+        },
         // 切換動畫設定
         effect: 'fade',
         // 動畫速度
