@@ -3,8 +3,9 @@
     <nav class="navbar navbar-expand-sm navbar-dark container">
       <!-- Brand -->
       <router-link class="navbar-brand" :to="{ name: 'Home' }"
-        >THE NAP STORE</router-link
-      >
+        ><img src="@/assets/logo.png" alt="" /><span>
+          THE NAP STORE</span
+        ></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -43,11 +44,14 @@
             </div>
           </li>
           <li class="nav-item mr-2">
-            <a class="nav-link" href="#" title="願望清單"><i class="fas fa-heart"></i></a>
+            <a class="nav-link" href="#" title="願望清單"
+              ><i class="fas fa-heart"></i
+            ></a>
           </li>
-
           <li class="nav-item mr-2">
-            <a class="nav-link" href="#" title="購物車"><i class="fas fa-shopping-bag"></i></a>
+            <a class="nav-link" href="#" title="購物車"
+              ><i class="fas fa-shopping-bag"></i
+            ></a>
           </li>
         </ul>
       </div>
@@ -60,3 +64,14 @@ export default {
   name: 'Navbar',
 };
 </script>
+
+<style lang="scss" scoped>
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  img {
+    height: 50px;
+    width: 50px;
+  }
+}
+</style>
