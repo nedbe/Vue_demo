@@ -47,10 +47,10 @@ $cyan:    #17a2b8 !default;
 //自定義顏色
 $grape:    #cacd4a !default;
 $classic:   #6c3411 !default; 
-$warm:  #da471d !default; 
-$night:  #262626 !default; 
-$foggy:  #eee0b5 !default; 
-$mocha:  #87775c !default; 
+$navbarColor:  #da471d !default; 
+$footerColor:  #262626 !default; 
+$aboutColor:  #eee0b5 !default; 
+$textColor:  #87775c !default; 
 
 $colors: () !default;
 $colors: map-merge(
@@ -95,10 +95,10 @@ $theme-colors: map-merge(
     //自定義顏色
     "grape":   $grape, 
     "classic":   $classic, 
-    "warm":   $warm, 
-    "night":   $night, 
-    "foggy":   $foggy, 
-    "mocha":   $mocha, 
+    "navbarColor":   $navbarColor, 
+    "footerColor":   $footerColor, 
+    "aboutColor":   $aboutColor, 
+    "textColor":   $textColor, 
   ),
   $theme-colors
 );

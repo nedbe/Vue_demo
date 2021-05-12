@@ -5,7 +5,7 @@
       v-for="(item, index) in imgSrc"
       :key="index"
       :style="{
-        backgroundImage: 'url(' + require(`@/assets/images/home/${item}`) + ')',
+        backgroundImage: 'url(' + require(`@/assets/images/home/swiper/${item}`) + ')',
       }"
     >
       <div class="swiper_content">
@@ -14,7 +14,7 @@
           歡慶開幕 全館八折起
         </p>
         <p class="content" data-swiper-parallax="-140" v-show="index === 1">
-          - NATURAL STYLE -
+          - DESIGN FURNITURE -
         </p>
         <router-link class="btn btn-lg pick_btn" :to="{ name: 'Products' }"
           >挑選商品</router-link
@@ -152,16 +152,18 @@ export default {
   font-size: 50px;
 }
 
+$text_color : #cacd4a;
+
 .pick_btn {
   border-radius: 99px;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
-  color: #6c3411;
+  color: #87775c;
   background-color: #fff;
   &:hover {
-    color: #cacd4a;
+    color: $text_color;
     background-color: rgba(255, 255, 255, 0);
-    border: 1px #cacd4a solid;
+    border: 1px $text_color solid;
   }
 }
 </style>

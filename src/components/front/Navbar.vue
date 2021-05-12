@@ -1,11 +1,20 @@
 <template>
-  <div class="bg-warm fixed-top">
+  <div class="bg-navbarColor fixed-top">
     <nav class="navbar navbar-expand-sm navbar-dark container">
       <!-- Brand -->
       <router-link class="navbar-brand" :to="{ name: 'Home' }"
-        ><img src="@/assets/logo.png" alt="" /><span>
+        ><img src="@/assets/images/logo.png" alt="logo" /><span>
           THE NAP STORE</span
-        ></router-link>
+        ></router-link
+      >
+
+        <ul class="navbar-nav icon">
+          <li class="nav-item mr-2">
+            <a class="nav-link" href="#" title=""
+              ><i class="fas fa-shopping-bag"></i
+            ></a>
+          </li>
+        </ul>
       <button
         class="navbar-toggler"
         type="button"
@@ -19,8 +28,8 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Links -->
-        <ul class="navbar-nav ml-auto align-items-end">
-          <li class="nav-item mr-2">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mr-2 active">
             <router-link class="nav-link" :to="{ name: 'Home' }"
               >首頁</router-link
             >
@@ -43,16 +52,6 @@
               <a class="dropdown-item mr-2" href="#">桌子</a>
             </div>
           </li>
-          <li class="nav-item mr-2">
-            <a class="nav-link" href="#" title="願望清單"
-              ><i class="fas fa-heart"></i
-            ></a>
-          </li>
-          <li class="nav-item mr-2">
-            <a class="nav-link" href="#" title="購物車"
-              ><i class="fas fa-shopping-bag"></i
-            ></a>
-          </li>
         </ul>
       </div>
     </nav>
@@ -69,9 +68,35 @@ export default {
 .navbar-brand {
   display: flex;
   align-items: center;
+  // LOGO
   img {
     height: 50px;
     width: 50px;
+    margin-right: 10px;
+  }
+}
+
+// 購物車icon位置與漢堡選單調整
+.navbar {
+  position: relative;
+  .icon {
+    position: absolute;
+    right: -20px;
+
+    @media (max-width: 576px) {
+      right: 100px;
+      top: 18px;
+    }
+  }
+}
+
+// dropdown 樣式
+.dropdown-menu {
+  box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
+  .dropdown-item {
+    &:active {
+      background-color: #da471d;
+    }
   }
 }
 </style>

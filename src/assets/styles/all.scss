@@ -3,7 +3,7 @@
 // 載入bootstrap functions來修改變數
 @import "~bootstrap/scss/functions";
 // 載入修改變數的檔案 (_variables是從node_modules/bootstrap/scss裡複製的)
-@import "../helpers/_variables";
+@import "@/assets/styles/scss/_variables";
 // 載入bootstrap
 @import "~bootstrap/scss/bootstrap";
 // 載入css
