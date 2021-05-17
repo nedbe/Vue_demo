@@ -11,7 +11,7 @@
       <div class="swiper_content">
         <h1 class="title">THE NAP STORE</h1>
         <p class="content" data-swiper-parallax="-140" v-show="index === 0">
-          歡慶開幕 全館八折起
+          歡慶開幕 全館八折
         </p>
         <p class="content" data-swiper-parallax="-140" v-show="index === 1">
           - DESIGN FURNITURE -

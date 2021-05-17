@@ -7,9 +7,9 @@
         <div class="row">
           <div class="col">
             <h1 class="title text-navbarColor">THE NAP STORE 設計傢俱品牌</h1>
-            <h3 class="label text-navbarColor">
+            <h2 class="label text-navbarColor">
               Create a space that welcomes a lifetime of comfort and style.
-            </h3>
+            </h2>
             <br />
             <p class="text-textColor">
               The Nap Store 創始於1989年，如今已成為一個知名的設計傢俱品牌。
@@ -47,20 +47,41 @@
   </div>
 </template>
 
+<script>
+// @ is an alias to /src
+// 引入元件
+import Navbar from '@/components/front/Navbar.vue';
+import Swiper from '@/components/front/Swiper.vue';
+import Footer from '@/components/front/Footer.vue';
+
+export default {
+  name: 'Home',
+  // 註冊元件
+  components: {
+    Navbar,
+    Swiper,
+    Footer,
+  },
+};
+</script>
+
 <style lang="scss" scope>
 .about {
   padding-top: 50px;
   .text-textColor {
     font-size: 20px;
-    text-align:justify;
+    text-align: justify;
     margin-bottom: 50px;
   }
 }
 
-// 產品分類
+// 產品分類圖片
 .category {
   position: relative;
-  // overflow: hidden;
+  overflow: hidden;
+  .row:nth-child(1) {
+    margin-top: 15px;
+  }
   .category_img {
     z-index: 100;
     height: 450px;
@@ -71,9 +92,11 @@
     transition: transform 0.7s ease-out;
     &:hover {
       z-index: 300;
+      // overflow: hidden;
       transform: scale(1.05, 1.05);
     }
   }
+  // 製造遮色
   a {
     position: absolute;
     z-index: 200;
@@ -101,36 +124,18 @@
 
 // 背景圖
 #beds {
-  background-image: url("../assets/images/home/about/beds.jpg");
+  background-image: url("../../assets/images/home/about/beds.jpg");
 }
 
 #sofas {
-  background-image: url("../assets/images/home/about/sofas.jpg");
+  background-image: url("../../assets/images/home/about/sofas.jpg");
 }
 
 #chairs {
-  background-image: url("../assets/images/home/about/chairs.jpg");
+  background-image: url("../../assets/images/home/about/chairs.jpg");
 }
 
 #tables {
-  background-image: url("../assets/images/home/about/tables.jpg");
+  background-image: url("../../assets/images/home/about/tables.jpg");
 }
 </style>
-
-<script>
-// @ is an alias to /src
-// 引入元件
-import Navbar from '@/components/front/Navbar.vue';
-import Swiper from '@/components/front/Swiper.vue';
-import Footer from '@/components/front/Footer.vue';
-
-export default {
-  name: 'Home',
-  // 註冊元件
-  components: {
-    Navbar,
-    Swiper,
-    Footer,
-  },
-};
-</script>

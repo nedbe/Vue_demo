@@ -7,14 +7,15 @@
           THE NAP STORE</span
         ></router-link
       >
-
-        <ul class="navbar-nav icon">
-          <li class="nav-item mr-2">
-            <a class="nav-link" href="#" title=""
-              ><i class="fas fa-shopping-bag"></i
-            ></a>
-          </li>
-        </ul>
+      <!-- 購物車 -->
+      <ul class="navbar-nav icon">
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="#" title="">
+            <i class="fas fa-shopping-cart"></i>
+            <!-- <span class="badge badge-primary badge-pill">1</span> -->
+          </a>
+        </li>
+      </ul>
       <button
         class="navbar-toggler"
         type="button"
