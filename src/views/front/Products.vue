@@ -4,17 +4,9 @@
     <Jumbotron />
     <div class="container mb-1 pt-3">
       <div class="row">
+        <!-- 左側選單 -->
         <div class="col-md-3">
-          <!-- 左側選單 -->
-          <div class="list-group">
-            <a class="list-group-item list-group-item-action disabled" href="#!"
-              >商品分類</a
-            >
-            <a href="#!" class="list-group-item list-group-item-action">床</a>
-            <a href="#!" class="list-group-item list-group-item-action">沙發</a>
-            <a href="#!" class="list-group-item list-group-item-action">椅子</a>
-            <a href="#!" class="list-group-item list-group-item-action">桌子</a>
-          </div>
+          <Sidebar />
         </div>
         <!-- 右側排序 -->
         <div class="col-md-9">
@@ -34,19 +26,23 @@
               <div class="col-md-4 mb-4">
                 <div class="card border-0 text-center">
                   <div class="card_img">
-                    <a href="#!" class="card_detail">
+                    <router-link
+                      href="#!"
+                      class="card_detail"
+                      :to="{ name: 'Product_detail' }"
+                    >
                       <img
                         class="card-img-top"
                         src="https://images.unsplash.com/photo-1494281258937-45f28753affd?w=1350"
                         alt="商品圖片"
-                    /></a>
+                    /></router-link>
                     <div class="overlay">查看商品</div>
                   </div>
                   <div class="card-body">
-                    <h4 class="card-title text-left text-textColor">
+                    <h4 class="card-title text-center text-textColor">
                       北歐風格床
                     </h4>
-                    <p class="card-text text-left">NT$8,000元</p>
+                    <p class="card-text text-center">NT$8,000元</p>
                   </div>
                   <div class="card-footer border-top-0 bg-white">
                     <a href="#!" class="btn btn-block add_btn"> 加入購物車 </a>
@@ -89,6 +85,7 @@
 import Navbar from '@/components/front/Navbar.vue';
 import Footer from '@/components/front/Footer.vue';
 import Jumbotron from '@/components/front/Jumbotron.vue';
+import Sidebar from '@/components/front/Sidebar.vue';
 
 export default {
   name: 'Products',
@@ -96,11 +93,14 @@ export default {
     Navbar,
     Footer,
     Jumbotron,
+    Sidebar,
   },
 };
 </script>
 
 <style lang="scss" scoped>
+$btn_color: #87775c;
+
 // 排序
 .custom-select {
   max-width: 25%;
@@ -110,21 +110,11 @@ export default {
   }
 }
 
-// 左側選單
-.list-group-item {
-  border-width: 0px 0px 1px 0px;
-  border-style: solid;
-  color: #6c757d;
-  &:hover {
-    color: #000;
-  }
-}
-
 // 商品卡片
-$btn_color: #87775c;
-
 .card_img {
   position: relative;
+  box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
+  overflow: hidden;
   .overlay {
     position: absolute;
     bottom: 0;
@@ -136,21 +126,36 @@ $btn_color: #87775c;
     font-size: 16px;
     padding: 5px;
     text-align: center;
+    transition: opacity 0.7s ease-in;
   }
-
   &:hover .overlay {
     opacity: 1;
+    transition: opacity 0.7s ease-out;
+  }
+  img {
+    border-radius: 0px;
+    transform: scale(1, 1);
+    transition: transform 0.7s ease-in;
+  }
+  &:hover img {
+    transform: scale(1.05, 1.05);
+    transition: transform 0.7s ease-out;
   }
 }
 
+// 加入購物車按鈕
 .add_btn {
   color: $btn_color;
   font-size: 16px;
   background-color: #fff;
   border: 1px $btn_color solid;
+  border-radius: 0px;
   &:hover {
     color: #fff;
     background-color: $btn_color;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
   }
 }
 </style>
