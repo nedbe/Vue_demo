@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navbar />
     <Swiper />
     <div class="about bg-aboutColor">
       <div class="container">
@@ -43,24 +42,19 @@
         </div>
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 // 引入元件
-import Navbar from '@/components/front/Navbar.vue';
 import Swiper from '@/components/front/Swiper.vue';
-import Footer from '@/components/front/Footer.vue';
 
 export default {
   name: 'Home',
   // 註冊元件
   components: {
-    Navbar,
     Swiper,
-    Footer,
   },
 };
 </script>

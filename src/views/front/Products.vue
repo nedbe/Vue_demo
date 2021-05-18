@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navbar />
     <Jumbotron />
     <div class="container mb-1 pt-3">
       <div class="row">
@@ -77,21 +76,16 @@
         </div>
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/front/Navbar.vue';
-import Footer from '@/components/front/Footer.vue';
 import Jumbotron from '@/components/front/Jumbotron.vue';
 import Sidebar from '@/components/front/Sidebar.vue';
 
 export default {
   name: 'Products',
   components: {
-    Navbar,
-    Footer,
     Jumbotron,
     Sidebar,
   },

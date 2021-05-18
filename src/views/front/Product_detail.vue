@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navbar />
     <div class="container mt-5 mb-5 Whole_box">
       <div class="row">
         <!-- 左側選單 -->
@@ -44,6 +43,7 @@
                     <input type="button" value="+" class="input_plus" />
                   </div>
                   <button type="submit" class="btn add_btn">加入購物車</button>
+                  <a type="submit" class="btn add_btn disabled">缺貨中</a>
                 </div>
               </form>
             </div>
@@ -146,9 +146,15 @@
                   </a>
                   <h5 class="text-textColor pt-3">北歐風格床</h5>
                   <span class="">NT$8,000元</span>
-                  <button type="button" class="btn btn-block swiper_btn add_btn">
+                  <button
+                    type="button"
+                    class="btn btn-block swiper_btn add_btn"
+                  >
                     加入購物車
                   </button>
+                  <a href="#!" class="btn btn-block swiper_btn disabled">
+                    缺貨中
+                  </a>
                 </swiper-slide>
                 <!-- 前進後退按鈕 -->
                 <div class="swiper-button-prev" slot="button-prev"></div>
@@ -159,13 +165,10 @@
         </div>
       </div>
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/front/Navbar.vue';
-import Footer from '@/components/front/Footer.vue';
 import Sidebar from '@/components/front/Sidebar.vue';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
@@ -173,8 +176,6 @@ import 'swiper/css/swiper.css';
 export default {
   name: 'Product_detail',
   components: {
-    Navbar,
-    Footer,
     Sidebar,
     Swiper,
     SwiperSlide,
@@ -228,7 +229,7 @@ $border_color: #cacd4a;
 }
 
 // 商品價格
-.card-text{
+.card-text {
   font-size: 25px;
 }
 
@@ -336,11 +337,12 @@ h4 {
       width: 100%;
     }
     // 文字
-    h5 ,span{
+    h5,
+    span {
       padding-top: 8px;
       padding-bottom: 8px;
     }
-    span{
+    span {
       font-size: 16px;
     }
     // 購物車按鈕
