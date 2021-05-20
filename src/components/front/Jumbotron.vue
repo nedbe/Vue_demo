@@ -3,7 +3,7 @@
     <span class="bg_block"></span>
     <div class="container text-white align-self-center">
       <h1 class="display-3">歡慶開幕</h1>
-      <p class="coupon_text">全館八折 ｜ 結帳時輸入【WOW】</p>
+      <p class="coupon_text">全館八折 ｜ 限時折扣碼【WOW】</p>
     </div>
   </div>
 </template>

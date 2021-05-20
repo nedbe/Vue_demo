@@ -45,8 +45,7 @@ $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 
 //自定義顏色
-$grape:    #cacd4a !default;
-$classic:   #6c3411 !default; 
+$countColor:   #cacd4a !default; 
 $navbarColor:  #da471d !default; 
 $footerColor:  #262626 !default; 
 $aboutColor:  #eee0b5 !default; 
@@ -93,8 +92,7 @@ $theme-colors: map-merge(
     "light":      $light,
     "dark":       $dark,
     //自定義顏色
-    "grape":   $grape, 
-    "classic":   $classic, 
+    "countColor":   $countColor, 
     "navbarColor":   $navbarColor, 
     "footerColor":   $footerColor, 
     "aboutColor":   $aboutColor, 

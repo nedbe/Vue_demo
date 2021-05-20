@@ -80,6 +80,9 @@
 </template>
 
 <script>
+// 將$開頭給jquery使用
+import $ from 'jquery';
+
 import Jumbotron from '@/components/front/Jumbotron.vue';
 import Sidebar from '@/components/front/Sidebar.vue';
 
@@ -88,6 +91,9 @@ export default {
   components: {
     Jumbotron,
     Sidebar,
+  },
+  created() {
+    $('html,body').scrollTop(0);
   },
 };
 </script>

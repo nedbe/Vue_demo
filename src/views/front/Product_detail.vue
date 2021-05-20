@@ -38,7 +38,7 @@
                       value="1"
                       title="數量"
                       size="2"
-                      pattern="[0-9]*{2}"
+                      pattern="[1-9]{1}[0-9]{1}"
                     />
                     <input type="button" value="+" class="input_plus" />
                   </div>
@@ -169,6 +169,9 @@
 </template>
 
 <script>
+// 將$開頭給jquery使用
+import $ from 'jquery';
+
 import Sidebar from '@/components/front/Sidebar.vue';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
@@ -210,6 +213,9 @@ export default {
       },
       imgSrc: ['swiper1.jpg', 'swiper2.jpg', 'swiper1.jpg', 'swiper2.jpg'],
     };
+  },
+  created() {
+    $('html,body').scrollTop(0);
   },
 };
 </script>

@@ -46,6 +46,9 @@
 </template>
 
 <script>
+// 將$開頭給jquery使用
+import $ from 'jquery';
+
 // @ is an alias to /src
 // 引入元件
 import Swiper from '@/components/front/Swiper.vue';
@@ -55,6 +58,10 @@ export default {
   // 註冊元件
   components: {
     Swiper,
+  },
+  created() {
+    // 切換頁時回到最上方
+    $('html,body').scrollTop(0);
   },
 };
 </script>
