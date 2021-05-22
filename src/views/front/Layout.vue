@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <router-view></router-view>
-    <Footer />
+    <Footer></Footer>
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import Navbar from '@/components/front/Navbar.vue';
 import Footer from '@/components/front/Footer.vue';
 
 export default {
-  name: 'Home',
+  name: 'Layout',
   // 註冊元件
   components: {
     Navbar,

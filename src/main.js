@@ -13,8 +13,6 @@ import router from './router';
 
 // 安裝 axios
 Vue.use(VueAxios, axios);
-// 前端 cookie跨域設定
-axios.defaults.withCredentials = true;
 
 // vue-loading-overlay全域註冊
 Vue.component('Loading', Loading);

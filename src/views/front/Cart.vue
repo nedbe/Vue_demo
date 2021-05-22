@@ -172,7 +172,7 @@ export default {
 <style lang="scss" scoped>
 $btn_color: #87775c;
 $checkout_btn_color: #da471d;
-$sm: 576px;
+// $sm: 576px;
 
 // 整個頁面
 .cart_box {
@@ -267,14 +267,17 @@ $sm: 576px;
   }
 }
 
-// 折扣碼樣式
+// 折扣碼相關樣式
 .coupon {
+  p{
+    padding-left: 12px;
+  }
   // 超連結
   .coupon_link {
-    color: #000;
+    color: $btn_color;
     &:hover {
       color: $btn_color;
-      text-decoration: none;
+      // text-decoration: none;
     }
   }
   // 輸入框

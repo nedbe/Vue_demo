@@ -1,11 +1,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Layout from '@/components/front/Layout.vue';
+import axios from 'axios';
+
+import Layout from '@/views/front/Layout.vue';
 import Home from '@/views/front/Home.vue';
 import Products from '@/views/front/Products.vue';
 import ProductDetail from '@/views/front/Product_detail.vue';
 import Cart from '@/views/front/Cart.vue';
 import Checkout from '@/views/front/Checkout.vue';
+import Dashboard from '@/views/back/Dashboard.vue';
+// 將$開頭給jquery使用
+// import $ from 'jquery';
 
 Vue.use(VueRouter);
 
@@ -16,11 +21,13 @@ const routes = [
     redirect: '/',
   },
   {
+    // 路徑建議開頭不要大寫
     path: '/',
     name: 'Layout',
     component: Layout,
     children: [
       {
+        // 沒寫路徑則為上層路徑'/'的預設頁面
         path: '',
         name: 'Home',
         component: Home,
@@ -47,6 +54,13 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/admin',
+    name: 'Dashboard',
+    component: Dashboard,
+    // 進入此頁面前需要驗證
+    meta: { requiresAuth: true },
+  },
 
 ];
 
@@ -54,4 +68,27 @@ const router = new VueRouter({
   routes,
 });
 
+// 全局守衛
+router.beforeEach((to, from, next) => {
+  console.log('to:', to, 'from:', from, 'next:', next);
+  if (to.meta.requiresAuth) {
+    const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
+    axios.post(api).then((response) => {
+      console.log(response.data);
+      // 如果還是登入狀態則放行
+      if (response.data.success) {
+        next();
+      } else {
+        next({
+          path: `/${from.name}`,
+        });
+      }
+    });
+  } else {
+    next();
+  }
+});
+
 export default router;
+
+// nedbe780112@gmail.com
