@@ -1,5 +1,6 @@
 <template>
   <div class="bg-footerColor fixed-buttom">
+    <loading :active.sync="status.pageIsLoading"></loading>
     <footer class="container">
       <ul class="row d-flex justify-content-around align-items-center">
         <li class="icon">
@@ -22,15 +23,14 @@
           <span class="text-white"
             >ⓒ僅個人作品練習，無任何商業用途
             <span class="divider">
-              <router-link
+              <a
                 class="user"
-                href="#!"
+                href="#"
                 title="管理者登入"
-                data-toggle="modal"
                 data-target="#loginModal"
-                :to="{ name: 'Dashboard' }"
+                @click.prevent="loginModal"
                 ><i class="fas fa-user"></i
-              ></router-link>
+              ></a>
             </span>
           </span>
         </li>
@@ -93,7 +93,7 @@
               >
               <button type="submit" class="btn login_btn">
                 登入
-                <i class="fas fa-spinner fa-spin" v-if="status.isLoading"></i>
+                <i class="fas fa-spinner fa-spin" v-if="status.buttonIsLoading"></i>
               </button>
             </div>
           </form>
@@ -117,15 +117,24 @@ export default {
       },
       status: {
         showMessage: false,
-        isLoading: false,
+        buttonIsLoading: false,
+        pageIsLoading: false,
       },
     };
   },
   methods: {
+    loginModal() {
+      const vm = this;
+      vm.status.pageIsLoading = true;
+      setTimeout(() => {
+        vm.status.pageIsLoading = false;
+      }, 1000);
+      vm.$router.push('/admin');
+    },
     signinController() {
       const vm = this;
       vm.status.showMessage = false;
-      vm.status.isLoading = true;
+      vm.status.buttonIsLoading = true;
       $('.inputDisabled').attr('disabled', true);
 
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
@@ -151,7 +160,7 @@ export default {
         } else {
           vm.status.showMessage = true;
         }
-        vm.status.isLoading = false;
+        vm.status.buttonIsLoading = false;
         $('.inputDisabled').attr('disabled', false);
       });
     },

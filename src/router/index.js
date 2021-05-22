@@ -10,7 +10,7 @@ import Cart from '@/views/front/Cart.vue';
 import Checkout from '@/views/front/Checkout.vue';
 import Dashboard from '@/views/back/Dashboard.vue';
 // 將$開頭給jquery使用
-// import $ from 'jquery';
+import $ from 'jquery';
 
 Vue.use(VueRouter);
 
@@ -78,10 +78,11 @@ router.beforeEach((to, from, next) => {
       // 如果還是登入狀態則放行
       if (response.data.success) {
         next();
+        // 登入modal關閉
+        $('#loginModal').modal('hide');
       } else {
-        next({
-          path: `/${from.name}`,
-        });
+        // 登入modal開啟
+        $('#loginModal').modal('show');
       }
     });
   } else {
