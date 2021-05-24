@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
+// 將$開頭給jquery使用
+import $ from 'jquery';
 
 import Layout from '@/views/front/Layout.vue';
 import Home from '@/views/front/Home.vue';
@@ -8,9 +10,9 @@ import Products from '@/views/front/Products.vue';
 import ProductDetail from '@/views/front/Product_detail.vue';
 import Cart from '@/views/front/Cart.vue';
 import Checkout from '@/views/front/Checkout.vue';
+
 import Dashboard from '@/views/back/Dashboard.vue';
-// 將$開頭給jquery使用
-import $ from 'jquery';
+import ProductsList from '@/views/back/Products_list.vue';
 
 Vue.use(VueRouter);
 
@@ -18,12 +20,13 @@ const routes = [
   {
     // 當匹配不到網址時，跳轉首頁
     path: '*',
-    redirect: '/',
+    redirect: '/home',
   },
   {
     // 路徑建議開頭不要大寫
-    path: '/',
-    name: 'Layout',
+    path: '/home',
+    // 因有 children 還加 name,DevTools會跳警示訊息
+    // name: 'Layout',
     component: Layout,
     children: [
       {
@@ -56,10 +59,21 @@ const routes = [
   },
   {
     path: '/admin',
-    name: 'Dashboard',
+    // 因有 children 還加 name,DevTools會跳警示訊息
+    // name: 'Dashboard',
     component: Dashboard,
     // 進入此頁面前需要驗證
     meta: { requiresAuth: true },
+    // 轉址到 '/admin/products_list'
+    redirect: ProductsList,
+    children: [
+      {
+        path: '/admin/products_list',
+        name: 'Products_list',
+        component: ProductsList,
+        meta: { requiresAuth: true },
+      },
+    ],
   },
 
 ];
@@ -70,7 +84,7 @@ const router = new VueRouter({
 
 // 全局守衛
 router.beforeEach((to, from, next) => {
-  console.log('to:', to, 'from:', from, 'next:', next);
+  // console.log('to:', to, 'from:', from, 'next:', next);
   if (to.meta.requiresAuth) {
     const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
     axios.post(api).then((response) => {

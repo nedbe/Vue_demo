@@ -1,0 +1,11 @@
+$main_color: #da471d;
+$color: #87775c;
+
+// 輸入框
+.form-control {
+  border-radius: 0;
+  &:focus {
+    box-shadow: 0 0 0 0;
+    border-color: $color;
+  }
+}

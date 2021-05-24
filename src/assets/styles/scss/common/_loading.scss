@@ -1,0 +1,70 @@
+/* vue-loading套件樣式 */
+@keyframes ldio-l6eq6mvdt0s-o {
+  0% {
+    opacity: 1;
+    transform: translate(0 0);
+  }
+  49.99% {
+    opacity: 1;
+    transform: translate(56px, 0);
+  }
+  50% {
+    opacity: 0;
+    transform: translate(56px, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+}
+@keyframes ldio-l6eq6mvdt0s {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(56px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.ldio-l6eq6mvdt0s div {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  top: 72px;
+  left: 44px;
+}
+.ldio-l6eq6mvdt0s div:nth-child(1) {
+  background: #da471d;
+  animation: ldio-l6eq6mvdt0s 1s linear infinite;
+  animation-delay: -0.5s;
+}
+.ldio-l6eq6mvdt0s div:nth-child(2) {
+  background: #b83a17;
+  animation: ldio-l6eq6mvdt0s 1s linear infinite;
+  animation-delay: 0s;
+}
+.ldio-l6eq6mvdt0s div:nth-child(3) {
+  background: #da471d;
+  animation: ldio-l6eq6mvdt0s-o 1s linear infinite;
+  animation-delay: -0.5s;
+}
+.loadingio-spinner-dual-ball-mx4nrrd19pi {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+}
+.ldio-l6eq6mvdt0s {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-l6eq6mvdt0s div {
+  box-sizing: content-box;
+}

@@ -1,23 +1,20 @@
 <template>
   <div>
     <NavbarBack />
-    <!-- <Alert></Alert> -->
-        <!-- <Sidebar></Sidebar> -->
+    <AlertMessage></AlertMessage>
           <router-view></router-view>
   </div>
 </template>
 
 <script>
-// import Sidebar from '../components/Sidebar';
-import NavbarBack from '@/components//back/NavbarBack.vue';
-// import Alert from '../components/AlertMessage';
+import NavbarBack from '@/components/back/NavbarBack.vue';
+import AlertMessage from '@/components/common/AlertMessage.vue';
 
 export default {
   name: 'Dashboard',
   components: {
-    // Sidebar,
     NavbarBack,
-    // Alert,
+    AlertMessage,
   },
   created() {
     // 取出Cookie

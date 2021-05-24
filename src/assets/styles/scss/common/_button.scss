@@ -1,0 +1,84 @@
+$main_color: #da471d;
+$color: #87775c;
+
+// 按鈕樣式
+.customize_btn {
+  font-size: 16px;
+  border-radius: 0px;
+  padding: 6px 20px;
+}
+
+// 實心按鈕-主色
+.btn_main_color {
+  color: #fff;
+  background-color: $main_color;
+  &:hover {
+    background-color: $main_color - #111111;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+// 實心按鈕
+.btn_color {
+  color: #fff;
+  background-color: $color;
+  &:hover {
+    background-color: $color - #111111;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+// 外框線按鈕-主色
+.btn_outline_main_color{
+  color: $main_color;
+  background-color: #fff;
+  border: 1px $main_color solid;
+  &:hover {
+    color: #fff;
+    background-color: $main_color;
+    border: 1px $main_color solid;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+// 外框線按鈕
+.btn_outline_color{
+  color: $color;
+  background-color: #fff;
+  border: 1px $color solid;
+  &:hover {
+    color: #fff;
+    background-color: $color;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+// 分頁按鈕
+.page-link{
+  color: $color;
+  &:focus {
+    box-shadow: 0 0 0 0;
+  }
+}
+
+.page-item.active .page-link{
+  background-color: $color;
+  border: 1px $color solid;
+}
+
+// 編輯與刪除icon
+.edit_icon,
+.delete_icon {
+  color: #000;
+  &:hover {
+    color: $color;
+  }
+}
