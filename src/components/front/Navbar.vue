@@ -142,4 +142,9 @@ $sm: 576px;
     }
   }
 }
+
+// link 激活樣式
+.router-link-exact-active {
+  color: #fff !important;
+}
 </style>

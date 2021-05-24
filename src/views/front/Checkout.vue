@@ -203,7 +203,9 @@
                 </select>
               </div>
               <div class="text-right">
-                <button type="submit" class="btn checkout_btn">確認結帳</button>
+                <button type="submit" class="btn customize_btn btn_main_color">
+                  確認結帳
+                </button>
               </div>
             </form>
           </div>
@@ -226,9 +228,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$btn_color: #87775c;
-$checkout_btn_color: #da471d;
-$sm: 576px;
+// 引入 button 樣式
+@import "@/assets/styles/scss/common/_button";
+
+// 引入 input 樣式
+@import "@/assets/styles/scss/common/_input";
+
+$border_btn_color: #da471d;
 
 // 整個頁面
 .checkout_box {
@@ -245,7 +251,7 @@ $sm: 576px;
 // 左邊訂單
 // 第一個表格線條
 .table {
-  border: 2px solid $checkout_btn_color;
+  border: 2px solid $border_btn_color;
   table {
     width: 100%;
   }
@@ -270,30 +276,6 @@ $sm: 576px;
 .checkout_form {
   .form-row {
     padding-top: 8px;
-  }
-}
-
-// 輸入框
-.form-control {
-  border-radius: 0;
-  &:focus {
-    box-shadow: 0 0 0 0;
-    border-color: $btn_color;
-  }
-}
-
-// 結帳按鈕
-.checkout_btn {
-  color: #fff;
-  font-size: 16px;
-  background-color: $checkout_btn_color;
-  border-radius: 0px;
-  padding: 6px 20px;
-  &:hover {
-    background-color: $checkout_btn_color - #111111;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
   }
 }
 </style>

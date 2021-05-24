@@ -1,7 +1,7 @@
 $main_color: #da471d;
 $color: #87775c;
 
-// 按鈕樣式
+// 按鈕基礎樣式
 .customize_btn {
   font-size: 16px;
   border-radius: 0px;
@@ -33,7 +33,7 @@ $color: #87775c;
 }
 
 // 外框線按鈕-主色
-.btn_outline_main_color{
+.btn_outline_main_color {
   color: $main_color;
   background-color: #fff;
   border: 1px $main_color solid;
@@ -48,7 +48,7 @@ $color: #87775c;
 }
 
 // 外框線按鈕
-.btn_outline_color{
+.btn_outline_color {
   color: $color;
   background-color: #fff;
   border: 1px $color solid;
@@ -62,14 +62,14 @@ $color: #87775c;
 }
 
 // 分頁按鈕
-.page-link{
+.page-link {
   color: $color;
   &:focus {
     box-shadow: 0 0 0 0;
   }
 }
 
-.page-item.active .page-link{
+.page-item.active .page-link {
   background-color: $color;
   border: 1px $color solid;
 }
@@ -82,3 +82,48 @@ $color: #87775c;
     color: $color;
   }
 }
+
+// <--- 購物數量按鈕相關 --->
+// input[type=number] 取消上下箭頭
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+// 數量與增減按鈕
+input[type="number"],
+input[type="button"] {
+  padding: 6px;
+  border-radius: 0;
+  border: 0;
+}
+
+// 增減按鈕
+input[type="button"] {
+  font-weight: bold;
+  &:hover {
+    background-color: $color;
+  }
+}
+
+// 數量按鈕
+.input_number {
+  border: 1px solid rgb(239, 239, 239);
+  &:focus {
+    outline: none;
+  }
+}
+
+.input_group {
+  border: solid 1px rgb(239, 239, 239);
+}
+
+// <--- 購物數量按鈕相關 --->
+

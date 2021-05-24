@@ -44,8 +44,8 @@
                     <p class="card-text text-center">NT$8,000元</p>
                   </div>
                   <div class="card-footer border-top-0 bg-white">
-                    <a href="#!" class="btn btn-block add_btn"> 加入購物車 </a>
-                    <a href="#" class="btn btn-block add_btn disabled">
+                    <a href="#!" class="btn btn-block customize_btn btn_outline_color"> 加入購物車 </a>
+                    <a href="#" class="btn btn-block customize_btn btn_outline_color disabled">
                       缺貨中
                     </a>
                   </div>
@@ -99,7 +99,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$btn_color: #87775c;
+// 引入 button 樣式
+@import "@/assets/styles/scss/common/_button";
+
+$background_color: #87775c;
 
 // 排序
 .custom-select {
@@ -118,7 +121,7 @@ $btn_color: #87775c;
   .overlay {
     position: absolute;
     bottom: 0;
-    background: $btn_color;
+    background: $background_color;
     color: #fff;
     width: 100%;
     transition: 0.5s ease;
@@ -140,22 +143,6 @@ $btn_color: #87775c;
   &:hover img {
     transform: scale(1.05, 1.05);
     transition: transform 0.7s ease-out;
-  }
-}
-
-// 加入購物車按鈕
-.add_btn {
-  color: $btn_color;
-  font-size: 16px;
-  background-color: #fff;
-  border: 1px $btn_color solid;
-  border-radius: 0px;
-  &:hover {
-    color: #fff;
-    background-color: $btn_color;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
   }
 }
 </style>

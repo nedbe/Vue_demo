@@ -87,6 +87,7 @@
       </div>
     </div>
 
+    <!-- 分頁 -->
     <Pagination :pages="pagination" @emitPages="getProducts"></Pagination>
 
     <!-- Modal -->

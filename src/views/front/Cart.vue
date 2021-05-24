@@ -43,7 +43,7 @@
                 <tr class="text-center">
                   <td class="align-middle">
                     <a href="#!"
-                      ><i class="far fa-times-circle delete_btn"></i
+                      ><i class="far fa-times-circle delete_icon"></i
                     ></a>
                   </td>
                   <td class="align-middle text-left">
@@ -104,16 +104,18 @@
                   <td colspan="3">
                     <router-link
                       href="#!"
-                      class="btn back_btn mr-3"
+                      class="btn customize_btn btn_outline_color mr-3"
                       :to="{ name: 'Product_detail' }"
                       >繼續購物</router-link
                     >
-                    <a href="#!" class="btn update_btn">更新購物車</a>
+                    <a href="#!" class="btn customize_btn btn_color"
+                      >更新購物車</a
+                    >
                   </td>
                   <td colspan="2" class="text-right">
                     <router-link
                       href="#!"
-                      class="btn checkout_btn"
+                      class="btn customize_btn btn_main_color"
                       :to="{ name: 'Checkout' }"
                       >前往結帳</router-link
                     >
@@ -147,7 +149,9 @@
                 aria-describedby="couponBtn"
               />
               <div class="input-group-prepend">
-                <button class="btn update_btn" id="couponBtn">套用</button>
+                <button class="btn customize_btn btn_color" id="couponBtn">
+                  套用
+                </button>
               </div>
             </div>
           </div>
@@ -170,9 +174,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$btn_color: #87775c;
-$checkout_btn_color: #da471d;
-// $sm: 576px;
+// 引入 button 樣式
+@import "@/assets/styles/scss/common/_button";
+
+// 引入 input 樣式
+@import "@/assets/styles/scss/common/_input";
+
+$link_color: #87775c;
 
 // 整個頁面
 .cart_box {
@@ -208,84 +216,21 @@ $checkout_btn_color: #da471d;
 .product_link {
   color: #000;
   &:hover {
-    color: $btn_color;
+    color: $link_color;
     // text-decoration: none;
-  }
-}
-
-// 刪除按鈕
-.delete_btn {
-  color: #000;
-  &:hover {
-    color: $btn_color;
-  }
-}
-
-// 返回購物按鈕
-.back_btn {
-  color: $btn_color;
-  font-size: 16px;
-  background-color: #fff;
-  border: 1px $btn_color solid;
-  border-radius: 0px;
-  &:hover {
-    color: #fff;
-    background-color: $btn_color;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
-  }
-}
-
-// 更新購物車按鈕
-.update_btn {
-  color: #fff;
-  font-size: 16px;
-  background-color: $btn_color;
-  border-radius: 0px;
-  padding: 6px 20px;
-  &:hover {
-    background-color: $btn_color - #111111;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
-  }
-}
-
-// 結帳按鈕
-.checkout_btn {
-  color: #fff;
-  font-size: 16px;
-  background-color: $checkout_btn_color;
-  border-radius: 0px;
-  padding: 6px 20px;
-  &:hover {
-    background-color: $checkout_btn_color - #111111;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
   }
 }
 
 // 折扣碼相關樣式
 .coupon {
-  p{
+  p {
     padding-left: 12px;
   }
   // 超連結
   .coupon_link {
-    color: $btn_color;
+    color: $link_color;
     &:hover {
-      color: $btn_color;
-      // text-decoration: none;
-    }
-  }
-  // 輸入框
-  .form-control {
-    border-radius: 0;
-    &:focus {
-      box-shadow: 0 0 0 0;
-      border-color: $btn_color;
+      color: $link_color;
     }
   }
   .input-group {
@@ -293,44 +238,4 @@ $checkout_btn_color: #da471d;
   }
 }
 
-// input[type=number] 取消上下箭頭
-/* Chrome, Safari, Edge, Opera */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-// 數量與增減按鈕
-input[type="number"],
-input[type="button"] {
-  padding: 6px;
-  border-radius: 0;
-  border: 0;
-}
-
-// 增減按鈕
-input[type="button"] {
-  font-weight: bold;
-  &:hover {
-    background-color: $btn_color;
-  }
-}
-
-// 數量按鈕
-.input_number {
-  border: 1px solid rgb(239, 239, 239);
-  &:focus {
-    outline: none;
-  }
-}
-
-.input_group {
-  border: solid 1px rgb(239, 239, 239);
-}
 </style>

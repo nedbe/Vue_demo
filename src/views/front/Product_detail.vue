@@ -42,8 +42,8 @@
                     />
                     <input type="button" value="+" class="input_plus" />
                   </div>
-                  <button type="submit" class="btn add_btn">加入購物車</button>
-                  <a type="submit" class="btn add_btn disabled">缺貨中</a>
+                  <button type="submit" class="btn customize_btn btn_color">加入購物車</button>
+                  <a type="submit" class="btn customize_btn btn_color disabled">缺貨中</a>
                 </div>
               </form>
             </div>
@@ -148,11 +148,11 @@
                   <span class="">NT$8,000元</span>
                   <button
                     type="button"
-                    class="btn btn-block swiper_btn add_btn"
+                    class="btn btn-block customize_btn btn_outline_color"
                   >
                     加入購物車
                   </button>
-                  <a href="#!" class="btn btn-block swiper_btn disabled">
+                  <a href="#!" class="btn btn-block customize_btn btn_outline_color disabled">
                     缺貨中
                   </a>
                 </swiper-slide>
@@ -221,6 +221,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 引入 button 樣式
+@import "@/assets/styles/scss/common/_button";
+
 $btn_color: #87775c;
 $border_color: #cacd4a;
 
@@ -237,62 +240,6 @@ $border_color: #cacd4a;
 // 商品價格
 .card-text {
   font-size: 25px;
-}
-
-// input[type=number] 取消上下箭頭
-/* Chrome, Safari, Edge, Opera */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-// 數量與增減按鈕
-input[type="number"],
-input[type="button"] {
-  padding: 6px;
-  border-radius: 0;
-  border: 0;
-}
-
-// 增減按鈕
-input[type="button"] {
-  font-weight: bold;
-  &:hover {
-    background-color: $btn_color;
-  }
-}
-
-// 數量按鈕
-.input_number {
-  border: 1px solid rgb(239, 239, 239);
-  &:focus {
-    outline: none;
-  }
-}
-
-.input_group {
-  border: solid 1px rgb(239, 239, 239);
-}
-
-// 加入購物車按鈕
-.add_btn {
-  color: #fff;
-  font-size: 16px;
-  background-color: $btn_color;
-  border-radius: 0px;
-  padding: 6px 20px;
-  &:hover {
-    background-color: $btn_color - #111111;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
-  }
 }
 
 // 商品規格與注意事項標籤切換效果
@@ -350,18 +297,6 @@ h4 {
     }
     span {
       font-size: 16px;
-    }
-    // 購物車按鈕
-    .swiper_btn {
-      color: $btn_color;
-      font-size: 16px;
-      background-color: #fff;
-      border: 1px $btn_color solid;
-      border-radius: 0px;
-      &:hover {
-        color: #fff;
-        background-color: $btn_color;
-      }
     }
   }
 }

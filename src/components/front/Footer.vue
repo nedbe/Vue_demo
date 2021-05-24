@@ -1,20 +1,34 @@
 <template>
   <div class="bg-footerColor fixed-buttom">
-    <loading :active.sync="status.pageIsLoading"></loading>
-    <footer class="container">
+    <!-- vue-loading -->
+    <loading :active.sync="status.pageIsLoading">
+      <div class="loadingio-spinner-dual-ball-mx4nrrd19pi">
+        <div class="ldio-l6eq6mvdt0s">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </loading>
+
+    <footer class="container pt-5 pb-3">
       <ul class="row d-flex justify-content-around align-items-center">
         <li class="icon">
           <!-- Facebook -->
-          <a class="btn" href="#!"><i class="fab fa-facebook-f"></i></a>
+          <a class="btn icon_link" href="#!"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
 
           <!-- Twitter -->
-          <a class="btn" href="#!"><i class="fab fa-twitter"></i></a>
+          <a class="btn icon_link" href="#!"><i class="fab fa-twitter"></i></a>
 
           <!-- Google -->
-          <a class="btn" href="#!"><i class="fab fa-google"></i></a>
+          <a class="btn icon_link" href="#!"><i class="fab fa-google"></i></a>
 
           <!-- Instagram -->
-          <a class="btn" href="#!"><i class="fab fa-instagram"></i></a>
+          <a class="btn icon_link" href="#!"
+            ><i class="fab fa-instagram"></i
+          ></a>
         </li>
         <li>
           <span class="text-white">聯絡電話：04-2244-6688</span>
@@ -24,7 +38,7 @@
             >ⓒ僅個人作品練習，無任何商業用途
             <span class="divider">
               <a
-                class="user"
+                class="user icon_link"
                 href="#"
                 title="管理者登入"
                 data-target="#loginModal"
@@ -76,7 +90,7 @@
               <div class="form-group">
                 <label for="password" class="col-form-label">密碼</label>
                 <input
-                  type="text"
+                  type="password"
                   class="form-control inputDisabled"
                   id="password"
                   required
@@ -91,9 +105,12 @@
               <span class="text-danger" v-if="status.showMessage"
                 >帳號或密碼錯誤，請重新登入。</span
               >
-              <button type="submit" class="btn login_btn">
+              <button type="submit" class="btn customize_btn btn_main_color">
                 登入
-                <i class="fas fa-spinner fa-spin" v-if="status.buttonIsLoading"></i>
+                <i
+                  class="fas fa-spinner fa-spin"
+                  v-if="status.buttonIsLoading"
+                ></i>
               </button>
             </div>
           </form>
@@ -111,30 +128,43 @@ export default {
   name: 'Footer',
   data() {
     return {
+      // 帳號與密碼資料
       user: {
         username: '',
         password: '',
       },
+      // 狀態判斷
       status: {
+        // 錯誤訊息
         showMessage: false,
+        // 按鈕讀取動畫
         buttonIsLoading: false,
+        // 整頁讀取動畫
         pageIsLoading: false,
       },
     };
   },
   methods: {
+    // 登入畫面 modal
     loginModal() {
       const vm = this;
+      // 開啟整頁讀取動畫
       vm.status.pageIsLoading = true;
+      // 1秒後關閉整頁讀取動畫
       setTimeout(() => {
         vm.status.pageIsLoading = false;
       }, 1000);
+      // 轉址到後台
       vm.$router.push('/admin');
     },
+    // 管理者登入
     signinController() {
       const vm = this;
+      // 隱藏錯誤訊息
       vm.status.showMessage = false;
+      // 開啟按鈕讀取動畫
       vm.status.buttonIsLoading = true;
+      // 將登入按鈕失效
       $('.inputDisabled').attr('disabled', true);
 
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
@@ -151,16 +181,17 @@ export default {
           // myToken 為自訂的Cookie名稱並儲存狀態; expires為到期時間
           document.cookie = `myToken=${token};expires=${new Date(expired)};`;
 
-          // 轉址
-          // 法一
+          // 轉址到後台
           vm.$router.push('/admin');
-          // 法二
-          // vm.$router.push({ name: 'Dashboard'});
+          // 關閉 modal
           $('#loginModal').modal('hide');
         } else {
+          // 顯示錯誤訊息
           vm.status.showMessage = true;
         }
+        // 關閉按鈕讀取動畫
         vm.status.buttonIsLoading = false;
+        // 重啟登入按鈕
         $('.inputDisabled').attr('disabled', false);
       });
     },
@@ -169,19 +200,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$btn_color: #87775c;
-$login_btn_color: #da471d;
+/* 引入 vue-loading套件自定義樣式 */
+@import "@/assets/styles/scss/common/_loading";
 
-footer {
-  padding-top: 25px;
-  padding-bottom: 15px;
-  ul {
-    padding: 0;
-  }
-}
+// 引入 button 樣式
+@import "@/assets/styles/scss/common/_button";
+
+// 引入 input 樣式
+@import "@/assets/styles/scss/common/_input";
 
 // icon
-a {
+.icon_link {
   width: 40px;
   margin-left: 5px;
   color: #fff;
@@ -218,30 +247,6 @@ a {
 
   .modal-footer {
     border-top: 0;
-  }
-
-  // 輸入框
-  .form-control {
-    border-radius: 0;
-    &:focus {
-      box-shadow: 0 0 0 0;
-      border-color: $btn_color;
-    }
-  }
-}
-
-// 登入按鈕
-.login_btn {
-  color: #fff;
-  font-size: 16px;
-  background-color: $login_btn_color;
-  border-radius: 0px;
-  padding: 6px 20px;
-  &:hover {
-    background-color: $login_btn_color - #111111;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
   }
 }
 </style>

@@ -5,7 +5,8 @@
       v-for="(item, index) in imgSrc"
       :key="index"
       :style="{
-        backgroundImage: 'url(' + require(`@/assets/images/home/swiper/${item}`) + ')',
+        backgroundImage:
+          'url(' + require(`@/assets/images/home/swiper/${item}`) + ')',
       }"
     >
       <div class="swiper_content">
@@ -42,6 +43,7 @@ export default {
   },
   data() {
     return {
+      // swiper套件設定
       swiperOption: {
         // 前進後退按鈕
         navigation: {
@@ -152,7 +154,7 @@ export default {
   font-size: 50px;
 }
 
-$text_color : #cacd4a;
+$text_color: #cacd4a;
 
 .pick_btn {
   border-radius: 99px;
