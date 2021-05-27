@@ -13,6 +13,8 @@ import Checkout from '@/views/front/Checkout.vue';
 
 import Dashboard from '@/views/back/Dashboard.vue';
 import ProductsList from '@/views/back/Products_list.vue';
+import OrderList from '@/views/back/Order_list.vue';
+import Coupons from '@/views/back/Coupons.vue';
 
 Vue.use(VueRouter);
 
@@ -73,6 +75,18 @@ const routes = [
         component: ProductsList,
         meta: { requiresAuth: true },
       },
+      {
+        path: '/admin/order_list',
+        name: 'Order_list',
+        component: OrderList,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/admin/coupons',
+        name: 'Coupons',
+        component: Coupons,
+        meta: { requiresAuth: true },
+      },
     ],
   },
 
@@ -97,6 +111,11 @@ router.beforeEach((to, from, next) => {
       } else {
         // 登入modal開啟
         $('#loginModal').modal('show');
+        // 如果不是從首頁來的
+        if (from.name !== 'Home') {
+          // 導向首頁
+          router.push('/home');
+        }
       }
     });
   } else {

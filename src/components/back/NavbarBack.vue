@@ -15,12 +15,12 @@
             </router-link>
           </li>
           <li class="nav-item mr-5">
-            <router-link to="/admin/orders" class="nav-link">
+            <router-link class="nav-link" :to="{ name: 'Order_list' }">
               <i class="far fa-list-alt"></i> 訂單列表
             </router-link>
           </li>
           <li class="nav-item mr-5">
-            <router-link to="/admin/coupons" class="nav-link">
+            <router-link class="nav-link" :to="{ name: 'Coupons' }">
               <i class="fas fa-ticket-alt"></i> 優惠券
             </router-link>
           </li>

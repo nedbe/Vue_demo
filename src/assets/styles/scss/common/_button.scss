@@ -86,27 +86,27 @@ $color: #87775c;
 // <--- 購物數量按鈕相關 --->
 // input[type=number] 取消上下箭頭
 /* Chrome, Safari, Edge, Opera */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+.input_number::-webkit-outer-spin-button,
+.input_number::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 /* Firefox */
-input[type="number"] {
+.input_number {
   -moz-appearance: textfield;
 }
 
 // 數量與增減按鈕
-input[type="number"],
-input[type="button"] {
+.input_number,
+.input_button {
   padding: 6px;
   border-radius: 0;
   border: 0;
 }
 
 // 增減按鈕
-input[type="button"] {
+.input_button {
   font-weight: bold;
   &:hover {
     background-color: $color;
