@@ -117,85 +117,85 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <div class="row">
-              <!-- 訂單詳情 -->
-              <div class="col-5 table">
-                <h5 class="text-center pt-3 pb-3">訂單詳情</h5>
-                <table class="w-100">
-                  <thead>
-                    <tr class="text-center">
-                      <th
-                        scope="col"
-                        colspan="2"
-                        class="font-weight-normal text-left"
+          <form @submit.prevent="updateOrder">
+            <div class="modal-body">
+              <div class="row">
+                <!-- 訂單詳情 -->
+                <div class="col-5 table">
+                  <h5 class="text-center pt-3 pb-3">訂單詳情</h5>
+                  <table class="w-100">
+                    <thead>
+                      <tr class="text-center">
+                        <th
+                          scope="col"
+                          colspan="2"
+                          class="font-weight-normal text-left"
+                        >
+                          商品名稱
+                        </th>
+                        <th scope="col" class="font-weight-normal text-right">
+                          單價
+                        </th>
+                        <th scope="col" class="font-weight-normal">數量</th>
+                        <th
+                          scope="col"
+                          class="font-weight-normal text-right text-navbarColor"
+                        >
+                          折扣
+                        </th>
+                        <th scope="col" class="font-weight-normal text-right">
+                          小計
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        class="text-center"
+                        v-for="(item, index) in tempOrder.products"
+                        :key="index"
                       >
-                        商品名稱
-                      </th>
-                      <th scope="col" class="font-weight-normal text-right">
-                        單價
-                      </th>
-                      <th scope="col" class="font-weight-normal">數量</th>
-                      <th
-                        scope="col"
-                        class="font-weight-normal text-right text-navbarColor"
-                      >
-                        折扣
-                      </th>
-                      <th scope="col" class="font-weight-normal text-right">
-                        小計
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      class="text-center"
-                      v-for="(item, index) in tempOrder.products"
-                      :key="index"
-                    >
-                      <td colspan="2" class="align-middle text-left">
-                        <span class="text-textColor">{{
-                          item.product.title
-                        }}</span>
-                      </td>
-                      <td class="align-middle text-right">
-                        {{ item.product.price | currency }}
-                      </td>
-                      <td class="align-middle">x{{ item.qty }}</td>
-                      <td
-                        class="align-middle text-right text-navbarColor"
-                        v-if="item.total - item.final_total > 0"
-                      >
-                        -{{ (item.total - item.final_total) | currency }}
-                      </td>
-                      <td
-                        class="align-middle text-right text-navbarColor"
-                        v-else
-                      >
-                        -
-                      </td>
-                      <td class="align-middle text-right">
-                        {{ item.final_total | currency }}
-                      </td>
-                    </tr>
+                        <td colspan="2" class="align-middle text-left">
+                          <span class="text-textColor">{{
+                            item.product.title
+                          }}</span>
+                        </td>
+                        <td class="align-middle text-right">
+                          {{ item.product.price | currency }}
+                        </td>
+                        <td class="align-middle">x{{ item.qty }}</td>
+                        <td
+                          class="align-middle text-right text-navbarColor"
+                          v-if="item.total - item.final_total > 0"
+                        >
+                          -{{ (item.total - item.final_total) | currency }}
+                        </td>
+                        <td
+                          class="align-middle text-right text-navbarColor"
+                          v-else
+                        >
+                          -
+                        </td>
+                        <td class="align-middle text-right">
+                          {{ item.final_total | currency }}
+                        </td>
+                      </tr>
 
-                    <tr class="last_tr">
-                      <td colspan="3" class="align-middle">總計</td>
-                      <td
-                        colspan="3"
-                        class="align-middle text-right font-weight-bold"
-                      >
-                        {{ tempOrder.total | currency }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                      <tr class="last_tr">
+                        <td colspan="3" class="align-middle">總計</td>
+                        <td
+                          colspan="3"
+                          class="align-middle text-right font-weight-bold"
+                        >
+                          {{ tempOrder.total | currency }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-              <!-- 收件人 -->
-              <div class="col-7" v-if="tempOrder.hasOwnProperty('create_at')">
-                <h5 class="text-center pt-3 pb-3">收件人資訊</h5>
-                <form>
+                <!-- 收件人 -->
+                <div class="col-7" v-if="tempOrder.hasOwnProperty('create_at')">
+                  <h5 class="text-center pt-3 pb-3">收件人資訊</h5>
                   <div class="form-row">
                     <div class="form-group col-md">
                       <label for="name"
@@ -289,30 +289,29 @@
                       <option value="false">訂單取消</option>
                     </select>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn customize_btn btn_outline_color"
-              data-dismiss="modal"
-            >
-              取消
-            </button>
-            <button
-              type="button"
-              class="btn customize_btn btn_main_color updateBtn"
-              @click="updateOrder"
-            >
-              修改
-              <i
-                class="fas fa-spinner fa-spin"
-                v-if="status.buttonIsLoading"
-              ></i>
-            </button>
-          </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn customize_btn btn_outline_color"
+                data-dismiss="modal"
+              >
+                取消
+              </button>
+              <button
+                type="submit"
+                class="btn customize_btn btn_main_color updateBtn"
+              >
+                修改
+                <i
+                  class="fas fa-spinner fa-spin"
+                  v-if="status.buttonIsLoading"
+                ></i>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -405,6 +404,7 @@ export default {
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
+      // axios
       vm.$http.get(api).then((response) => {
         console.log(response.data);
         // 關閉整頁讀取動畫
@@ -414,6 +414,8 @@ export default {
         // 存入頁碼資料
         vm.pagination = response.data.pagination;
       });
+      // 回到最上方
+      $('html,body').scrollTop(0);
     },
     // 編輯與取消畫面 modal
     // 參數 name: 'edit'編輯或 'cancel'取消畫面;item: 要編輯的資料

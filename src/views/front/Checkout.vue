@@ -80,12 +80,12 @@
           </div>
 
           <div class="col-12 col-lg-7 mt-5 mt-lg-1">
-            <h5 class="text-center pt-3 pb-3">訂購人資訊</h5>
+            <h5 class="text-center pt-3 pb-3">收件人資訊</h5>
             <form class="checkout_form">
               <div class="form-row">
                 <div class="form-group col-md">
                   <label for="name"
-                    >訂購人姓名 <span class="text-danger">*</span></label
+                    >姓名 <span class="text-danger">*</span></label
                   >
                   <input
                     type="text"
@@ -120,58 +120,9 @@
                   />
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group col-md">
-                  <label for="city"
-                    >城市 <span class="text-danger">*</span></label
-                  >
-                  <select name="" id="city" class="form-control" required>
-                    <option value="" disabled selected>請選擇</option>
-                    <option value="基隆市">基隆市</option>
-                    <option value="台北市">台北市</option>
-                    <option value="新北市">新北市</option>
-                    <option value="宜蘭縣">宜蘭縣</option>
-                    <option value="桃園市">桃園市</option>
-                    <option value="新竹市">新竹市</option>
-                    <option value="新竹縣">新竹縣</option>
-                    <option value="苗栗縣">苗栗縣</option>
-                    <option value="台中市">台中市</option>
-                    <option value="彰化縣">彰化縣</option>
-                    <option value="南投縣">南投縣</option>
-                    <option value="雲林縣">雲林縣</option>
-                    <option value="嘉義市">嘉義市</option>
-                    <option value="嘉義縣">嘉義縣</option>
-                    <option value="台南市">台南市</option>
-                    <option value="高雄市">高雄市</option>
-                    <option value="屏東縣">屏東縣</option>
-                    <option value="花蓮縣">花蓮縣</option>
-                    <option value="台東縣">台東縣</option>
-                    <option value="澎湖縣">澎湖縣</option>
-                    <option value="金門縣">金門縣</option>
-                    <option value="連江縣">連江縣</option>
-                  </select>
-                </div>
-                <div class="form-group col-md">
-                  <label for="township"
-                    >鄉鎮市 <span class="text-danger">*</span></label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="township"
-                    required
-                  />
-                </div>
-                <div class="form-group col-md">
-                  <label for="zip"
-                    >郵遞區號 <span class="text-danger">*</span></label
-                  >
-                  <input type="text" class="form-control" id="zip" required />
-                </div>
-              </div>
               <div class="form-group">
                 <label for="address"
-                  >街道地址 <span class="text-danger">*</span></label
+                  >地址 <span class="text-danger">*</span></label
                 >
                 <input
                   type="text"
@@ -198,11 +149,13 @@
                 <select name="" id="pay" class="form-control" required>
                   <option value="" disabled selected>請選擇</option>
                   <option value="銀行轉帳">銀行轉帳</option>
-                  <option value="貨到付款">貨到付款</option>
                   <option value="信用卡支付">信用卡支付</option>
                 </select>
               </div>
-              <div class="text-right">
+              <div class="d-flex justify-content-between">
+                <a href="#!" class="btn customize_btn btn_outline_color"
+                  >返回上一頁</a
+                >
                 <button type="submit" class="btn customize_btn btn_main_color">
                   確認結帳
                 </button>

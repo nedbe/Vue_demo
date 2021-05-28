@@ -58,20 +58,22 @@
                   </td>
                   <td class="align-middle text-right">$1,400</td>
                   <td class="align-middle text-right text-sm-center">
-                    <input type="button" value="-" class="input_minus" />
-                    <input
-                      type="number"
-                      class="text-center input_number"
-                      step="1"
-                      min="1"
-                      max="99"
-                      name="quantity"
-                      value="1"
-                      title="數量"
-                      size="2"
-                      pattern="[1-9]{1}[0-9]{1}"
-                    />
-                    <input type="button" value="+" class="input_plus" />
+                    <span class="input_group d-inline-block">
+                      <input type="button" value="-" class="input_button" />
+                      <input
+                        type="number"
+                        class="text-center input_number"
+                        step="1"
+                        min="1"
+                        max="99"
+                        name="quantity"
+                        value="1"
+                        title="數量"
+                        size="2"
+                        pattern="[1-9]{1}[0-9]{1}"
+                      />
+                      <input type="button" value="+" class="input_button" />
+                    </span>
                   </td>
                   <td class="align-middle d-none d-sm-table-cell text-right">
                     $1,400
@@ -105,7 +107,7 @@
                     <router-link
                       href="#!"
                       class="btn customize_btn btn_outline_color mr-3"
-                      :to="{ name: 'Product_detail' }"
+                      :to="{ name: 'Products' }"
                       >繼續購物</router-link
                     >
                     <a href="#!" class="btn customize_btn btn_color"
@@ -237,5 +239,4 @@ $link_color: #87775c;
     padding-right: 12px;
   }
 }
-
 </style>

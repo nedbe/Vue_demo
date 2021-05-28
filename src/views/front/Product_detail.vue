@@ -27,7 +27,7 @@
               <form action="#" method="post">
                 <div class="d-flex justify-content-between mt-4">
                   <div class="input_group">
-                    <input type="button" value="-" class="input_minus" />
+                    <input type="button" value="-" class="input_button" />
                     <input
                       type="number"
                       class="text-center input_number"
@@ -40,7 +40,7 @@
                       size="2"
                       pattern="[1-9]{1}[0-9]{1}"
                     />
-                    <input type="button" value="+" class="input_plus" />
+                    <input type="button" value="+" class="input_button" />
                   </div>
                   <button type="submit" class="btn customize_btn btn_color">加入購物車</button>
                   <a type="submit" class="btn customize_btn btn_color disabled">缺貨中</a>

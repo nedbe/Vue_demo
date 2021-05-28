@@ -158,7 +158,7 @@
                         type="number"
                         class="form-control"
                         id="percent"
-                        placeholder="請輸入數值"
+                        placeholder="請輸入數字"
                         min="1"
                         max="100"
                         required
@@ -168,15 +168,19 @@
                   </div>
                   <div class="row">
                     <div class="form-group col-md">
-                      <label for="is_enabled">是否啟用</label>
-                      <input
-                        type="checkbox"
-                        id="is_enabled"
-                        class="ml-3"
-                        :true-value="1"
-                        :false-value="0"
-                        v-model="tempCoupon.is_enabled"
-                      />
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          id="is_enabled"
+                          class="form-check-input"
+                          :true-value="1"
+                          :false-value="0"
+                          v-model="tempCoupon.is_enabled"
+                        />
+                        <label class="form-check-label" for="is_enabled"
+                          >是否啟用</label
+                        >
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -298,7 +302,8 @@ export default {
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
-      this.$http.get(api).then((response) => {
+      // axios
+      vm.$http.get(api).then((response) => {
         console.log(response.data);
         // 關閉整頁讀取動畫
         vm.status.pageIsLoading = false;
@@ -307,6 +312,8 @@ export default {
         // 存入頁碼資料
         vm.pagination = response.data.pagination;
       });
+      // 回到最上方
+      $('html,body').scrollTop(0);
     },
     openModal(isNew, item) {
       const vm = this;
@@ -344,7 +351,8 @@ export default {
         // 將請求方法改為 put
         httpMethod = 'put';
       }
-      this.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
+      // axios
+      vm.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
         console.log(response.data);
         // 傳送參數給 AlertMessage並執行彈出訊息回饋
         vm.$bus.$emit('messsage:push', response.data.message, 'success');
@@ -375,9 +383,9 @@ export default {
       $('#deleteModal').attr('disabled', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
       // axios
-      this.$http.delete(api).then((response) => {
+      vm.$http.delete(api).then((response) => {
         console.log(response.data);
-        // 如果更新成功
+        // 如果刪除成功
         if (response.data.success) {
           // 傳送參數給 AlertMessage並執行彈出訊息回饋
           vm.$bus.$emit('messsage:push', response.data.message, 'success');
