@@ -36,9 +36,8 @@
               <tr class="text-center">
                 <th width="160">產品分類</th>
                 <th>產品名稱</th>
-                <th width="160" class="text-right">原價</th>
                 <th width="160" class="text-right">售價</th>
-                <th width="160">是否啟用</th>
+                <th width="160">庫存狀況</th>
                 <th width="160">編輯</th>
               </tr>
             </thead>
@@ -53,14 +52,11 @@
                   /><span class="pl-2">{{ item.title }}</span>
                 </td>
                 <td class="align-middle text-right">
-                  {{ item.origin_price | currency }}
-                </td>
-                <td class="align-middle text-right">
                   {{ item.price | currency }}
                 </td>
                 <td class="align-middle">
-                  <span v-if="item.is_enabled" class="text-success">啟用</span>
-                  <span v-else>未啟用</span>
+                  <span v-if="item.is_enabled" class="text-success">有庫存</span>
+                  <span v-else>缺貨中</span>
                 </td>
                 <td class="align-middle">
                   <a
@@ -153,7 +149,7 @@
                 <div class="col-sm-8">
                   <div class="form-group">
                     <label for="title"
-                      >產品名稱 <span class="text-danger">*</span></label
+                      >名稱 <span class="text-danger">*</span></label
                     >
                     <input
                       type="text"
@@ -185,34 +181,6 @@
                     </div>
                     <div class="form-group col-md-6">
                       <label for="price"
-                        >單位 <span class="text-danger">*</span></label
-                      >
-                      <input
-                        type="unit"
-                        class="form-control"
-                        id="unit"
-                        required
-                        v-model="tempProduct.unit"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="origin_price"
-                        >原價 <span class="text-danger">*</span></label
-                      >
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="origin_price"
-                        min="100"
-                        required
-                        v-model="tempProduct.origin_price"
-                      />
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="price"
                         >售價 <span class="text-danger">*</span></label
                       >
                       <input
@@ -225,7 +193,6 @@
                       />
                     </div>
                   </div>
-                  <hr />
 
                   <div class="form-group">
                     <label for="description"
@@ -235,18 +202,22 @@
                       type="text"
                       class="form-control"
                       id="description"
+                      rows="5"
+                      placeholder="最優質的沙發商品，皮革是使用牛皮之外．．．"
                       required
                       v-model="tempProduct.description"
                     ></textarea>
                   </div>
                   <div class="form-group">
                     <label for="content"
-                      >產品說明內容 <span class="text-danger">*</span></label
+                      >產品規格 <span class="text-danger">*</span></label
                     >
                     <textarea
                       type="text"
                       class="form-control"
                       id="content"
+                      rows="3"
+                      placeholder="顏色、材質、尺寸等。"
                       required
                       v-model="tempProduct.content"
                     ></textarea>
@@ -262,7 +233,7 @@
                         id="is_enabled"
                       />
                       <label class="form-check-label" for="is_enabled">
-                        是否啟用
+                        是否有庫存
                       </label>
                     </div>
                   </div>
@@ -348,7 +319,7 @@
 // 將$開頭給jquery使用
 import $ from 'jquery';
 
-import Pagination from '@/components/common/Pagination.vue';
+import Pagination from '@/components/back/PaginationBack.vue';
 
 export default {
   name: 'Products_list',
@@ -398,9 +369,6 @@ export default {
           vm.pagination = response.data.pagination;
         }
       });
-      console.log(vm.$router);
-      // 回到最上方
-      // $('html,body').scrollTop(0);
     },
     // 新增與編輯畫面 modal
     // 參數 isNew:判斷是新增還是編輯; item: 要編輯的資料
@@ -410,6 +378,8 @@ export default {
       vm.isNew = isNew;
       // 將暫存資料清空，以免開啟 modal時還有舊資料
       vm.tempProduct = {};
+      // 將上傳檔案的資料清空，以免開啟 modal時還有舊資料
+      document.getElementById('customFile').value = '';
       // 因傳參考的特性，怕影響原始 product資料，故用解構的方式處理
       vm.tempProduct = { ...item };
       // 開啟 modal

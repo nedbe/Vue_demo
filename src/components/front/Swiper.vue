@@ -17,7 +17,7 @@
         <p class="content" data-swiper-parallax="-140" v-show="index === 1">
           - DESIGN FURNITURE -
         </p>
-        <router-link class="btn btn-lg pick_btn" :to="{ name: 'Products' }"
+        <router-link class="btn btn-lg pick_btn" to="/products/all"
           >挑選商品</router-link
         >
       </div>

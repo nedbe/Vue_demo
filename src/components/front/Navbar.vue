@@ -58,10 +58,36 @@
                 找商品
               </a>
               <div class="dropdown-menu bg-navbarColor">
-                <a class="dropdown-item mr-2" href="#">床</a>
-                <a class="dropdown-item mr-2" href="#">沙發</a>
-                <a class="dropdown-item mr-2" href="#">椅子</a>
-                <a class="dropdown-item mr-2" href="#">桌子</a>
+                <router-link
+                  class="dropdown-item mr-2"
+                  href="#"
+                  to="/products/all"
+                  >全部商品</router-link
+                >
+                <router-link
+                  class="dropdown-item mr-2"
+                  href="#"
+                  to="/products/beds"
+                  >床</router-link
+                >
+                <router-link
+                  class="dropdown-item mr-2"
+                  href="#"
+                  to="/products/sofas"
+                  >沙發</router-link
+                >
+                <router-link
+                  class="dropdown-item mr-2"
+                  href="#"
+                  to="/products/chairs"
+                  >椅子</router-link
+                >
+                <router-link
+                  class="dropdown-item mr-2"
+                  href="#"
+                  to="/products/tables"
+                  >桌子</router-link
+                >
               </div>
             </li>
           </ul>

@@ -148,7 +148,7 @@
                   <span class="">NT$8,000元</span>
                   <button
                     type="button"
-                    class="btn btn-block customize_btn btn_outline_color"
+                    class="btn btn-block customize_btn btn_color"
                   >
                     加入購物車
                   </button>

@@ -22,21 +22,21 @@
       <div class="category">
         <div class="row">
           <div id="beds" class="col-md category_img">
-            <a href="#!"> </a>
+            <router-link href="#!" to="/products/beds"> </router-link>
             <h3>Beds</h3>
           </div>
           <div id="sofas" class="col-md category_img">
-            <a href="#!"> </a>
+            <router-link href="#!" to="/products/sofas"> </router-link>
             <h3>Sofas</h3>
           </div>
         </div>
         <div class="row">
           <div id="chairs" class="col-md category_img">
-            <a href="#!"> </a>
+            <router-link href="#!" to="/products/chairs"> </router-link>
             <h3>Chairs</h3>
           </div>
           <div id="tables" class="col-md category_img">
-            <a href="#!"> </a>
+            <router-link href="#!" to="/products/tables"> </router-link>
             <h3>Tables</h3>
           </div>
         </div>

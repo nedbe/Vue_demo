@@ -266,7 +266,7 @@
 // 將$開頭給jquery使用
 import $ from 'jquery';
 
-import Pagination from '@/components/common/Pagination.vue';
+import Pagination from '@/components/back/PaginationBack.vue';
 
 export default {
   name: 'Coupons',
