@@ -1,28 +1,35 @@
 <template>
   <div>
+    <!-- vue-loading -->
+    <loading :active.sync="status.pageIsLoading">
+      <div class="loadingio-spinner-dual-ball-mx4nrrd19pi">
+        <div class="ldio-l6eq6mvdt0s">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </loading>
+
     <div class="container mt-5 mb-5 Whole_box">
       <div class="row">
         <!-- 左側選單 -->
-        <div class="col-md-3">
+        <div class="col-md-3 sticky_container">
           <Sidebar />
         </div>
         <!-- 右側商品資訊 -->
         <div class="col-md-9">
           <div class="row">
             <div class="col-md-6">
-              <img
-                src="https://images.unsplash.com/photo-1494281258937-45f28753affd?w=1350"
-                alt="商品圖片"
-                class="product_img"
-              />
+              <img :src="product.imageUrl" alt="商品圖片" class="product_img" />
             </div>
             <div class="col-md-6">
-              <h1 class="text-textColor">北歐風格床</h1>
-              <p class="card-text text-left mt-3">NT$8,000元</p>
+              <h1 class="text-textColor">{{ product.title }}</h1>
+              <p class="card-text text-left mt-3">
+                NT{{ product.price | currency }}元
+              </p>
               <p class="text-justify text-textColor mt-4">
-                最優質的明星沙發商品，皮革是使用苯染牛皮之外，還利用了流線與尖足椅腳設計，
-                徹底擺脫一般皮革沙發的笨重感，乘坐空間一樣寬敞舒適，簡潔的直線絎縫，不必多餘的飾品來裝飾沙發，
-                非常適合擺放在各種風格的空間裡。
+                {{ product.description }}
               </p>
               <form action="#" method="post">
                 <div class="d-flex justify-content-between mt-4">
@@ -42,8 +49,19 @@
                     />
                     <input type="button" value="+" class="input_button" />
                   </div>
-                  <button type="submit" class="btn customize_btn btn_color">加入購物車</button>
-                  <a type="submit" class="btn customize_btn btn_color disabled">缺貨中</a>
+                  <button
+                    type="submit"
+                    class="btn customize_btn btn_color"
+                    v-if="product.is_enabled === 1"
+                  >
+                    加入購物車
+                  </button>
+                  <a
+                    type="submit"
+                    class="btn customize_btn btn_color disabled"
+                    v-else
+                    >缺貨中</a
+                  >
                 </div>
               </form>
             </div>
@@ -84,13 +102,10 @@
                   role="tabpanel"
                   aria-labelledby="specification-tab"
                 >
-                  <p class="text-justify content">
-                    顏色：深灰色
-                    <br />
-                    材質：亞麻 + 金屬 + 海綿 + 桉樹
-                    <br />
-                    尺寸：185.4 公分 X 76.2 公分 X 86.3 公分(長×寬×高)
-                  </p>
+                  <p
+                    class="text-justify content content_pre"
+                    v-text="product.content"
+                  ></p>
                 </div>
                 <div
                   class="tab-pane fade"
@@ -136,25 +151,24 @@
             <div class="col">
               <h4>瀏覽紀錄</h4>
               <swiper class="swiper" :options="swiperOption">
-                <swiper-slide v-for="(item, index) in imgSrc" :key="index">
-                  <a href="#!">
-                    <img
-                      src="https://images.unsplash.com/photo-1494281258937-45f28753affd?w=1350"
-                      alt=""
-                      class="swiper_img"
-                    />
-                  </a>
-                  <h5 class="text-textColor pt-3">北歐風格床</h5>
-                  <span class="">NT$8,000元</span>
+                <swiper-slide
+                  v-for="(item, index) in recordProducts"
+                  :key="index"
+                >
+                  <div class="position">
+                    <a href="#!" @click.prevent="goToProductDetail(item.id)">
+                      <img :src="item.imageUrl" alt="" class="swiper_img" />
+                      <div class="overlay">查看商品</div>
+                    </a>
+                  </div>
+                  <h5 class="text-textColor pt-3">{{ item.title }}</h5>
+                  <span class="">NT{{ item.price | currency }}元</span>
                   <button
                     type="button"
                     class="btn btn-block customize_btn btn_color"
                   >
                     加入購物車
                   </button>
-                  <a href="#!" class="btn btn-block customize_btn btn_outline_color disabled">
-                    缺貨中
-                  </a>
                 </swiper-slide>
                 <!-- 前進後退按鈕 -->
                 <div class="swiper-button-prev" slot="button-prev"></div>
@@ -185,6 +199,7 @@ export default {
   },
   data() {
     return {
+      // swiper 套件選項
       swiperOption: {
         // 前進後退按鈕
         navigation: {
@@ -211,16 +226,98 @@ export default {
           },
         },
       },
-      imgSrc: ['swiper1.jpg', 'swiper2.jpg', 'swiper1.jpg', 'swiper2.jpg'],
+      // 商品
+      product: {},
+      // 瀏覽過的商品
+      recordProducts: [],
+      // 判斷是否啟用狀態
+      status: {
+        // 整頁讀取動畫
+        pageIsLoading: false,
+      },
     };
   },
+  methods: {
+    // 取得商品細節
+    getProductDetail() {
+      const vm = this;
+      // 啟動整頁讀取動畫
+      vm.status.pageIsLoading = true;
+      // 存入商品id
+      let id = '';
+      id = vm.$route.params.id;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
+      // axios
+      vm.$http.get(api).then((response) => {
+        console.log(response.data);
+        // 如果取資料成功
+        if (response.data.success) {
+          // 存入商品資料
+          vm.product = response.data.product;
+          // 執行saveRecord
+          vm.saveRecord();
+        } else {
+          // 如果取資料失敗
+          // 轉址
+          vm.$router.push({ path: '/products/all' });
+        }
+        // 關閉整頁讀取動畫
+        vm.status.pageIsLoading = false;
+      });
+    },
+    // 存瀏覽資料
+    saveRecord() {
+      const vm = this;
+      // 檢查有無重複的值
+      const check = vm.recordProducts.find((item) => (item.id === vm.product.id));
+      // 如果沒有
+      if (check === undefined) {
+        // 將新的資料加入
+        vm.recordProducts.push(vm.product);
+      }
+      // 將瀏覽資料存入 localStorage
+      localStorage.setItem('save', JSON.stringify(vm.recordProducts));
+    },
+    // 取瀏覽資料
+    getRecord() {
+      // 從 localStorage取瀏覽資料
+      const data = JSON.parse(localStorage.getItem('save'));
+      // 如果有資料
+      if (data.length !== null) {
+        // 直接將資料存入
+        this.recordProducts = data;
+      }
+    },
+    // 轉址到商品細節頁面
+    goToProductDetail(productId) {
+      this.$router.push({ path: `/product_detail/${productId}` });
+    },
+  },
+  watch: {
+    // 監聽網址改變時處理
+    $route() {
+      const vm = this;
+      // 重新取得商品列表
+      vm.getProductDetail();
+      // 轉換頁面置頂
+      $('html,body').scrollTop(0);
+    },
+  },
   created() {
+    // 進入時先取得商品出來
+    this.getProductDetail();
+    // 取得瀏覽過的商品
+    this.getRecord();
+    // 轉換頁面置頂
     $('html,body').scrollTop(0);
   },
 };
 </script>
 
 <style lang="scss" scoped>
+/* 引入 vue-loading套件自定義樣式 */
+@import "@/assets/styles/scss/common/_loading";
+
 // 引入 button 樣式
 @import "@/assets/styles/scss/common/_button";
 
@@ -232,9 +329,18 @@ $border_color: #cacd4a;
   padding-top: 76px;
 }
 
+// 側邊欄
+.sticky_container {
+  position: sticky;
+  top: 100px;
+  left: 0;
+  height: 300px;
+}
+
 // 商品圖
 .product_img {
   max-width: 100%;
+  max-height: 450px;
 }
 
 // 商品價格
@@ -270,6 +376,10 @@ $border_color: #cacd4a;
   }
 }
 
+.content_pre {
+  white-space: pre;
+}
+
 // 瀏覽紀錄
 h4 {
   padding: 16px 8px;
@@ -283,12 +393,40 @@ h4 {
   .swiper-slide {
     height: 100%;
     flex-direction: column;
-    // 圖片
-    .swiper_img {
-      background-size: cover;
-      background-position: center;
-      width: 100%;
+    .position {
+      position: relative;
+      overflow: hidden;
+      box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
+      .overlay {
+        position: absolute;
+        bottom: 0;
+        background: $border_color;
+        color: #fff;
+        width: 100%;
+        transition: 0.5s ease;
+        opacity: 0;
+        font-size: 16px;
+        padding: 5px;
+        text-align: center;
+        transition: opacity 0.7s ease-in;
+      }
+      &:hover .overlay {
+        opacity: 1;
+        transition: opacity 0.7s ease-out;
+      }
+      // 圖片
+      .swiper_img {
+        width: 100%;
+        height: 180px;
+        transform: scale(1, 1);
+        transition: transform 0.7s ease-in;
+      }
+      &:hover .swiper_img {
+        transform: scale(1.05, 1.05);
+        transition: transform 0.7s ease-out;
+      }
     }
+
     // 文字
     h5,
     span {

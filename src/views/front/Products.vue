@@ -46,10 +46,11 @@
               >
                 <div class="card border-0 text-center">
                   <div class="card_img">
+                    <!-- 正常商品 -->
                     <a
                       href="#!"
-                      class="card_detail"
                       @click.prevent="goToProductDetail(item.id)"
+                      v-if="item.is_enabled === 1"
                     >
                       <img
                         class="card-img-top"
@@ -57,6 +58,14 @@
                         alt="商品圖片"
                       />
                       <div class="overlay">查看商品</div>
+                    </a>
+                    <!-- 缺貨商品 -->
+                    <a href="javascript:;" class="disabled_link" v-else>
+                      <img
+                        class="card-img-top"
+                        :src="item.imageUrl"
+                        alt="商品圖片"
+                      />
                     </a>
                   </div>
                   <div class="card-body">
@@ -67,7 +76,7 @@
                       NT{{ item.price | currency }}元
                     </p>
                   </div>
-                  <div class="card-footer border-top-0 bg-white">
+                  <div class="card-footer border-top-0 p-0">
                     <a
                       href="#!"
                       class="btn btn-block customize_btn btn_color"
@@ -77,7 +86,12 @@
                     </a>
                     <a
                       href="#"
-                      class="btn btn-block customize_btn btn_outline_color disabled"
+                      class="
+                        btn btn-block
+                        customize_btn
+                        btn_outline_color
+                        disabled
+                      "
                       v-else
                     >
                       缺貨中
@@ -283,7 +297,7 @@ export default {
 // 引入 button 樣式
 @import "@/assets/styles/scss/common/_button";
 
-$background_color: #87775c;
+$background_color: #cacd4a;
 
 // 側邊欄
 .sticky_container {
@@ -336,5 +350,10 @@ $background_color: #87775c;
     transform: scale(1.05, 1.05);
     transition: transform 0.7s ease-out;
   }
+}
+
+// 缺貨商品連結指標樣式
+.disabled_link {
+  cursor: default;
 }
 </style>
