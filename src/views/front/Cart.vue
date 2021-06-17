@@ -1,5 +1,16 @@
 <template>
   <div>
+    <!-- vue-loading -->
+    <loading :active.sync="status.pageIsLoading">
+      <div class="loadingio-spinner-dual-ball-mx4nrrd19pi">
+        <div class="ldio-l6eq6mvdt0s">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </loading>
+
     <div class="cart_box">
       <div class="container">
         <div class="row mb-1">
@@ -11,8 +22,8 @@
 
         <div class="row">
           <div class="col">
-            <table class="table">
-              <thead class="bg-navbarColor">
+            <table class="table table-hover">
+              <thead class="thead-dark">
                 <tr class="text-center text-white">
                   <th
                     scope="col"
@@ -27,6 +38,14 @@
                   <th scope="col" class="font-weight-normal">數量</th>
                   <th
                     scope="col"
+                    class="font-weight-normal text-right"
+                    v-if="cart.total - cart.final_total > 0"
+                  >
+                    折扣
+                  </th>
+                  <th scope="col" v-else></th>
+                  <th
+                    scope="col"
                     class="d-none d-sm-table-cell font-weight-normal text-right"
                   >
                     小計
@@ -34,29 +53,40 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="text-center">
-                  <td colspan="5" class="align-middle text-textColor">
+                <!-- 購物車無商品時顯示 -->
+                <tr class="text-center" v-if="cart.final_total === 0">
+                  <td colspan="6" class="align-middle text-textColor">
                     您尚未加入商品
                   </td>
                 </tr>
 
-                <tr class="text-center">
+                <!-- 購物車商品 -->
+                <tr
+                  class="text-center"
+                  v-for="item in cart.carts"
+                  :key="item.id"
+                  v-show="cart.final_total > 0"
+                >
                   <td class="align-middle">
-                    <a href="#!"
+                    <a href="#!" @click.prevent="deleteCartItem(item.id)"
                       ><i class="far fa-times-circle delete_icon"></i
                     ></a>
                   </td>
                   <td class="align-middle text-left">
                     <a href="#!" class="product_link">
                       <img
-                        src="https://images.unsplash.com/photo-1494281258937-45f28753affd?w=1350"
+                        :src="item.product.imageUrl"
                         alt="商品圖片"
                         class="cart_img"
                       />
-                      <span class="pl-2 text-textColor">金牌西裝</span>
+                      <span class="pl-2 text-textColor">{{
+                        item.product.title
+                      }}</span>
                     </a>
                   </td>
-                  <td class="align-middle text-right">$1,400</td>
+                  <td class="align-middle text-right">
+                    {{ item.product.price | currency }}
+                  </td>
                   <td class="align-middle text-right text-sm-center">
                     <span class="input_group d-inline-block">
                       <input type="button" value="-" class="input_button" />
@@ -67,7 +97,7 @@
                         min="1"
                         max="99"
                         name="quantity"
-                        value="1"
+                        :value="item.qty"
                         title="數量"
                         size="2"
                         pattern="[1-9]{1}[0-9]{1}"
@@ -75,46 +105,42 @@
                       <input type="button" value="+" class="input_button" />
                     </span>
                   </td>
+                  <td
+                    class="align-middle text-right text-navbarColor"
+                    v-if="item.total - item.final_total > 0"
+                  >
+                    -{{ (item.total - item.final_total) | currency }}
+                  </td>
+                  <td v-else></td>
                   <td class="align-middle d-none d-sm-table-cell text-right">
-                    $1,400
+                    {{ item.final_total | currency }}
                   </td>
                 </tr>
 
-                <tr>
-                  <td colspan="2" class="align-middle">小計</td>
-                  <td colspan="3" class="align-middle text-right">$5,000</td>
-                </tr>
-
-                <tr>
-                  <td colspan="2" class="align-middle text-navbarColor">
-                    開幕慶折扣
-                  </td>
-                  <td colspan="3" class="align-middle text-right">-$1,000</td>
-                </tr>
-
-                <tr>
-                  <td colspan="2" class="align-middle">總計</td>
+                <tr v-show="cart.final_total > 0">
+                  <td colspan="3" class="align-middle">總計</td>
                   <td
                     colspan="3"
                     class="align-middle text-right font-weight-bold"
                   >
-                    $4,000
+                    {{ cart.final_total | currency }}
                   </td>
                 </tr>
-
+              </tbody>
+              <tfoot>
                 <tr class="last_tr">
-                  <td colspan="3">
-                    <router-link
+                  <td colspan="3" class="pl-0">
+                    <a
                       href="#!"
                       class="btn customize_btn btn_outline_color mr-3"
-                      :to="{ name: 'Products' }"
-                      >繼續購物</router-link
+                      @click.prevent="goBack"
+                      >返回上一頁</a
                     >
                     <a href="#!" class="btn customize_btn btn_color"
                       >更新購物車</a
                     >
                   </td>
-                  <td colspan="2" class="text-right">
+                  <td colspan="3" class="text-right pr-0">
                     <router-link
                       href="#!"
                       class="btn customize_btn btn_main_color"
@@ -123,10 +149,11 @@
                     >
                   </td>
                 </tr>
-              </tbody>
+              </tfoot>
             </table>
           </div>
         </div>
+        <!-- 折扣碼 -->
         <div class="row">
           <div class="col coupon">
             <p class="pb-1">
@@ -143,19 +170,27 @@
               </a>
             </p>
 
-            <div class="input-group collapse" id="collapseCoupon">
+            <div class="input-group collapse pr-0" id="collapseCoupon">
               <input
                 type="text"
-                class="form-control pt-3"
+                class="form-control"
                 placeholder="請輸入折扣碼"
                 aria-describedby="couponBtn"
+                v-model.trim="coupon"
               />
               <div class="input-group-prepend">
-                <button class="btn customize_btn btn_color" id="couponBtn">
+                <button
+                  class="btn customize_btn btn_color"
+                  id="couponBtn"
+                  @click="postCoupon"
+                >
                   套用
                 </button>
               </div>
             </div>
+            <p class="text-danger mt-2" v-if="couponFeedBack !== ''">
+              {{ couponFeedBack }}
+            </p>
           </div>
         </div>
       </div>
@@ -169,13 +204,97 @@ import $ from 'jquery';
 
 export default {
   name: 'Cart',
+  data() {
+    return {
+      // 購物車資料
+      cart: {},
+      // 折扣碼
+      coupon: '',
+      // 套用折扣碼訊息回饋
+      couponFeedBack: '',
+      // 判斷是否啟用狀態
+      status: {
+        // 整頁讀取動畫
+        pageIsLoading: false,
+      },
+    };
+  },
+  methods: {
+    // 取得購物車列表
+    getCart() {
+      const vm = this;
+      // 啟動整頁讀取動畫
+      vm.status.pageIsLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // axios
+      vm.$http.get(api).then((response) => {
+        console.log(response.data);
+        // 更新導覽列購物車數量
+        vm.$bus.$emit('upateCartQty');
+        // 關閉整頁讀取動畫
+        vm.status.pageIsLoading = false;
+        // 存入購物車資料
+        vm.cart = response.data.data;
+      });
+    },
+    // 刪除購物車商品
+    deleteCartItem(id) {
+      const vm = this;
+      // 啟動整頁讀取動畫
+      vm.status.pageIsLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
+      // axios
+      vm.$http.delete(api).then((response) => {
+        console.log(response.data);
+        // 關閉整頁讀取動畫
+        vm.status.pageIsLoading = false;
+        // 重新取得購物車資料
+        vm.getCart();
+      });
+    },
+    // 折扣碼處理
+    postCoupon() {
+      const vm = this;
+      // 啟動整頁讀取動畫
+      vm.status.pageIsLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
+      // 折扣碼傳送格式
+      const coupon = {
+        code: vm.coupon,
+      };
+      // axios
+      vm.$http.post(api, { data: coupon }).then((response) => {
+        console.log(response.data);
+        // 如果套用成功
+        if (response.data.success) {
+          vm.couponFeedBack = '已成功套用折扣碼！';
+        } else {
+          vm.couponFeedBack = '折扣碼過期或輸入錯誤！';
+        }
+        // 關閉整頁讀取動畫
+        vm.status.pageIsLoading = false;
+        // 重新取得購物車資料
+        vm.getCart();
+      });
+    },
+    // 返回上一頁
+    goBack() {
+      this.$router.back();
+    },
+  },
   created() {
+    // 進入時先取得訂單列表
+    this.getCart();
+    // 轉換頁面置頂
     $('html,body').scrollTop(0);
   },
 };
 </script>
 
 <style lang="scss" scoped>
+/* 引入 vue-loading套件自定義樣式 */
+@import "@/assets/styles/scss/common/_loading";
+
 // 引入 button 樣式
 @import "@/assets/styles/scss/common/_button";
 

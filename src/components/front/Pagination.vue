@@ -54,7 +54,6 @@ export default {
     updatePage(page) {
       this.$emit('emitPages', page);
     },
-
     showPosition() {
       // 轉換時頁面位置
       const target = $('#show').offset().top;

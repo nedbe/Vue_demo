@@ -19,8 +19,10 @@
             >
               <i class="fas fa-shopping-cart"></i>
               <span
-                class="badge badge-countColor badge-pill text-white count_num"
-                >1</span
+                class="badge badge-countColor text-white count_num"
+                :class="{ count_animation: cartIsLoading }"
+                v-if="qty > 0"
+                >{{ qty }}</span
               >
             </router-link>
           </li>
@@ -100,6 +102,57 @@
 <script>
 export default {
   name: 'Navbar',
+  data() {
+    return {
+      // 購物車數量
+      qty: 0,
+      // 購物車數量變動動畫
+      cartIsLoading: false,
+    };
+  },
+  methods: {
+    // 取得購物車資料
+    getCart() {
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // axios
+      vm.$http.get(api).then((response) => {
+        console.log(response.data);
+        // 如果取得資料成功
+        if (response.data.success) {
+          console.log('更新購物車數量成功');
+          let total = 0;
+          // 加總商品數量
+          response.data.data.carts.forEach((item) => {
+            total += item.qty;
+          });
+          // 存入計算結果並顯示
+          vm.qty = total;
+          // 顯示動畫
+          vm.cartIsLoading = true;
+        }
+      });
+    },
+  },
+  watch: {
+    cartIsLoading() {
+      setTimeout(() => {
+        this.cartIsLoading = false;
+      }, 1100);
+    },
+  },
+  created() {
+    const vm = this;
+    // 取得購物車數量
+    vm.getCart();
+
+    // 使用 event bus跨組件溝通
+    // 使用方式詳 '/bus.js'
+    vm.$bus.$on('upateCartQty', () => {
+      // 取得購物車數量
+      vm.getCart();
+    });
+  },
 };
 </script>
 
@@ -128,16 +181,21 @@ $sm: 576px;
     }
     .count_num {
       position: absolute;
-      top: -2px;
-      right: 3px;
-      animation-name: count_num;
-      animation-duration: 1s;
+      top: -5px;
+      right: 0px;
+      width: 20px;
+      height: 20px;
+      padding: 5px;
+      border-radius: 100%;
       @media (max-width: $sm) {
         right: -3px;
       }
     }
-
-    @keyframes count_num {
+    .count_animation {
+      animation-name: count_animation;
+      animation-duration: 1s;
+    }
+    @keyframes count_animation {
       0% {
         transform: scale(1, 1);
       }

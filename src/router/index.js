@@ -124,5 +124,3 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
-
-// nedbe780112@gmail.com

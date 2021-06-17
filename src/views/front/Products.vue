@@ -77,21 +77,16 @@
                     </p>
                   </div>
                   <div class="card-footer border-top-0 p-0">
-                    <a
-                      href="#!"
+                    <button
                       class="btn btn-block customize_btn btn_color"
+                      @click.prevent="addtoCart(item.id, (qty = 1), $event)"
                       v-if="item.is_enabled === 1"
                     >
                       加入購物車
-                    </a>
+                    </button>
                     <a
                       href="#"
-                      class="
-                        btn btn-block
-                        customize_btn
-                        btn_outline_color
-                        disabled
-                      "
+                      class="btn btn-block customize_btn btn_outline_color disabled"
                       v-else
                     >
                       缺貨中
@@ -258,6 +253,34 @@ export default {
     // 轉址到商品細節頁面
     goToProductDetail(productId) {
       this.$router.push({ name: 'Product_detail', params: { id: productId } });
+    },
+    // 加入購物車
+    addtoCart(id, qty = 1, event) {
+      const vm = this;
+      // 顯示按鈕讀取動畫
+      const i = '<i class="fas fa-spinner fa-spin"></i>';
+      $(event.target).append(i);
+      // 關閉按鈕以免連續點擊
+      $(event.target).attr('disabled', true);
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // 後端格式
+      const cart = {
+        product_id: id,
+        qty,
+      };
+      // axios
+      vm.$http.post(api, { data: cart }).then((response) => {
+        console.log(response.data);
+        // 如果加入購物車成功
+        if (response.data.success) {
+          // 更新導覽列購物車數量
+          vm.$bus.$emit('upateCartQty');
+        }
+        // 移除按鈕讀取動畫
+        $(event.target).children().remove();
+        // 重新開啟按鈕
+        $(event.target).attr('disabled', false);
+      });
     },
   },
   watch: {
