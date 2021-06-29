@@ -34,7 +34,12 @@
               <form action="#" method="post">
                 <div class="d-flex justify-content-between mt-4">
                   <div class="input_group">
-                    <input type="button" value="-" class="input_button" />
+                    <input
+                      type="button"
+                      value="-"
+                      class="input_button"
+                      @click="addCartQty(tempQty - 1)"
+                    />
                     <input
                       type="number"
                       class="text-center input_number"
@@ -45,21 +50,24 @@
                       value="1"
                       title="數量"
                       size="2"
-                      pattern="[1-9]{1}[0-9]{1}"
+                      v-model.number="tempQty"
                     />
-                    <input type="button" value="+" class="input_button" />
+                    <input
+                      type="button"
+                      value="+"
+                      class="input_button"
+                      @click="addCartQty(tempQty + 1)"
+                    />
                   </div>
                   <button
                     type="submit"
                     class="btn customize_btn btn_color"
+                    @click.prevent="checkCart(product.id, $event)"
                     v-if="product.is_enabled === 1"
                   >
                     加入購物車
                   </button>
-                  <a
-                    type="submit"
-                    class="btn customize_btn btn_color disabled"
-                    v-else
+                  <a class="btn customize_btn btn_color disabled" v-else
                     >缺貨中</a
                   >
                 </div>
@@ -164,8 +172,8 @@
                   <h5 class="text-textColor pt-3">{{ item.title }}</h5>
                   <span class="">NT{{ item.price | currency }}元</span>
                   <button
-                    type="button"
                     class="btn btn-block customize_btn btn_color"
+                    @click="checkCart(item.id, $event, (tempQty = 1))"
                   >
                     加入購物車
                   </button>
@@ -228,6 +236,10 @@ export default {
       },
       // 商品
       product: {},
+      // 暫存購物車商品
+      tempCart: [],
+      // 暫存商品數量
+      tempQty: 1,
       // 瀏覽過的商品
       recordProducts: [],
       // 判斷是否啟用狀態
@@ -265,11 +277,93 @@ export default {
         vm.status.pageIsLoading = false;
       });
     },
+    // 商品數量
+    addCartQty(qty) {
+      const vm = this;
+      // 暫存傳入的當前商品數
+      let tempQty = qty;
+      // 防止商品數變負數
+      // 如果傳入商品數小於等於0
+      if (tempQty <= 0) {
+        // 讓當商品數變為1
+        tempQty = 1;
+      } else if (tempQty > 99) {
+        // 如果傳入商品數大於99
+        // 讓商品數變為99
+        tempQty = 99;
+      }
+      // 存入當前數量
+      vm.tempQty = tempQty;
+    },
+    // 取得購物車列表
+    getCart() {
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // axios
+      vm.$http.get(api).then((response) => {
+        console.log(response.data);
+        // 將購物車資料存入
+        vm.tempCart = response.data.data;
+      });
+    },
+    // 檢查購物車商品
+    checkCart(id, event) {
+      const vm = this;
+      // 顯示按鈕讀取動畫
+      const i = '<i class="fas fa-spinner fa-spin"></i>';
+      $(event.target).append(i);
+      // 關閉按鈕以免連續點擊
+      $(event.target).attr('disabled', true);
+      // 後端格式
+      const cart = {
+        product_id: id,
+        qty: vm.tempQty,
+      };
+      console.log(vm.tempQty);
+      // 查看是否有重複的資料
+      const check = vm.tempCart.carts.find((item) => item.product_id === id);
+      console.log(check);
+      // 如果購物車有重複的商品，先刪除後再重新加入
+      if (check !== undefined) {
+        // 讓該商品數量加上新填入的數量
+        cart.qty = check.qty + vm.tempQty;
+        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${check.id}`;
+        // axios
+        vm.$http.delete(url).then((response) => {
+          console.log(response.data);
+          vm.addtoCart(cart, event);
+        });
+      } else {
+        vm.addtoCart(cart, event);
+      }
+    },
+    // 將商品加入購物車
+    addtoCart(cart, event) {
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // axios
+      vm.$http.post(api, { data: cart }).then((response) => {
+        console.log(response.data);
+        // 如果加入購物車成功
+        if (response.data.success) {
+          // 更新導覽列購物車數量
+          vm.$bus.$emit('upateCartQty');
+          // 重新取得購物車資料
+          vm.getCart();
+        }
+        // 移除按鈕讀取動畫
+        $(event.target)
+          .children()
+          .remove();
+        // 重新開啟按鈕
+        $(event.target).attr('disabled', false);
+      });
+    },
     // 存瀏覽資料
     saveRecord() {
       const vm = this;
       // 檢查有無重複的值
-      const check = vm.recordProducts.find((item) => (item.id === vm.product.id));
+      const check = vm.recordProducts.find((item) => item.id === vm.product.id);
       // 如果沒有
       if (check === undefined) {
         // 將新的資料加入
@@ -294,6 +388,24 @@ export default {
     },
   },
   watch: {
+    // 監聽商品數量
+    tempQty(value) {
+      const vm = this;
+      // 暫存傳入的當前商品數
+      let tempQty = value;
+      // 防止商品數變負數
+      // 如果傳入商品數小於等於0
+      if (tempQty <= 0) {
+        // 讓當商品數變為1
+        tempQty = 1;
+      } else if (tempQty > 99) {
+        // 如果傳入商品數大於99
+        // 讓商品數變為99
+        tempQty = 99;
+      }
+      // 存入當前數量
+      vm.tempQty = tempQty;
+    },
     // 監聽網址改變時處理
     $route() {
       const vm = this;
@@ -306,6 +418,8 @@ export default {
   created() {
     // 進入時先取得商品出來
     this.getProductDetail();
+    // 取得購物車資料
+    this.getCart();
     // 取得瀏覽過的商品
     this.getRecord();
     // 轉換頁面置頂

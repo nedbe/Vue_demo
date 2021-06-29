@@ -79,7 +79,7 @@
                   <div class="card-footer border-top-0 p-0">
                     <button
                       class="btn btn-block customize_btn btn_color"
-                      @click.prevent="addtoCart(item.id, (qty = 1), $event)"
+                      @click="checkCart(item.id, (qty = 1), $event)"
                       v-if="item.is_enabled === 1"
                     >
                       加入購物車
@@ -132,6 +132,8 @@ export default {
       tempProducts: [],
       // 要顯示的商品
       showProducts: [],
+      // 暫存購物車商品
+      tempCart: [],
       // 商品類別
       category: [
         { name: '全部商品', link: 'all' },
@@ -254,20 +256,51 @@ export default {
     goToProductDetail(productId) {
       this.$router.push({ name: 'Product_detail', params: { id: productId } });
     },
-    // 加入購物車
-    addtoCart(id, qty = 1, event) {
+    // 取得購物車列表
+    getCart() {
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // axios
+      vm.$http.get(api).then((response) => {
+        console.log(response.data);
+        // 將購物車資料存入
+        vm.tempCart = response.data.data;
+      });
+    },
+    // 檢查購物車商品
+    checkCart(id, qty = 1, event) {
       const vm = this;
       // 顯示按鈕讀取動畫
       const i = '<i class="fas fa-spinner fa-spin"></i>';
       $(event.target).append(i);
       // 關閉按鈕以免連續點擊
       $(event.target).attr('disabled', true);
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       // 後端格式
       const cart = {
         product_id: id,
         qty,
       };
+      // 查看是否有重複的資料
+      const check = vm.tempCart.carts.find((item) => item.product_id === id);
+      console.log(check);
+      // 如果購物車有重複的商品，先刪除後再重新加入
+      if (check !== undefined) {
+        // 讓該商品數量加1
+        cart.qty = check.qty + 1;
+        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${check.id}`;
+        // axios
+        vm.$http.delete(url).then((response) => {
+          console.log(response.data);
+          vm.addtoCart(cart, event);
+        });
+      } else {
+        vm.addtoCart(cart, event);
+      }
+    },
+    // 將商品加入購物車
+    addtoCart(cart, event) {
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       // axios
       vm.$http.post(api, { data: cart }).then((response) => {
         console.log(response.data);
@@ -275,9 +308,13 @@ export default {
         if (response.data.success) {
           // 更新導覽列購物車數量
           vm.$bus.$emit('upateCartQty');
+          // 重新取得購物車資料
+          vm.getCart();
         }
         // 移除按鈕讀取動畫
-        $(event.target).children().remove();
+        $(event.target)
+          .children()
+          .remove();
         // 重新開啟按鈕
         $(event.target).attr('disabled', false);
       });
@@ -305,8 +342,9 @@ export default {
     },
   },
   created() {
-    // 進入時先取得商品出來
+    // 進入時先取得商品與購物車出來
     this.getProducts();
+    this.getCart();
     // 轉換頁面置頂
     $('html,body').scrollTop(0);
   },
