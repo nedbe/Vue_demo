@@ -145,52 +145,13 @@
                       href="#!"
                       class="btn customize_btn btn_main_color"
                       :to="{ name: 'Checkout' }"
+                      v-if="cart.final_total > 0"
                       >前往結帳</router-link
                     >
                   </td>
                 </tr>
               </tfoot>
             </table>
-          </div>
-        </div>
-        <!-- 折扣碼 -->
-        <div class="row">
-          <div class="col coupon">
-            <p class="pb-1">
-              有折扣碼嗎?
-              <a
-                class="coupon_link"
-                data-toggle="collapse"
-                href="#collapseCoupon"
-                role="button"
-                aria-expanded="false"
-                aria-controls="collapseCoupon"
-              >
-                點此輸入
-              </a>
-            </p>
-
-            <div class="input-group collapse pr-0" id="collapseCoupon">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="請輸入折扣碼"
-                aria-describedby="couponBtn"
-                v-model.trim="coupon"
-              />
-              <div class="input-group-prepend">
-                <button
-                  class="btn customize_btn btn_color"
-                  id="couponBtn"
-                  @click="postCoupon"
-                >
-                  套用
-                </button>
-              </div>
-            </div>
-            <p class="text-danger mt-2" v-if="couponFeedBack !== ''">
-              {{ couponFeedBack }}
-            </p>
           </div>
         </div>
       </div>
@@ -314,31 +275,6 @@ export default {
     goToProductDetail(productId) {
       this.$router.push({ path: `/product_detail/${productId}` });
     },
-    // 折扣碼處理
-    postCoupon() {
-      const vm = this;
-      // 啟動整頁讀取動畫
-      vm.status.pageIsLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      // 折扣碼傳送格式
-      const coupon = {
-        code: vm.coupon,
-      };
-      // axios
-      vm.$http.post(api, { data: coupon }).then((response) => {
-        console.log(response.data);
-        // 如果套用成功
-        if (response.data.success) {
-          vm.couponFeedBack = '已成功套用折扣碼！';
-        } else {
-          vm.couponFeedBack = '折扣碼過期或輸入錯誤！';
-        }
-        // 關閉整頁讀取動畫
-        vm.status.pageIsLoading = false;
-        // 重新取得購物車資料
-        vm.getCart();
-      });
-    },
     // 返回上一頁
     goBack() {
       this.$router.back();
@@ -401,23 +337,6 @@ $link_color: #87775c;
   &:hover {
     color: $link_color;
     // text-decoration: none;
-  }
-}
-
-// 折扣碼相關樣式
-.coupon {
-  p {
-    padding-left: 12px;
-  }
-  // 超連結
-  .coupon_link {
-    color: $link_color;
-    &:hover {
-      color: $link_color;
-    }
-  }
-  .input-group {
-    padding-right: 12px;
   }
 }
 </style>

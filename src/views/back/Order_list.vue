@@ -121,7 +121,7 @@
             <div class="modal-body">
               <div class="row">
                 <!-- 訂單詳情 -->
-                <div class="col-5 table">
+                <div class="col-6 table">
                   <h5 class="text-center pt-3 pb-3">訂單詳情</h5>
                   <table class="w-100">
                     <thead>
@@ -194,7 +194,7 @@
                 </div>
 
                 <!-- 收件人 -->
-                <div class="col-7" v-if="tempOrder.hasOwnProperty('create_at')">
+                <div class="col-6" v-if="tempOrder.hasOwnProperty('create_at')">
                   <h5 class="text-center pt-3 pb-3">收件人資訊</h5>
                   <div class="form-row">
                     <div class="form-group col-md">
@@ -256,22 +256,6 @@
                       cols="5"
                       v-model="tempOrder.message"
                     ></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label for="pay"
-                      >付款方式 <span class="text-danger">*</span></label
-                    >
-                    <select
-                      name=""
-                      id="pay"
-                      class="form-control"
-                      required
-                      v-model="tempOrder.payment_method"
-                    >
-                      <option value="" disabled selected>請選擇</option>
-                      <option value="銀行轉帳">銀行轉帳</option>
-                      <option value="信用卡支付">信用卡支付</option>
-                    </select>
                   </div>
                   <div class="form-group">
                     <label for="status"
