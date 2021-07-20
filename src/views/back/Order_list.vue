@@ -15,7 +15,7 @@
       <!-- 標題 -->
       <div class="row">
         <div class="col mt-5">
-          <h4 class="text-center mt-3 text-navbarColor">訂單列表</h4>
+          <h1 class="h3 text-center mt-3 text-mainColor">訂單列表</h1>
         </div>
       </div>
 
@@ -139,7 +139,7 @@
                         <th scope="col" class="font-weight-normal">數量</th>
                         <th
                           scope="col"
-                          class="font-weight-normal text-right text-navbarColor"
+                          class="font-weight-normal text-right text-mainColor"
                         >
                           折扣
                         </th>
@@ -155,7 +155,7 @@
                         :key="index"
                       >
                         <td colspan="2" class="align-middle text-left">
-                          <span class="text-textColor">{{
+                          <span class="text-secColor">{{
                             item.product.title
                           }}</span>
                         </td>
@@ -164,13 +164,13 @@
                         </td>
                         <td class="align-middle">x{{ item.qty }}</td>
                         <td
-                          class="align-middle text-right text-navbarColor"
+                          class="align-middle text-right text-mainColor"
                           v-if="item.total - item.final_total > 0"
                         >
                           -{{ (item.total - item.final_total) | currency }}
                         </td>
                         <td
-                          class="align-middle text-right text-navbarColor"
+                          class="align-middle text-right text-mainColor"
                           v-else
                         >
                           -
@@ -466,15 +466,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 引入 vue-loading套件自定義樣式 */
-@import "@/assets/styles/scss/common/_loading";
-
-// 引入 button 樣式
-@import "@/assets/styles/scss/common/_button";
-
-// 引入 input 樣式
-@import "@/assets/styles/scss/common/_input";
-
 // edit modal
 .modal-lg {
   max-width: 1000px;

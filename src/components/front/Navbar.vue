@@ -1,6 +1,6 @@
 <template>
   <div class="navbar_box">
-    <div class="bg-navbarColor fixed-top">
+    <div class="bg-mainColor fixed-top">
       <nav class="navbar navbar-expand-sm navbar-dark container">
         <!-- Brand -->
         <router-link class="navbar-brand" :to="{ name: 'Home' }"
@@ -19,7 +19,7 @@
             >
               <i class="fas fa-shopping-cart"></i>
               <span
-                class="badge badge-countColor text-white count_num"
+                class="badge badge-thirdColor text-white count_num"
                 :class="{ count_animation: cartIsLoading }"
                 v-if="qty > 0"
                 >{{ qty }}</span
@@ -59,7 +59,7 @@
               >
                 找商品
               </a>
-              <div class="dropdown-menu bg-navbarColor">
+              <div class="dropdown-menu bg-mainColor">
                 <router-link
                   class="dropdown-item mr-2"
                   href="#"

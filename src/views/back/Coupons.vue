@@ -15,7 +15,7 @@
       <!-- 標題 -->
       <div class="row">
         <div class="col mt-5">
-          <h4 class="text-center mt-3 text-navbarColor">優惠券列表</h4>
+          <h1 class="h3 text-center mt-3 text-mainColor">優惠券列表</h1>
         </div>
       </div>
 
@@ -423,14 +423,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-/* 引入 vue-loading套件自定義樣式 */
-@import "@/assets/styles/scss/common/_loading";
-
-// 引入 button 樣式
-@import "@/assets/styles/scss/common/_button";
-
-// 引入 input 樣式
-@import "@/assets/styles/scss/common/_input";
-</style>

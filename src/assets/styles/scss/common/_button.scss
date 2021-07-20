@@ -1,5 +1,7 @@
-$main_color: #da471d;
-$color: #87775c;
+// 修改bootstrap btn原樣式
+.btn:hover{
+  color: $white;
+}
 
 // 按鈕基礎樣式
 .customize_btn {
@@ -8,24 +10,37 @@ $color: #87775c;
   padding: 6px 20px;
 }
 
-// 實心按鈕-主色
-.btn_main_color {
-  color: #fff;
-  background-color: $main_color;
+// 實心按鈕樣式
+@mixin btn($color) {
+  color: $white;
+  background-color: $color;
   &:hover {
-    background-color: darken($main_color, 5%);
+    background-color: darken($color, 5%);
   }
   &:focus {
     box-shadow: 0 0 0 0;
   }
 }
 
+// 實心按鈕-主色
+.btn_main_color {
+  @include btn($mainColor);
+}
+
 // 實心按鈕
 .btn_color {
-  color: #fff;
-  background-color: $color;
+  @include btn($secColor);
+}
+
+// 外框線按鈕樣式
+@mixin btn_outline($color) {
+  color: $color;
+  background-color: $white;
+  border: 1px $color solid;
   &:hover {
-    background-color:  darken($color, 5%);
+    color: $white;
+    background-color: $color;
+    border: 1px $color solid;
   }
   &:focus {
     box-shadow: 0 0 0 0;
@@ -34,44 +49,25 @@ $color: #87775c;
 
 // 外框線按鈕-主色
 .btn_outline_main_color {
-  color: $main_color;
-  background-color: #fff;
-  border: 1px $main_color solid;
-  &:hover {
-    color: #fff;
-    background-color: $main_color;
-    border: 1px $main_color solid;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
-  }
+  @include btn_outline($mainColor);
 }
 
 // 外框線按鈕
 .btn_outline_color {
-  color: $color;
-  background-color: #fff;
-  border: 1px $color solid;
-  &:hover {
-    color: #fff;
-    background-color: $color;
-  }
-  &:focus {
-    box-shadow: 0 0 0 0;
-  }
+  @include btn_outline($secColor);
 }
 
 // 分頁按鈕
 .page-link {
-  color: $color;
+  color: $secColor;
   &:focus {
     box-shadow: 0 0 0 0;
   }
 }
 
 .page-item.active .page-link {
-  background-color: $color;
-  border: 1px $color solid;
+  background-color: $secColor;
+  border: 1px $secColor solid;
 }
 
 // 編輯與刪除icon
@@ -79,7 +75,7 @@ $color: #87775c;
 .delete_icon {
   color: #000;
   &:hover {
-    color: $color;
+    color: $secColor;
   }
 }
 
@@ -109,8 +105,8 @@ $color: #87775c;
 .input_button {
   font-weight: bold;
   &:hover {
-    background-color: $color;
-    color: #fff;
+    background-color: $secColor;
+    color: $white;
   }
 }
 
@@ -124,6 +120,3 @@ $color: #87775c;
 .input_group {
   border: solid 1px rgb(239, 239, 239);
 }
-
-// <--- 購物數量按鈕相關 --->
-

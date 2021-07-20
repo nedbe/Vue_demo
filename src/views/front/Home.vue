@@ -5,12 +5,12 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h1 class="title text-navbarColor">THE NAP STORE 設計傢俱品牌</h1>
-            <h2 class="label text-navbarColor">
+            <h1 class="title text-mainColor">THE NAP STORE 設計傢俱品牌</h1>
+            <h2 class="label text-mainColor">
               Create a space that welcomes a lifetime of comfort and style.
             </h2>
             <br />
-            <p class="text-textColor">
+            <p class="text-secColor">
               The Nap Store 創始於1989年，如今已成為一個知名的設計傢俱品牌。
               我們設計、生產並銷售適合於客廳、臥室和戶外空間等的一系列現代設計傢俱，
               同時我們也可以提供專業室內傢俱布置建議給客戶，
@@ -69,7 +69,7 @@ export default {
 <style lang="scss" scope>
 .about {
   padding-top: 50px;
-  .text-textColor {
+  .text-secColor {
     font-size: 20px;
     text-align: justify;
     margin-bottom: 50px;
@@ -108,13 +108,11 @@ export default {
     display: block;
     background-color: rgba(#000, 0.3);
     &:hover {
-      // z-index: 10;
       background-color: rgba(#000, 0);
     }
   }
   h3 {
     position: absolute;
-    // z-index: 200;
     bottom: 10%;
     left: 15%;
     color: #fff;

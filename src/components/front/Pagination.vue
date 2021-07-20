@@ -62,8 +62,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-// 引入 button 樣式
-@import "@/assets/styles/scss/common/_button";
-</style>

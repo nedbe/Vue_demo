@@ -1,7 +1,7 @@
 <template>
   <div class="list-group">
     <a
-      class="list-group-item list-group-item-action disabled text-textColor"
+      class="list-group-item list-group-item-action disabled text-secColor"
       href="#!"
       >商品分類</a
     >

@@ -1,6 +1,6 @@
 <template>
   <div class="navbar_box">
-    <div class="bg-navbarColor fixed-top">
+    <div class="bg-mainColor fixed-top">
       <nav class="navbar navbar-dark container">
         <!-- Brand -->
         <router-link class="navbar-brand mr-5" :to="{ name: 'Home' }"

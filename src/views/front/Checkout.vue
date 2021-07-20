@@ -15,22 +15,24 @@
       <div class="container">
         <div class="row mb-1">
           <div class="col-12" v-if="status.is_paid === false">
-            <h4 class="text-center mt-3 mb-3 text-navbarColor">結帳資料填寫</h4>
+            <h1 class="h3 text-center mt-3 mb-3 text-mainColor">
+              結帳資料填寫
+            </h1>
             <hr />
           </div>
 
           <div class="col-12" v-else>
-            <h4 class="text-center mt-3 mb-3 text-navbarColor">
+            <h1 class="h3 text-center mt-3 mb-3 text-mainColor">
               感謝您的購買，如訂單有問題請與我們客服聯繫。
-            </h4>
+            </h1>
             <hr />
-            <p class="text-center">此頁面將於10秒後跳轉到首頁。</p>
+            <p class="h4 text-center">此頁面將於10秒後跳轉到首頁。</p>
           </div>
         </div>
 
         <div class="row" v-if="status.is_paid === false">
           <div class="col-12 col-lg-6 table">
-            <h5 class="text-center pt-3 pb-3">訂單詳情</h5>
+            <h2 class="h4 text-center pt-3 pb-3">訂單詳情</h2>
             <table>
               <thead>
                 <tr class="text-center">
@@ -66,7 +68,7 @@
                       class="cart_img"
                     />
                     <span
-                      class="pl-2 text-textColor d-inline d-lg-table-cell d-xl-inline"
+                      class="pl-2 text-secColor d-inline d-lg-table-cell d-xl-inline"
                       >{{ item.product.title }}</span
                     >
                   </td>
@@ -87,12 +89,12 @@
                 </tr>
 
                 <tr v-if="cart.final_total !== cart.total">
-                  <td colspan="2" class="align-middle text-navbarColor">
+                  <td colspan="2" class="align-middle text-mainColor">
                     優惠折扣
                   </td>
                   <td
                     colspan="3"
-                    class="align-middle text-right text-navbarColor"
+                    class="align-middle text-right text-mainColor"
                   >
                     -{{ (cart.total - cart.final_total) | currency }}
                   </td>
@@ -153,7 +155,7 @@
           </div>
 
           <div class="col-12 col-lg-6 mt-5 mt-lg-1">
-            <h5 class="text-center pt-3 pb-3">收件人資訊</h5>
+            <h2 class="h4 text-center pt-3 pb-3">收件人資訊</h2>
             <validation-observer v-slot="{ invalid }" ref="checkoutForm">
               <form class="checkout_form" @submit.prevent="submitCheckoutData">
                 <div class="form-row">
@@ -198,25 +200,25 @@
                       <span class="invalid-feedback">{{ errors[0] }}</span>
                     </validation-provider>
                   </div>
-                  <div class="form-group col-md">
-                    <validation-provider
-                      rules="required|email"
-                      v-slot="{ errors, classes }"
+                </div>
+                <div class="form-group">
+                  <validation-provider
+                    rules="required|email"
+                    v-slot="{ errors, classes }"
+                  >
+                    <label for="電子信箱"
+                      >電子信箱 <span class="text-danger">*</span></label
                     >
-                      <label for="電子信箱"
-                        >電子信箱 <span class="text-danger">*</span></label
-                      >
-                      <input
-                        type="email"
-                        class="form-control"
-                        :class="classes"
-                        id="電子信箱"
-                        placeholder="請輸入電子信箱"
-                        v-model="checkoutData.user.email"
-                      />
-                      <span class="invalid-feedback">{{ errors[0] }}</span>
-                    </validation-provider>
-                  </div>
+                    <input
+                      type="email"
+                      class="form-control"
+                      :class="classes"
+                      id="電子信箱"
+                      placeholder="請輸入電子信箱"
+                      v-model="checkoutData.user.email"
+                    />
+                    <span class="invalid-feedback">{{ errors[0] }}</span>
+                  </validation-provider>
                 </div>
                 <div class="form-group">
                   <validation-provider
@@ -421,17 +423,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 引入 vue-loading套件自定義樣式 */
-@import "@/assets/styles/scss/common/_loading";
-
-// 引入 button 樣式
-@import "@/assets/styles/scss/common/_button";
-
-// 引入 input 樣式
-@import "@/assets/styles/scss/common/_input";
-
-$border_btn_color: #da471d;
-$link_color: #87775c;
+$mainColor: #da471d;
+$secColor: #87775c;
 
 // 整個頁面
 .checkout_box {
@@ -448,7 +441,7 @@ $link_color: #87775c;
 // 左邊訂單
 // 第一個表格線條
 .table {
-  border: 2px solid $border_btn_color;
+  border: 2px solid $mainColor;
   table {
     width: 100%;
   }
@@ -472,9 +465,9 @@ $link_color: #87775c;
 .coupon {
   // 超連結
   .coupon_link {
-    color: $link_color;
+    color: $secColor;
     &:hover {
-      color: $link_color;
+      color: $secColor;
     }
   }
   .input-group {

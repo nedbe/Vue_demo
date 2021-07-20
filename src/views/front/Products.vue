@@ -22,7 +22,7 @@
         <div class="col-md-9">
           <div class="d-flex justify-content-end mb-4">
             <label
-              class="d-flex align-items-center text-textColor my-1 mr-2"
+              class="d-flex align-items-center text-secColor my-1 mr-2"
               for="sort"
               >顯示方法</label
             >
@@ -57,7 +57,7 @@
                         :src="item.imageUrl"
                         alt="商品圖片"
                       />
-                      <div class="overlay">查看商品</div>
+                      <div class="overlay p-2">查看商品</div>
                     </a>
                     <!-- 缺貨商品 -->
                     <a href="javascript:;" class="disabled_link" v-else>
@@ -69,9 +69,9 @@
                     </a>
                   </div>
                   <div class="card-body">
-                    <h4 class="card-title text-center text-textColor">
+                    <h3 class="h4 card-title text-center text-secColor">
                       {{ item.title }}
-                    </h4>
+                    </h3>
                     <p class="card-text text-center">
                       NT{{ item.price | currency }}元
                     </p>
@@ -352,13 +352,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 引入 vue-loading套件自定義樣式 */
-@import "@/assets/styles/scss/common/_loading";
-
-// 引入 button 樣式
-@import "@/assets/styles/scss/common/_button";
-
-$background_color: #cacd4a;
+$thirdColor: #cacd4a;
 
 // 側邊欄
 .sticky_container {
@@ -386,13 +380,12 @@ $background_color: #cacd4a;
   .overlay {
     position: absolute;
     bottom: 0;
-    background: $background_color;
+    background: $thirdColor;
     color: #fff;
     width: 100%;
     transition: 0.5s ease;
     opacity: 0;
     font-size: 16px;
-    padding: 5px;
     text-align: center;
     transition: opacity 0.7s ease-in;
   }

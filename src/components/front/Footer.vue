@@ -63,7 +63,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title text-navbarColor" id="modalLabel">
+            <h4 class="modal-title text-mainColor" id="modalLabel">
               管理者登入
             </h4>
             <button
@@ -200,15 +200,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 引入 vue-loading套件自定義樣式 */
-@import "@/assets/styles/scss/common/_loading";
-
-// 引入 button 樣式
-@import "@/assets/styles/scss/common/_button";
-
-// 引入 input 樣式
-@import "@/assets/styles/scss/common/_input";
-
 // icon
 .icon_link {
   width: 40px;

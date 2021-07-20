@@ -3,7 +3,7 @@
     <span class="bg_block"></span>
     <div class="container text-white align-self-center">
       <h1 class="display-3">歡慶開幕</h1>
-      <p class="coupon_text">全館八折 ｜ 限時折扣碼【WOW】</p>
+      <h2 class="text-thirdColor">全館八折 ｜ 限時折扣碼【WOW】</h2>
     </div>
   </div>
 </template>
@@ -37,10 +37,6 @@ export default {
   }
   .container {
     z-index: 200;
-  }
-  .coupon_text {
-    color: #cacd4a;
-    font-size: 28px;
   }
 }
 </style>

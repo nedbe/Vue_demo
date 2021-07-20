@@ -15,7 +15,7 @@
       <div class="container">
         <div class="row mb-1">
           <div class="col">
-            <h4 class="text-center mt-3 text-navbarColor">購物車</h4>
+            <h1 class="h3 text-center mt-3 text-mainColor">購物車</h1>
             <hr />
           </div>
         </div>
@@ -47,7 +47,7 @@
               <tbody>
                 <!-- 購物車無商品時顯示 -->
                 <tr class="text-center" v-if="cart.final_total === 0">
-                  <td colspan="6" class="align-middle text-textColor">
+                  <td colspan="6" class="align-middle text-secColor">
                     您尚未加入商品
                   </td>
                 </tr>
@@ -75,7 +75,7 @@
                         alt="商品圖片"
                         class="cart_img"
                       />
-                      <span class="pl-2 text-textColor">{{
+                      <span class="pl-2 text-secColor">{{
                         item.product.title
                       }}</span>
                     </a>
@@ -290,16 +290,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 引入 vue-loading套件自定義樣式 */
-@import "@/assets/styles/scss/common/_loading";
-
-// 引入 button 樣式
-@import "@/assets/styles/scss/common/_button";
-
-// 引入 input 樣式
-@import "@/assets/styles/scss/common/_input";
-
-$link_color: #87775c;
+$secColor: #87775c;
 
 // 整個頁面
 .cart_box {
@@ -335,8 +326,7 @@ $link_color: #87775c;
 .product_link {
   color: #000;
   &:hover {
-    color: $link_color;
-    // text-decoration: none;
+    color: $secColor;
   }
 }
 </style>

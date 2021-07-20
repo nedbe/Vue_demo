@@ -24,11 +24,11 @@
               <img :src="product.imageUrl" alt="商品圖片" class="product_img" />
             </div>
             <div class="col-md-6">
-              <h1 class="text-textColor">{{ product.title }}</h1>
+              <h1 class="text-secColor">{{ product.title }}</h1>
               <p class="card-text text-left mt-3">
                 NT{{ product.price | currency }}元
               </p>
-              <p class="text-justify text-textColor mt-4">
+              <p class="text-justify text-secColor mt-4">
                 {{ product.description }}
               </p>
               <form action="#" method="post">
@@ -111,7 +111,7 @@
                   aria-labelledby="specification-tab"
                 >
                   <p
-                    class="text-justify content content_pre"
+                    class="text-justify content content_pre p-3"
                     v-text="product.content"
                   ></p>
                 </div>
@@ -121,7 +121,7 @@
                   role="tabpanel"
                   aria-labelledby="notice-tab"
                 >
-                  <ul class="text-justify content">
+                  <ul class="text-justify content p-3">
                     <li>
                       <strong>送貨時間：</strong>
                       <br />
@@ -157,8 +157,8 @@
           <!-- 瀏覽紀錄 -->
           <div class="row mt-3 mb-3">
             <div class="col">
-              <h4>瀏覽紀錄</h4>
-              <swiper class="swiper" :options="swiperOption">
+              <h2 class="h4">瀏覽紀錄</h2>
+              <swiper class="swiper pt-3" :options="swiperOption">
                 <swiper-slide
                   v-for="(item, index) in recordProducts"
                   :key="index"
@@ -166,11 +166,11 @@
                   <div class="position">
                     <a href="#!" @click.prevent="goToProductDetail(item.id)">
                       <img :src="item.imageUrl" alt="" class="swiper_img" />
-                      <div class="overlay">查看商品</div>
+                      <div class="overlay p-2">查看商品</div>
                     </a>
                   </div>
-                  <h5 class="text-textColor pt-3">{{ item.title }}</h5>
-                  <span class="">NT{{ item.price | currency }}元</span>
+                  <h3 class="h5 text-secColor pt-2 pb-2">{{ item.title }}</h3>
+                  <span class="pt-2 pb-2">NT{{ item.price | currency }}元</span>
                   <button
                     class="btn btn-block customize_btn btn_color"
                     @click="checkCart(item.id, $event, (tempQty = 1))"
@@ -429,14 +429,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 引入 vue-loading套件自定義樣式 */
-@import "@/assets/styles/scss/common/_loading";
-
-// 引入 button 樣式
-@import "@/assets/styles/scss/common/_button";
-
-$btn_color: #87775c;
-$border_color: #cacd4a;
+$secColor: #87775c;
+$thirdColor: #cacd4a;
 
 // 整個頁面
 .Whole_box {
@@ -464,26 +458,25 @@ $border_color: #cacd4a;
 
 // 商品規格與注意事項標籤切換效果
 .nav-link {
-  color: $btn_color;
+  color: $secColor;
   &:hover {
     color: #495057;
-    border-color: $border_color;
+    border-color: $thirdColor;
   }
 }
 
 .nav-tabs {
-  border-color: $border_color;
+  border-color: $thirdColor;
 }
 
 .nav-tabs .nav-link.active {
-  border-color: $border_color $border_color #fff;
+  border-color: $thirdColor $thirdColor #fff;
 }
 
 // 商品規格與注意事項
 .content {
   line-height: 2rem;
-  padding: 16px;
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $thirdColor;
   li {
     list-style-type: none;
     padding-bottom: 12px;
@@ -497,12 +490,11 @@ $border_color: #cacd4a;
 // 瀏覽紀錄
 h4 {
   padding: 16px 8px;
-  border-bottom: 1px solid $border_color;
+  border-bottom: 1px solid $thirdColor;
 }
 
 // swiper樣式
 .swiper {
-  padding-top: 16px;
   width: 100%;
   .swiper-slide {
     height: 100%;
@@ -514,13 +506,12 @@ h4 {
       .overlay {
         position: absolute;
         bottom: 0;
-        background: $border_color;
+        background: $thirdColor;
         color: #fff;
         width: 100%;
         transition: 0.5s ease;
         opacity: 0;
         font-size: 16px;
-        padding: 5px;
         text-align: center;
         transition: opacity 0.7s ease-in;
       }
@@ -542,11 +533,6 @@ h4 {
     }
 
     // 文字
-    h5,
-    span {
-      padding-top: 8px;
-      padding-bottom: 8px;
-    }
     span {
       font-size: 16px;
     }

@@ -15,7 +15,7 @@
       <!-- 標題 -->
       <div class="row">
         <div class="col mt-5">
-          <h4 class="text-center mt-3 text-navbarColor">產品列表</h4>
+          <h1 class="h3 text-center mt-3 text-mainColor">產品列表</h1>
         </div>
       </div>
 
@@ -49,7 +49,7 @@
                     :src="item.imageUrl"
                     alt="商品圖片"
                     class="product_img"
-                  /><span class="pl-2">{{ item.title }}</span>
+                  /><span class="pl-2 text-secColor">{{ item.title }}</span>
                 </td>
                 <td class="align-middle text-right">
                   {{ item.price | currency }}
@@ -509,15 +509,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 引入 vue-loading套件自定義樣式 */
-@import "@/assets/styles/scss/common/_loading";
-
-// 引入 button 樣式
-@import "@/assets/styles/scss/common/_button";
-
-// 引入 input 樣式
-@import "@/assets/styles/scss/common/_input";
-
 // table 樣式
 .table {
   // 產品圖片

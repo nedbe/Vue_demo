@@ -45,11 +45,11 @@ $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 
 //自定義顏色
-$countColor:   #cacd4a !default; 
-$navbarColor:  #da471d !default; 
+$mainColor:  #da471d !default; 
+$secColor:  #87775c !default; 
+$thirdColor:   #cacd4a !default; 
 $footerColor:  #262626 !default; 
 $aboutColor:  #eee0b5 !default; 
-$textColor:  #87775c !default; 
 
 $colors: () !default;
 $colors: map-merge(
@@ -92,11 +92,11 @@ $theme-colors: map-merge(
     "light":      $light,
     "dark":       $dark,
     //自定義顏色
-    "countColor":   $countColor, 
-    "navbarColor":   $navbarColor, 
+    "mainColor":   $mainColor, 
+    "secColor":   $secColor, 
+    "thirdColor":   $thirdColor, 
     "footerColor":   $footerColor, 
     "aboutColor":   $aboutColor, 
-    "textColor":   $textColor, 
   ),
   $theme-colors
 );
