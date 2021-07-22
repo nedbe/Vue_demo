@@ -12,10 +12,10 @@
     </loading>
 
     <Jumbotron />
-    <div class="container mb-1 pt-3" id="show">
+    <div class="container mb-1 pt-1 pt-sm-3" id="show">
       <div class="row">
         <!-- 左側選單 -->
-        <div class="col-md-3 sticky_container">
+        <div class="col-md-3 sticky_container d-none d-sm-block">
           <Sidebar></Sidebar>
         </div>
         <!-- 右側排序 -->
@@ -57,7 +57,9 @@
                         :src="item.imageUrl"
                         alt="商品圖片"
                       />
-                      <div class="overlay p-2">查看商品</div>
+                      <div class="overlay text-white text-center w-100 p-2">
+                        查看商品
+                      </div>
                     </a>
                     <!-- 缺貨商品 -->
                     <a href="javascript:;" class="disabled_link" v-else>
@@ -72,9 +74,9 @@
                     <h3 class="h4 card-title text-center text-secColor">
                       {{ item.title }}
                     </h3>
-                    <p class="card-text text-center">
+                    <span class="card-text text-center">
                       NT{{ item.price | currency }}元
-                    </p>
+                    </span>
                   </div>
                   <div class="card-footer border-top-0 p-0">
                     <button
@@ -352,6 +354,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 引入 rwdMixin
+@import "@/assets/styles/scss/rwdMixin";
+
 $thirdColor: #cacd4a;
 
 // 側邊欄
@@ -370,6 +375,22 @@ $thirdColor: #cacd4a;
     border: 1px solid #ced4da;
     box-shadow: 0 0 0 0;
   }
+  @include md {
+    max-width: 35%;
+  }
+  @include sm {
+    max-width: 50%;
+    font-size: 14px;
+  }
+}
+
+// 商品文字
+.card-body {
+  h3 {
+    @include md {
+      font-size: 20px;
+    }
+  }
 }
 
 // 商品卡片
@@ -377,22 +398,20 @@ $thirdColor: #cacd4a;
   position: relative;
   box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
   overflow: hidden;
+
   .overlay {
     position: absolute;
     bottom: 0;
     background: $thirdColor;
-    color: #fff;
-    width: 100%;
     transition: 0.5s ease;
     opacity: 0;
-    font-size: 16px;
-    text-align: center;
     transition: opacity 0.7s ease-in;
   }
   &:hover .overlay {
     opacity: 1;
     transition: opacity 0.7s ease-out;
   }
+
   img {
     height: 180px;
     object-fit: cover;

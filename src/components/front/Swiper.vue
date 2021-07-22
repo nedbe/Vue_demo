@@ -9,7 +9,7 @@
           'url(' + require(`@/assets/images/home/swiper/${item}`) + ')',
       }"
     >
-      <div class="swiper_content">
+      <div class="text-white">
         <h1 class="title">THE NAP STORE</h1>
         <p class="content" data-swiper-parallax="-140" v-show="index === 0">
           歡慶開幕 全館八折
@@ -141,17 +141,21 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-// 廣告標語相關
-.swiper_content {
-  color: #fff;
-}
+// 引入 rwdMixin
+@import "@/assets/styles/scss/rwdMixin";
 
 .title {
   font-size: 80px;
+  @include sm{
+    font-size: 60px;
+  }
 }
 
 .content {
   font-size: 50px;
+    @include sm{
+    font-size: 30px;
+  }
 }
 
 $text_color: #cacd4a;

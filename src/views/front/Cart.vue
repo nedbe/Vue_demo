@@ -21,7 +21,7 @@
         </div>
 
         <div class="row">
-          <div class="col">
+          <div class="col-sm">
             <table class="table">
               <thead class="thead-dark">
                 <tr class="text-center text-white">
@@ -32,7 +32,7 @@
                   >
                     商品名稱
                   </th>
-                  <th scope="col" class="font-weight-normal text-right">
+                  <th scope="col" class="font-weight-normal text-sm-right">
                     單價
                   </th>
                   <th scope="col" class="font-weight-normal">數量</th>
@@ -64,7 +64,7 @@
                       ><i class="far fa-times-circle delete_icon"></i
                     ></a>
                   </td>
-                  <td class="align-middle text-left">
+                  <td class="align-middle text-left p-0 p-sm-3">
                     <a
                       href="#!"
                       class="product_link"
@@ -73,9 +73,9 @@
                       <img
                         :src="item.product.imageUrl"
                         alt="商品圖片"
-                        class="cart_img"
+                        class="cart_img d-block d-sm-inline-block"
                       />
-                      <span class="pl-2 text-secColor">{{
+                      <span class="pl-sm-2 text-secColor">{{
                         item.product.title
                       }}</span>
                     </a>
@@ -290,6 +290,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 引入 rwdMixin
+@import "@/assets/styles/scss/rwdMixin";
+
 $secColor: #87775c;
 
 // 整個頁面
@@ -299,6 +302,17 @@ $secColor: #87775c;
   padding-top: 25px;
   padding-bottom: 25px;
   background-color: #fff;
+  @include md {
+    min-height: 85vh;
+  }
+
+  // 頁面標題
+  h1 {
+    @include sm {
+      font-size: 24px;
+    }
+  }
+
   hr {
     border-top: 2px solid rgba(0, 0, 0, 0.1);
   }
@@ -308,23 +322,50 @@ $secColor: #87775c;
 .table {
   th {
     border-bottom: 0;
+    @include sm {
+      font-size: 14px;
+    }
+  }
+
+  td {
+    @include sm {
+      font-size: 14px;
+    }
   }
 }
 
-// 最後一個表格線條
-.last_tr {
-  border-top: 2px solid #dee2e6;
+// 表尾
+tfoot {
+
+  // 最後一個表格線條
+  .last_tr {
+    border-top: 2px solid #dee2e6;
+  }
+
+  // 按鈕大小
+  a {
+    @include sm {
+      padding: 4px 12px;
+    }
+  }
 }
 
 // 購物車圖片
 .cart_img {
   width: 100px;
   height: 80px;
+  @include sm {
+    width: 40px;
+    height: 30px;
+  }
 }
 
 // 商品超連結
 .product_link {
-  color: #000;
+  @include sm {
+    color: $secColor;
+    text-decoration: underline;
+  }
   &:hover {
     color: $secColor;
   }

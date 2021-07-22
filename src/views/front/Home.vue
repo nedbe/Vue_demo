@@ -5,8 +5,8 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h1 class="title text-mainColor">THE NAP STORE 設計傢俱品牌</h1>
-            <h2 class="label text-mainColor">
+            <h1 class="text-mainColor">THE NAP STORE 設計傢俱品牌</h1>
+            <h2 class="text-mainColor">
               Create a space that welcomes a lifetime of comfort and style.
             </h2>
             <br />
@@ -67,12 +67,30 @@ export default {
 </script>
 
 <style lang="scss" scope>
+// 引入 rwdMixin
+@import "@/assets/styles/scss/rwdMixin";
+
+// 品牌故事區塊
 .about {
   padding-top: 50px;
-  .text-secColor {
-    font-size: 20px;
+  h1 {
+    @include sm {
+      font-size: 22px;
+    }
+  }
+  h2 {
+    @include sm {
+      font-size: 20px;
+    }
+  }
+  p {
+    font-size: 24px;
     text-align: justify;
     margin-bottom: 50px;
+    @include sm {
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
   }
 }
 
@@ -95,6 +113,9 @@ export default {
       z-index: 300;
       // overflow: hidden;
       transform: scale(1.05, 1.05);
+    }
+    @include sm {
+      height: 250px;
     }
   }
   // 製造遮色

@@ -11,23 +11,23 @@
       </div>
     </loading>
 
-    <div class="container mt-5 mb-5 Whole_box">
+    <div class="container mt-3 mt-sm-5 mb-5 Whole_box">
       <div class="row">
         <!-- 左側選單 -->
-        <div class="col-md-3 sticky_container">
+        <div class="col-md-3 sticky_container d-none d-sm-block">
           <Sidebar />
         </div>
         <!-- 右側商品資訊 -->
         <div class="col-md-9">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 text-center">
               <img :src="product.imageUrl" alt="商品圖片" class="product_img" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 card_content">
               <h1 class="text-secColor">{{ product.title }}</h1>
-              <p class="card-text text-left mt-3">
+              <span class="card-text text-left mt-3">
                 NT{{ product.price | currency }}元
-              </p>
+              </span>
               <p class="text-justify text-secColor mt-4">
                 {{ product.description }}
               </p>
@@ -103,6 +103,7 @@
                   >
                 </li>
               </ul>
+              <!-- 顯示的內容 -->
               <div class="tab-content" id="myTabContent">
                 <div
                   class="tab-pane fade show active"
@@ -155,7 +156,7 @@
             </div>
           </div>
           <!-- 瀏覽紀錄 -->
-          <div class="row mt-3 mb-3">
+          <div class="row mt-4 mt-sm-3 mb-3">
             <div class="col">
               <h2 class="h4">瀏覽紀錄</h2>
               <swiper class="swiper pt-3" :options="swiperOption">
@@ -224,12 +225,12 @@ export default {
             slidesPerView: 3,
             spaceBetween: 40,
           },
-          768: {
+          769: {
             slidesPerView: 2,
             spaceBetween: 30,
           },
-          640: {
-            slidesPerView: 1,
+          375: {
+            slidesPerView: 2,
             spaceBetween: 20,
           },
         },
@@ -429,6 +430,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 引入 rwdMixin
+@import "@/assets/styles/scss/rwdMixin";
+
 $secColor: #87775c;
 $thirdColor: #cacd4a;
 
@@ -445,10 +449,28 @@ $thirdColor: #cacd4a;
   height: 300px;
 }
 
+// 商品名稱
+.card_content {
+  h1 {
+    @include md {
+      font-size: 32px;
+    }
+  }
+
+  .card-text {
+    @include md {
+      font-size: 24px;
+    }
+  }
+}
+
 // 商品圖
 .product_img {
   max-width: 100%;
   max-height: 450px;
+  @include sm {
+    margin-bottom: 16px;
+  }
 }
 
 // 商品價格
@@ -477,6 +499,7 @@ $thirdColor: #cacd4a;
 .content {
   line-height: 2rem;
   border-bottom: 1px solid $thirdColor;
+
   li {
     list-style-type: none;
     padding-bottom: 12px;
@@ -485,6 +508,7 @@ $thirdColor: #cacd4a;
 
 .content_pre {
   white-space: pre;
+  overflow: auto;
 }
 
 // 瀏覽紀錄
@@ -496,13 +520,16 @@ h4 {
 // swiper樣式
 .swiper {
   width: 100%;
+
   .swiper-slide {
     height: 100%;
     flex-direction: column;
+
     .position {
       position: relative;
       overflow: hidden;
       box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
+
       .overlay {
         position: absolute;
         bottom: 0;
@@ -519,6 +546,7 @@ h4 {
         opacity: 1;
         transition: opacity 0.7s ease-out;
       }
+
       // 圖片
       .swiper_img {
         width: 100%;

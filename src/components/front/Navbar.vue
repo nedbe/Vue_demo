@@ -1,7 +1,7 @@
 <template>
   <div class="navbar_box">
     <div class="bg-mainColor fixed-top">
-      <nav class="navbar navbar-expand-sm navbar-dark container">
+      <nav class="navbar navbar-expand-lg navbar-dark container">
         <!-- Brand -->
         <router-link class="navbar-brand" :to="{ name: 'Home' }"
           ><img src="@/assets/images/logo.png" alt="logo" /><span>
@@ -157,11 +157,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$sm: 576px;
+// 引入 rwdMixin
+@import "@/assets/styles/scss/rwdMixin";
+
 // LOGO
 .navbar-brand {
   display: flex;
   align-items: center;
+
   img {
     height: 50px;
     width: 50px;
@@ -172,13 +175,21 @@ $sm: 576px;
 // 購物車icon位置與漢堡選單調整
 .navbar {
   position: relative;
+
+  // 購物車icon
   .icon {
     position: absolute;
     right: -20px;
-    @media (max-width: $sm) {
-      right: 100px;
+    @include sm {
+      right: 90px;
       top: 18px;
     }
+    @include md {
+      right: 90px;
+      top: 18px;
+    }
+
+    // 購物車數量icon
     .count_num {
       position: absolute;
       top: -5px;
@@ -187,10 +198,15 @@ $sm: 576px;
       height: 20px;
       padding: 5px;
       border-radius: 100%;
-      @media (max-width: $sm) {
-        right: -3px;
+      @include sm {
+        right: -5px;
+      }
+      @include md {
+        right: -8px;
       }
     }
+
+    // 加入購物車動畫
     .count_animation {
       animation-name: count_animation;
       animation-duration: 1s;
@@ -214,6 +230,7 @@ $sm: 576px;
   box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
   min-width: 8rem;
   border: 0;
+
   .dropdown-item {
     padding: 4px 8px;
     color: rgba(255, 255, 255, 0.5);

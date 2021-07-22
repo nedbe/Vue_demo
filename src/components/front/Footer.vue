@@ -11,7 +11,7 @@
       </div>
     </loading>
 
-    <footer class="container pt-5 pb-3">
+    <footer class="container pt-3 pt-sm-5 pb-3">
       <ul class="row d-flex justify-content-around align-items-center">
         <li class="icon">
           <!-- Facebook -->
@@ -31,10 +31,12 @@
           ></a>
         </li>
         <li>
-          <span class="text-white">聯絡電話：04-2244-6688</span>
+          <span class="text-white d-none d-sm-block"
+            >聯絡電話：04-2244-6688</span
+          >
         </li>
-        <li>
-          <span class="text-white"
+        <li class="pt-1 pt-sm-0">
+          <span class="text-white note"
             >ⓒ僅個人作品練習，無任何商業用途
             <span class="divider">
               <a
@@ -200,6 +202,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 引入 rwdMixin
+@import "@/assets/styles/scss/rwdMixin";
+
 // icon
 .icon_link {
   width: 40px;
@@ -214,11 +219,19 @@ export default {
   }
 }
 
+// 底部文字
+.note {
+  @include sm {
+    font-size: 14px;
+  }
+}
+
 // user icon 旁垂直線
 .divider {
   border-left: 1px solid rgb(253, 159, 18);
   height: 30px;
   margin: 0 7.5px;
+
   .user {
     padding-left: 5px;
   }

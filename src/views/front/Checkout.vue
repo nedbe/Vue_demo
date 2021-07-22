@@ -30,10 +30,10 @@
           </div>
         </div>
 
-        <div class="row" v-if="status.is_paid === false">
+        <div class="row m-1 m-sm-0" v-if="status.is_paid === false">
           <div class="col-12 col-lg-6 table">
             <h2 class="h4 text-center pt-3 pb-3">訂單詳情</h2>
-            <table>
+            <table class="w-100">
               <thead>
                 <tr class="text-center">
                   <th
@@ -113,8 +113,8 @@
               <!-- 折扣碼 -->
               <tfoot>
                 <tr>
-                  <td colspan="5" class="coupon">
-                    <p class="pb-1">
+                  <td colspan="5" class="coupon pl-0 pr-0">
+                    <p class="pl-2 pb-1">
                       有折扣碼嗎?
                       <a
                         class="coupon_link"
@@ -154,7 +154,7 @@
             </table>
           </div>
 
-          <div class="col-12 col-lg-6 mt-5 mt-lg-1">
+          <div class="col-12 col-lg-6 mt-1 mt-lg-1">
             <h2 class="h4 text-center pt-3 pb-3">收件人資訊</h2>
             <validation-observer v-slot="{ invalid }" ref="checkoutForm">
               <form class="checkout_form" @submit.prevent="submitCheckoutData">
@@ -423,6 +423,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 引入 rwdMixin
+@import "@/assets/styles/scss/rwdMixin";
+
 $mainColor: #da471d;
 $secColor: #87775c;
 
@@ -433,8 +436,29 @@ $secColor: #87775c;
   padding-top: 25px;
   padding-bottom: 25px;
   background-color: #fff;
+
+  // 頁面標題
+  h1 {
+    @include sm {
+      font-size: 24px;
+    }
+  }
+
+  // 訂單詳情文字
+  h2 {
+    @include sm {
+      font-size: 20px;
+    }
+  }
+
   hr {
     border-top: 2px solid rgba(0, 0, 0, 0.1);
+  }
+
+  p {
+    @include sm {
+      font-size: 16px;
+    }
   }
 }
 
@@ -442,11 +466,18 @@ $secColor: #87775c;
 // 第一個表格線條
 .table {
   border: 2px solid $mainColor;
-  table {
-    width: 100%;
-  }
+
   th {
     border-top: 0;
+    @include sm {
+      font-size: 14px;
+    }
+  }
+
+  td {
+    @include sm {
+      font-size: 14px;
+    }
   }
 }
 
@@ -459,10 +490,15 @@ $secColor: #87775c;
 .cart_img {
   width: 80px;
   height: 60px;
+  @include sm {
+    width: 40px;
+    height: 30px;
+  }
 }
 
 // 折扣碼相關樣式
 .coupon {
+
   // 超連結
   .coupon_link {
     color: $secColor;
@@ -470,14 +506,22 @@ $secColor: #87775c;
       color: $secColor;
     }
   }
+
+  // 輸入框
   .input-group {
-    padding-right: 12px;
+    .form-control,
+    #couponBtn {
+      @include sm {
+        font-size: 14px;
+      }
+    }
   }
 }
 
 // 右邊結帳資料
 // 表頭對齊
 .checkout_form {
+
   .form-row {
     padding-top: 8px;
   }

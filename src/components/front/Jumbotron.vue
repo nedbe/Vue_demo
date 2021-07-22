@@ -15,6 +15,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 引入 rwdMixin
+@import "@/assets/styles/scss/rwdMixin";
+
 .jumbotron_bg {
   height: 300px;
   margin-top: 76px;
@@ -24,6 +27,7 @@ export default {
   background-attachment: fixed;
   background-position: bottom;
   position: relative;
+
   // 製造遮色
   .bg_block {
     position: absolute;
@@ -35,8 +39,21 @@ export default {
     display: block;
     background-color: rgba(#000, 0.2);
   }
+
   .container {
     z-index: 200;
+  }
+
+  h1 {
+    @include sm {
+      font-size: 52px;
+    }
+  }
+
+  h2 {
+    @include sm {
+      font-size: 22px;
+    }
   }
 }
 </style>
