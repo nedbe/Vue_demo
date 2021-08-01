@@ -111,10 +111,10 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-12">
-                <form>
+          <form @submit.prevent="updateCoupon">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-12">
                   <div class="form-row">
                     <div class="form-group col-md">
                       <label for="title">名稱</label>
@@ -183,30 +183,29 @@
                       </div>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn customize_btn btn_outline_color"
-              data-dismiss="modal"
-            >
-              取消
-            </button>
-            <button
-              type="button"
-              class="btn customize_btn btn_main_color updateBtn"
-              @click="updateCoupon"
-            >
-              確認
-              <i
-                class="fas fa-spinner fa-spin"
-                v-if="status.buttonIsLoading"
-              ></i>
-            </button>
-          </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn customize_btn btn_outline_color"
+                data-dismiss="modal"
+              >
+                取消
+              </button>
+              <button
+                type="submit"
+                class="btn customize_btn btn_main_color updateBtn"
+              >
+                確認
+                <i
+                  class="fas fa-spinner fa-spin"
+                  v-if="status.buttonIsLoading"
+                ></i>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -301,12 +300,12 @@ export default {
       const vm = this;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
+
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
-      // axios
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 關閉整頁讀取動畫
         vm.status.pageIsLoading = false;
+
         // 存入優惠券資料
         vm.coupons = response.data.coupons;
         // 存入頁碼資料
@@ -332,18 +331,20 @@ export default {
         // 存入日期
         vm.due_date = [...dateAndTime];
       }
+
       // 開啟 modal
       $('#editModal').modal('show');
     },
     updateCoupon() {
       const vm = this;
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
-      // 預設存入 post
-      let httpMethod = 'post';
       // 顯示確認按鈕讀取動畫
       vm.status.buttonIsLoading = true;
       // 關閉確認按鈕以免連續點擊
       $('.updateBtn').attr('disabled', true);
+
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
+      // 預設存入 post
+      let httpMethod = 'post';
       // 如果是要編輯優惠券
       if (!vm.isNew) {
         // 修改 api路徑
@@ -351,15 +352,16 @@ export default {
         // 將請求方法改為 put
         httpMethod = 'put';
       }
-      // axios
       vm.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
-        console.log(response.data);
         // 傳送參數給 AlertMessage並執行彈出訊息回饋
         vm.$bus.$emit('messsage:push', response.data.message, 'success');
+
         // 關閉 modal
         $('#editModal').modal('hide');
+
         // 重新取得優惠券列表
         vm.getCoupons();
+
         // 關閉確認按鈕讀取動畫
         vm.status.buttonIsLoading = false;
         // 重新開啟確認按鈕
@@ -368,23 +370,24 @@ export default {
     },
     // 優惠券刪除確認 modal
     openDeleteModal(item) {
-      // 開啟確認畫面
-      $('#deleteModal').modal('show');
       const vm = this;
       // 將要刪除的優惠券先存入，給 deleteCoupon()使用
       vm.tempCoupon = { ...item };
+
+      // 開啟確認畫面
+      $('#deleteModal').modal('show');
     },
     // 刪除產品
     deleteCoupon() {
       const vm = this;
+
       // 顯示確認按鈕讀取動畫
       vm.status.buttonIsLoading = true;
       // 關閉確認按鈕以免連續點擊
       $('#deleteModal').attr('disabled', true);
+
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
-      // axios
       vm.$http.delete(api).then((response) => {
-        console.log(response.data);
         // 如果刪除成功
         if (response.data.success) {
           // 傳送參數給 AlertMessage並執行彈出訊息回饋
@@ -396,10 +399,12 @@ export default {
         }
         // 重新取得優惠券
         vm.getCoupons();
+
         // 關閉確認按鈕讀取動畫
         vm.status.buttonIsLoading = false;
         // 重新開啟確認按鈕
         $('#deleteModal').attr('disabled', false);
+
         // 關閉 modal
         $('#deleteModal').modal('hide');
       });
@@ -415,11 +420,12 @@ export default {
       vm.tempCoupon.due_date = timestamp;
     },
   },
-  created() {
-    // 進入時先取得優惠券列表
-    this.getCoupons();
-    // 轉換頁面置頂
+  mounted() {
+    // 轉換頁面時置頂
     $('html,body').scrollTop(0);
+  },
+  created() {
+    this.getCoupons();
   },
 };
 </script>

@@ -46,8 +46,7 @@ export default {
     signout() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/logout`;
-      this.$http.post(api).then((response) => {
-        console.log(response.data);
+      vm.$http.post(api).then((response) => {
         // 如果登出成功返回首頁
         if (response.data.success) {
           vm.$router.push({ name: 'Home' });

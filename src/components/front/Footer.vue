@@ -149,15 +149,8 @@ export default {
   methods: {
     // 登入畫面 modal
     loginModal() {
-      const vm = this;
-      // 開啟整頁讀取動畫
-      vm.status.pageIsLoading = true;
-      // 1秒後關閉整頁讀取動畫
-      setTimeout(() => {
-        vm.status.pageIsLoading = false;
-      }, 1000);
       // 轉址到後台
-      vm.$router.push('/admin');
+      this.$router.push('/admin');
     },
     // 管理者登入
     signinController() {
@@ -166,25 +159,23 @@ export default {
       vm.status.showMessage = false;
       // 開啟按鈕讀取動畫
       vm.status.buttonIsLoading = true;
-      // 將登入按鈕失效
+      // 將輸入框失效
       $('.inputDisabled').attr('disabled', true);
 
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
-      // 使用axios ajax
       vm.$http.post(api, vm.user).then((response) => {
-        console.log(response.data);
         // 如果取得資料
         if (response.data.success) {
           // 取得api的token跟expired
           const { token } = response.data;
           const { expired } = response.data;
-          // console.log(token, expired);
 
           // myToken 為自訂的Cookie名稱並儲存狀態; expires為到期時間
           document.cookie = `myToken=${token};expires=${new Date(expired)};`;
 
           // 轉址到後台
           vm.$router.push('/admin');
+
           // 關閉 modal
           $('#loginModal').modal('hide');
         } else {
@@ -193,7 +184,7 @@ export default {
         }
         // 關閉按鈕讀取動畫
         vm.status.buttonIsLoading = false;
-        // 重啟登入按鈕
+        // 重啟輸入框
         $('.inputDisabled').attr('disabled', false);
       });
     },
@@ -202,7 +193,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// 引入 rwdMixin
 @import "@/assets/styles/scss/rwdMixin";
 
 // icon

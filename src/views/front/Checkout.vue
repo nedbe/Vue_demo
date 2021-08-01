@@ -335,14 +335,15 @@ export default {
       const vm = this;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
+
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // axios
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 更新導覽列購物車數量
         vm.$bus.$emit('upateCartQty');
+
         // 關閉整頁讀取動畫
         vm.status.pageIsLoading = false;
+
         // 存入購物車資料
         vm.cart = response.data.data;
       });
@@ -352,30 +353,34 @@ export default {
       const vm = this;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
+
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
       // 折扣碼傳送格式
       const coupon = {
         code: vm.coupon,
       };
-      // axios
       vm.$http.post(api, { data: coupon }).then((response) => {
-        console.log(response.data);
         // 如果套用成功
         if (response.data.success) {
           vm.couponFeedBack = '已成功套用折扣碼！';
         } else {
           vm.couponFeedBack = '折扣碼過期或輸入錯誤！';
         }
+
         // 關閉整頁讀取動畫
         vm.status.pageIsLoading = false;
+
         // 重新取得購物車資料
         vm.getCart();
       });
     },
+    // 提交結帳資料
     submitCheckoutData() {
       const vm = this;
+
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
+
       // 存入要新增的訂單
       const order = vm.checkoutData;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
@@ -384,7 +389,6 @@ export default {
         // 如果通過驗證
         if (result) {
           vm.$http.post(api, { data: order }).then((response) => {
-            console.log('訂單已建立', response);
             // 存入回傳之訂單ID
             vm.orderId = response.data.orderId;
             // 將付款結果傳入後端
@@ -394,10 +398,13 @@ export default {
               if (res.data.success) {
                 // 關閉整頁讀取動畫
                 vm.status.pageIsLoading = false;
+
                 // 切換成付款後畫面
                 vm.status.is_paid = true;
+
                 // 更新導覽列購物車數量
                 vm.$bus.$emit('upateCartQty');
+
                 // 轉換頁面置頂
                 $('html,body').scrollTop(0);
                 // 5秒後跳轉首頁
@@ -413,17 +420,17 @@ export default {
       this.$router.back();
     },
   },
-  created() {
-    // 進入時先取得購物車列表
-    this.getCart();
-    // 轉換頁面置頂
+  mounted() {
+    // 轉換頁面時置頂
     $('html,body').scrollTop(0);
+  },
+  created() {
+    this.getCart();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-// 引入 rwdMixin
 @import "@/assets/styles/scss/rwdMixin";
 
 $mainColor: #da471d;
@@ -498,7 +505,6 @@ $secColor: #87775c;
 
 // 折扣碼相關樣式
 .coupon {
-
   // 超連結
   .coupon_link {
     color: $secColor;
@@ -521,7 +527,6 @@ $secColor: #87775c;
 // 右邊結帳資料
 // 表頭對齊
 .checkout_form {
-
   .form-row {
     padding-top: 8px;
   }

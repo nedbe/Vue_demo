@@ -30,9 +30,10 @@ export default {
   methods: {
     // 更新訊息
     updateMessage(message, status) {
+      const vm = this;
       // 取得轉換成現在時間的數值
       const timestamp = Math.floor(new Date() / 1000);
-      this.messages.push({
+      vm.messages.push({
         // 訊息
         message,
         // 樣式
@@ -41,7 +42,7 @@ export default {
         timestamp,
       });
       // 設定自動移除訊息
-      this.removeMessageWithTiming(timestamp);
+      vm.removeMessageWithTiming(timestamp);
     },
     // 手動點擊移除訊息
     removeMessage(index) {

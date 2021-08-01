@@ -35,8 +35,7 @@ import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 
 export default {
-  name: 'swiper-example-navigation',
-  title: 'Navigation',
+  name: 'Swiper_navigation',
   components: {
     Swiper,
     SwiperSlide,
@@ -141,7 +140,6 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-// 引入 rwdMixin
 @import "@/assets/styles/scss/rwdMixin";
 
 .title {

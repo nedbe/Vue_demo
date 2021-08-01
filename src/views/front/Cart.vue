@@ -171,10 +171,6 @@ export default {
       cart: {},
       // 暫存商品數量
       tempQty: 1,
-      // 折扣碼
-      coupon: '',
-      // 套用折扣碼訊息回饋
-      couponFeedBack: '',
       // 判斷是否啟用狀態
       status: {
         // 整頁讀取動畫
@@ -188,14 +184,15 @@ export default {
       const vm = this;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
+
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // axios
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 更新導覽列購物車數量
         vm.$bus.$emit('upateCartQty');
+
         // 關閉整頁讀取動畫
         vm.status.pageIsLoading = false;
+
         // 存入購物車資料
         vm.cart = response.data.data;
       });
@@ -205,10 +202,9 @@ export default {
       const vm = this;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
+
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      // axios
-      vm.$http.delete(api).then((response) => {
-        console.log(response.data);
+      vm.$http.delete(api).then(() => {
         // 關閉整頁讀取動畫
         vm.status.pageIsLoading = false;
         // 重新取得購物車資料
@@ -229,6 +225,7 @@ export default {
         // 將輸入內容其轉為數字
         vm.tempQty = parseInt(event.target.value, 10);
       }
+
       // 防止商品數變負數
       // 如果傳入商品數小於等於0 或 空白時
       if (vm.tempQty <= 0 || Number.isNaN(vm.tempQty)) {
@@ -247,21 +244,18 @@ export default {
       const vm = this;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
+
       // 先將購物車刪除再重新加入
       vm.cart.carts.forEach((item) => {
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
-        // axios
-        vm.$http.delete(url).then((response) => {
-          console.log(response.data);
+        vm.$http.delete(url).then(() => {
           // 後端格式
           const cart = {
             product_id: item.product_id,
             qty: item.qty,
           };
           const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-          // axios
           vm.$http.post(api, { data: cart }).then((res) => {
-            console.log(res.data);
             // 如果新增購物車成功
             if (res.data.success) {
               // 重新取得購物車資料
@@ -280,17 +274,17 @@ export default {
       this.$router.back();
     },
   },
-  created() {
-    // 進入時先取得購物車列表
-    this.getCart();
-    // 轉換頁面置頂
+  mounted() {
+    // 轉換頁面時置頂
     $('html,body').scrollTop(0);
+  },
+  created() {
+    this.getCart();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-// 引入 rwdMixin
 @import "@/assets/styles/scss/rwdMixin";
 
 $secColor: #87775c;
@@ -336,7 +330,6 @@ $secColor: #87775c;
 
 // 表尾
 tfoot {
-
   // 最後一個表格線條
   .last_tr {
     border-top: 2px solid #dee2e6;

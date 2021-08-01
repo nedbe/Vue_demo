@@ -387,12 +387,12 @@ export default {
       const vm = this;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
+
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
-      // axios
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 關閉整頁讀取動畫
         vm.status.pageIsLoading = false;
+
         // 存入訂單資料
         vm.orders = response.data.orders;
         // 存入頁碼資料
@@ -421,20 +421,22 @@ export default {
     // 更新指定的訂單資料
     updateOrder() {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/order/${vm.tempOrder.id}`;
       // 顯示確認按鈕讀取動畫
       vm.status.buttonIsLoading = true;
       // 關閉確認按鈕以免連續點擊
       $('.updateBtn').attr('disabled', true);
-      // axios
+
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/order/${vm.tempOrder.id}`;
       vm.$http.put(api, { data: vm.tempOrder }).then((response) => {
-        console.log(response.data);
         // 傳送參數給 AlertMessage並執行彈出訊息回饋
         vm.$bus.$emit('messsage:push', response.data.message, 'success');
+
         // 關閉 modal
         $(`#${vm.namedModal}Modal`).modal('hide');
+
         // 重新取得訂單列表
         vm.getAllOrders();
+
         // 關閉確認按鈕讀取動畫
         vm.status.buttonIsLoading = false;
         // 重新開啟確認按鈕
@@ -456,11 +458,12 @@ export default {
       return newOrder;
     },
   },
-  created() {
-    // 進入時先取得訂單列表
-    this.getAllOrders();
-    // 轉換頁面置頂
+  mounted() {
+    // 轉換頁面時置頂
     $('html,body').scrollTop(0);
+  },
+  created() {
+    this.getAllOrders();
   },
 };
 </script>

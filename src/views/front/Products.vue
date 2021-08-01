@@ -16,7 +16,7 @@
       <div class="row">
         <!-- 左側選單 -->
         <div class="col-md-3 sticky_container d-none d-sm-block">
-          <Sidebar></Sidebar>
+          <Sidebar />
         </div>
         <!-- 右側排序 -->
         <div class="col-md-9">
@@ -164,6 +164,9 @@ export default {
     // 取得商品列表以及分類資訊
     getProducts() {
       const vm = this;
+      // 啟動整頁讀取動畫
+      vm.status.pageIsLoading = true;
+
       // 存入路由參數
       const linkName = vm.$route.params.category;
       // 用參數篩選出要顯示商品類別，結果為一陣列
@@ -174,21 +177,16 @@ export default {
         }
         return temp;
       });
-      // 啟動整頁讀取動畫
-      vm.status.pageIsLoading = true;
+
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      // axios
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 如果取資料成功
         if (response.data.success) {
-          // 關閉整頁讀取動畫
-          vm.status.pageIsLoading = false;
           // 存入商品資料
           vm.products = response.data.products;
+
           // 如果商品類別沒有匹配成功，或使用者亂輸入網址
           if (tempCategory.length === 0) {
-            // 轉址
             vm.$router.push({ path: '/products/all' });
             // 存入全部商品
             vm.tempProducts = [...vm.products];
@@ -201,11 +199,14 @@ export default {
             // 存入篩選後分類
             vm.tempProducts = vm.products.filter((item) => item.category === tempCategory[0].name);
           }
+
+          // 關閉整頁讀取動畫
+          vm.status.pageIsLoading = false;
+
           // 預設價格排序低到高
           vm.sortMethod = '價格排序低到高';
           vm.tempProducts.sort((a, b) => a.price - b.price);
-          // 關閉整頁讀取動畫
-          vm.status.pageIsLoading = false;
+
           // 頁數計算
           vm.getPagination();
         }
@@ -218,7 +219,6 @@ export default {
       const name = vm.$route.params.category;
       // 如果點擊不同連結時
       if (name !== link) {
-        // 轉址到指定連結
         vm.$router.push({ path: `/products/${link}` });
         // 重新取得商品列表
         vm.getProducts();
@@ -237,6 +237,7 @@ export default {
       }
       // 將正確總頁數存入
       vm.pagination.totalPages = totalPages;
+
       // 暫存傳入的當前頁數
       let tempPage = page;
       // 防止當前頁數變負數或大於總頁數
@@ -249,6 +250,7 @@ export default {
         // 讓當前頁數變為總頁數
         tempPage = totalPages;
       }
+
       // 依當前頁數做商品陣列切割，顯示6筆1頁
       vm.showProducts = vm.tempProducts.slice((tempPage - 1) * 6, tempPage * 6);
       // 存入當前頁數
@@ -262,9 +264,7 @@ export default {
     getCart() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // axios
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 將購物車資料存入
         vm.tempCart = response.data.data;
       });
@@ -277,6 +277,7 @@ export default {
       $(event.target).append(i);
       // 關閉按鈕以免連續點擊
       $(event.target).attr('disabled', true);
+
       // 後端格式
       const cart = {
         product_id: id,
@@ -284,15 +285,12 @@ export default {
       };
       // 查看是否有重複的資料
       const check = vm.tempCart.carts.find((item) => item.product_id === id);
-      console.log(check);
       // 如果購物車有重複的商品，先刪除後再重新加入
       if (check !== undefined) {
         // 讓該商品數量加1
         cart.qty = check.qty + 1;
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${check.id}`;
-        // axios
-        vm.$http.delete(url).then((response) => {
-          console.log(response.data);
+        vm.$http.delete(url).then(() => {
           vm.addtoCart(cart, event);
         });
       } else {
@@ -303,9 +301,7 @@ export default {
     addtoCart(cart, event) {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // axios
       vm.$http.post(api, { data: cart }).then((response) => {
-        console.log(response.data);
         // 如果加入購物車成功
         if (response.data.success) {
           // 更新導覽列購物車數量
@@ -313,6 +309,7 @@ export default {
           // 重新取得購物車資料
           vm.getCart();
         }
+
         // 移除按鈕讀取動畫
         $(event.target)
           .children()
@@ -333,28 +330,34 @@ export default {
         // 降冪
         vm.tempProducts.sort((a, b) => b.price - a.price);
       }
+
       // 頁數計算及顯示
       vm.getPagination();
     },
     // 監聽網址改變時處理
     $route() {
       const vm = this;
+      // 轉換頁面位置
+      const target = $('#show').offset().top;
+      $('html,body').animate({ scrollTop: target - 100 }, 600);
+
       // 重新取得商品列表
       vm.getProducts();
     },
   },
-  created() {
-    // 進入時先取得商品與購物車出來
-    this.getProducts();
-    this.getCart();
-    // 轉換頁面置頂
+  mounted() {
+    // 轉換頁面時置頂
     $('html,body').scrollTop(0);
+  },
+  created() {
+    const vm = this;
+    vm.getProducts();
+    vm.getCart();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-// 引入 rwdMixin
 @import "@/assets/styles/scss/rwdMixin";
 
 $thirdColor: #cacd4a;

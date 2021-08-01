@@ -31,47 +31,45 @@
               <p class="text-justify text-secColor mt-4">
                 {{ product.description }}
               </p>
-              <form action="#" method="post">
-                <div class="d-flex justify-content-between mt-4">
-                  <div class="input_group">
-                    <input
-                      type="button"
-                      value="-"
-                      class="input_button"
-                      @click="addCartQty(tempQty - 1)"
-                    />
-                    <input
-                      type="number"
-                      class="text-center input_number"
-                      step="1"
-                      min="1"
-                      max="99"
-                      name="quantity"
-                      value="1"
-                      title="數量"
-                      size="2"
-                      v-model.number="tempQty"
-                    />
-                    <input
-                      type="button"
-                      value="+"
-                      class="input_button"
-                      @click="addCartQty(tempQty + 1)"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    class="btn customize_btn btn_color"
-                    @click.prevent="checkCart(product.id, $event)"
-                    v-if="product.is_enabled === 1"
-                  >
-                    加入購物車
-                  </button>
-                  <a class="btn customize_btn btn_color disabled" v-else
-                    >缺貨中</a
-                  >
+              <div class="d-flex justify-content-between mt-4">
+                <div class="input_group">
+                  <input
+                    type="button"
+                    value="-"
+                    class="input_button"
+                    @click="addCartQty(tempQty - 1)"
+                  />
+                  <input
+                    type="number"
+                    class="text-center input_number"
+                    step="1"
+                    min="1"
+                    max="99"
+                    name="quantity"
+                    value="1"
+                    title="數量"
+                    size="2"
+                    v-model.number="tempQty"
+                  />
+                  <input
+                    type="button"
+                    value="+"
+                    class="input_button"
+                    @click="addCartQty(tempQty + 1)"
+                  />
                 </div>
-              </form>
+                <button
+                  type="submit"
+                  class="btn customize_btn btn_color"
+                  @click.prevent="checkCart(product.id, $event)"
+                  v-if="product.is_enabled === 1"
+                >
+                  加入購物車
+                </button>
+                <a class="btn customize_btn btn_color disabled" v-else
+                  >缺貨中</a
+                >
+              </div>
             </div>
           </div>
           <!-- 商品規格與注意事項 -->
@@ -256,24 +254,22 @@ export default {
       const vm = this;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
+
       // 存入商品id
       let id = '';
       id = vm.$route.params.id;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
-      // axios
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 如果取資料成功
         if (response.data.success) {
           // 存入商品資料
           vm.product = response.data.product;
-          // 執行saveRecord
+          // 存瀏覽資料
           vm.saveRecord();
         } else {
-          // 如果取資料失敗
-          // 轉址
           vm.$router.push({ path: '/products/all' });
         }
+
         // 關閉整頁讀取動畫
         vm.status.pageIsLoading = false;
       });
@@ -300,9 +296,7 @@ export default {
     getCart() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // axios
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 將購物車資料存入
         vm.tempCart = response.data.data;
       });
@@ -315,23 +309,21 @@ export default {
       $(event.target).append(i);
       // 關閉按鈕以免連續點擊
       $(event.target).attr('disabled', true);
+
       // 後端格式
       const cart = {
         product_id: id,
         qty: vm.tempQty,
       };
-      console.log(vm.tempQty);
       // 查看是否有重複的資料
       const check = vm.tempCart.carts.find((item) => item.product_id === id);
-      console.log(check);
-      // 如果購物車有重複的商品，先刪除後再重新加入
+      // 如果購物車有重複的商品，先刪除後再重新加入否則直接加入購物車
       if (check !== undefined) {
         // 讓該商品數量加上新填入的數量
         cart.qty = check.qty + vm.tempQty;
+
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${check.id}`;
-        // axios
-        vm.$http.delete(url).then((response) => {
-          console.log(response.data);
+        vm.$http.delete(url).then(() => {
           vm.addtoCart(cart, event);
         });
       } else {
@@ -342,9 +334,7 @@ export default {
     addtoCart(cart, event) {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // axios
       vm.$http.post(api, { data: cart }).then((response) => {
-        console.log(response.data);
         // 如果加入購物車成功
         if (response.data.success) {
           // 更新導覽列購物車數量
@@ -352,6 +342,7 @@ export default {
           // 重新取得購物車資料
           vm.getCart();
         }
+
         // 移除按鈕讀取動畫
         $(event.target)
           .children()
@@ -365,11 +356,11 @@ export default {
       const vm = this;
       // 檢查有無重複的值
       const check = vm.recordProducts.find((item) => item.id === vm.product.id);
-      // 如果沒有
+      // 如果沒有重複的值，則將新的資料加入
       if (check === undefined) {
-        // 將新的資料加入
         vm.recordProducts.push(vm.product);
       }
+
       // 將瀏覽資料存入 localStorage
       localStorage.setItem('save', JSON.stringify(vm.recordProducts));
     },
@@ -377,9 +368,8 @@ export default {
     getRecord() {
       // 從 localStorage取瀏覽資料
       const data = JSON.parse(localStorage.getItem('save'));
-      // 如果有資料
+      // 如果有資料，則直接將資料存入
       if (data.length !== null) {
-        // 直接將資料存入
         this.recordProducts = data;
       }
     },
@@ -416,21 +406,20 @@ export default {
       $('html,body').scrollTop(0);
     },
   },
-  created() {
-    // 進入時先取得商品出來
-    this.getProductDetail();
-    // 取得購物車資料
-    this.getCart();
-    // 取得瀏覽過的商品
-    this.getRecord();
-    // 轉換頁面置頂
+  mounted() {
+    // 轉換頁面時置頂
     $('html,body').scrollTop(0);
+  },
+  created() {
+    const vm = this;
+    vm.getProductDetail();
+    vm.getCart();
+    vm.getRecord();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-// 引入 rwdMixin
 @import "@/assets/styles/scss/rwdMixin";
 
 $secColor: #87775c;

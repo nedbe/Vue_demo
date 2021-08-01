@@ -102,7 +102,6 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
     axios.post(api).then((response) => {
-      console.log(response.data);
       // 如果還是登入狀態則放行
       if (response.data.success) {
         next();

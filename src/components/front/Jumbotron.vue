@@ -15,7 +15,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// 引入 rwdMixin
 @import "@/assets/styles/scss/rwdMixin";
 
 .jumbotron_bg {

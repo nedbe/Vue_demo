@@ -22,21 +22,21 @@
       <div class="category">
         <div class="row">
           <div id="beds" class="col-md category_img">
-            <router-link href="#!" to="/products/beds"> </router-link>
+            <router-link to="/products/beds"> </router-link>
             <h3>Beds</h3>
           </div>
           <div id="sofas" class="col-md category_img">
-            <router-link href="#!" to="/products/sofas"> </router-link>
+            <router-link to="/products/sofas"> </router-link>
             <h3>Sofas</h3>
           </div>
         </div>
         <div class="row">
           <div id="chairs" class="col-md category_img">
-            <router-link href="#!" to="/products/chairs"> </router-link>
+            <router-link to="/products/chairs"> </router-link>
             <h3>Chairs</h3>
           </div>
           <div id="tables" class="col-md category_img">
-            <router-link href="#!" to="/products/tables"> </router-link>
+            <router-link to="/products/tables"> </router-link>
             <h3>Tables</h3>
           </div>
         </div>
@@ -50,16 +50,14 @@
 import $ from 'jquery';
 
 // @ is an alias to /src
-// 引入元件
-import Swiper from '@/components/front/Swiper.vue';
+import Swiper from '@/components/front/Swiper_navigation.vue';
 
 export default {
   name: 'Home',
-  // 註冊元件
   components: {
     Swiper,
   },
-  created() {
+  mounted() {
     // 切換頁時回到最上方
     $('html,body').scrollTop(0);
   },
@@ -67,7 +65,6 @@ export default {
 </script>
 
 <style lang="scss" scope>
-// 引入 rwdMixin
 @import "@/assets/styles/scss/rwdMixin";
 
 // 品牌故事區塊

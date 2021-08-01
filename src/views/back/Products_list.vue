@@ -55,7 +55,9 @@
                   {{ item.price | currency }}
                 </td>
                 <td class="align-middle">
-                  <span v-if="item.is_enabled" class="text-success">有庫存</span>
+                  <span v-if="item.is_enabled" class="text-success"
+                    >有庫存</span
+                  >
                   <span v-else>缺貨中</span>
                 </td>
                 <td class="align-middle">
@@ -353,16 +355,16 @@ export default {
     // 取得產品列表以及頁數資訊
     getProducts(page = 1) {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
-      // axios
+
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 如果取資料成功
         if (response.data.success) {
           // 關閉整頁讀取動畫
           vm.status.pageIsLoading = false;
+
           // 存入產品資料
           vm.products = response.data.products;
           // 存入頁碼資料
@@ -382,18 +384,21 @@ export default {
       document.getElementById('customFile').value = '';
       // 因傳參考的特性，怕影響原始 product資料，故用解構的方式處理
       vm.tempProduct = { ...item };
+
       // 開啟 modal
       $('#editModal').modal('show');
     },
     // 更新產品
     updateProduct() {
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
-      let httpMethod = 'post';
       const vm = this;
+
       // 顯示確認按鈕讀取動畫
       vm.status.buttonIsLoading = true;
       // 關閉確認按鈕以免連續點擊
       $('.updateBtn').attr('disabled', true);
+
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
+      let httpMethod = 'post';
       // 如果是要編輯產品，
       if (!vm.isNew) {
         // 修改 api路徑
@@ -401,26 +406,27 @@ export default {
         // 將請求方法改為 put
         httpMethod = 'put';
       }
-      // axios
       vm.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
-        console.log(response.data);
         // 如果更新或新增成功
         if (response.data.success) {
           // 傳送參數給 AlertMessage並執行彈出訊息回饋
           vm.$bus.$emit('messsage:push', response.data.message, 'success');
+
           // 關閉 modal
           $('#editModal').modal('hide');
+
           // 重新取得產品
           vm.getProducts();
         } else {
           // 如果失敗
           // 傳送參數給 AlertMessage並執行彈出訊息回饋
           vm.$bus.$emit('messsage:push', response.data.message);
+
           // 關閉 modal
           $('#editModal').modal('hide');
+
           // 重新取得產品
           vm.getProducts();
-          console.log('新增失敗');
         }
         // 關閉確認按鈕讀取動畫
         vm.status.buttonIsLoading = false;
@@ -430,9 +436,10 @@ export default {
     },
     // 產品刪除確認 modal
     openDeleteModal(item) {
+      const vm = this;
       // 開啟確認畫面
       $('#deleteModal').modal('show');
-      const vm = this;
+
       // 將要刪除的產品先存入，給 deleteProduct()使用
       vm.tempDeleteItem = item;
     },
@@ -441,10 +448,9 @@ export default {
       const vm = this;
       // 顯示確認按鈕讀取動畫
       vm.status.buttonIsLoading = true;
+
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempDeleteItem.id}`;
-      // axios
       vm.$http.delete(api).then((response) => {
-        console.log(response.data);
         // 如果刪除成功
         if (response.data.success) {
           // 傳送參數給 AlertMessage並執行彈出訊息回饋
@@ -456,8 +462,10 @@ export default {
         }
         // 重新取得產品
         vm.getProducts();
+
         // 關閉確認按鈕讀取動畫
         vm.status.buttonIsLoading = false;
+
         // 關閉 modal
         $('#deleteModal').modal('hide');
       });
@@ -465,6 +473,9 @@ export default {
     // 上傳檔案
     uploadFile() {
       const vm = this;
+      // 顯示上傳按鈕讀取動畫
+      vm.status.fileUploading = true;
+
       // 為上傳檔案的資訊
       const uploadedFile = vm.$refs.files.files[0];
       // 使用 web api的 FormData()來模擬表單，因上傳檔案需用form的格式
@@ -473,9 +484,6 @@ export default {
       // 用 append傳送上傳檔案的欄位與資料
       formData.append('file-to-upload', uploadedFile);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`;
-      // 顯示上傳按鈕讀取動畫
-      vm.status.fileUploading = true;
-      // axios
       vm.$http
         .post(api, formData, {
           // 設定表單的表頭為 enctype="multipart/form-data" 這樣才能上傳檔案
@@ -484,7 +492,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data);
           // 如果上傳成功
           if (response.data.success) {
             // 因 tempProduct.imageUrl沒有雙向綁定，故使用 $set將資料綁定
@@ -494,16 +501,18 @@ export default {
             // 傳送參數給 AlertMessage並執行彈出訊息回饋
             vm.$bus.$emit('messsage:push', response.data.message, 'danger');
           }
+
           // 關閉上傳按鈕讀取動畫
           vm.status.fileUploading = false;
         });
     },
   },
-  created() {
-    // 進入時先取得產品出來
-    this.getProducts();
-    // 轉換頁面置頂
+  mounted() {
+    // 轉換頁面時置頂
     $('html,body').scrollTop(0);
+  },
+  created() {
+    this.getProducts();
   },
 };
 </script>

@@ -115,12 +115,9 @@ export default {
     getCart() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // axios
       vm.$http.get(api).then((response) => {
-        console.log(response.data);
         // 如果取得資料成功
         if (response.data.success) {
-          console.log('更新購物車數量成功');
           let total = 0;
           // 加總商品數量
           response.data.data.carts.forEach((item) => {
@@ -128,6 +125,7 @@ export default {
           });
           // 存入計算結果並顯示
           vm.qty = total;
+
           // 顯示動畫
           vm.cartIsLoading = true;
         }
@@ -157,7 +155,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// 引入 rwdMixin
 @import "@/assets/styles/scss/rwdMixin";
 
 // LOGO
