@@ -1,15 +1,6 @@
 <template>
   <div>
-    <!-- vue-loading -->
-    <loading :active.sync="status.pageIsLoading">
-      <div class="loadingio-spinner-dual-ball-mx4nrrd19pi">
-        <div class="ldio-l6eq6mvdt0s">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </loading>
+    <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
 
     <div class="container-fluid mt-5">
       <!-- 標題 -->
@@ -81,10 +72,10 @@
           </table>
         </div>
       </div>
-
-      <!-- 分頁 -->
-      <Pagination :pages="pagination" @emitPages="getCoupons"></Pagination>
     </div>
+
+    <!-- 分頁 -->
+    <Pagination :pages="pagination" @emitPages="getCoupons"></Pagination>
 
     <!-- edit Modal -->
     <div
@@ -265,10 +256,15 @@
 // 將$開頭給jquery使用
 import $ from 'jquery';
 
+import LoadingPage from '@/components/common/Loading_page.vue';
 import Pagination from '@/components/back/PaginationBack.vue';
 
 export default {
   name: 'Coupons',
+  components: {
+    LoadingPage,
+    Pagination,
+  },
   data() {
     return {
       // 優惠券列表
@@ -291,9 +287,6 @@ export default {
       // 頁數，這裡由後端設定每10筆顯示1頁
       pagination: {},
     };
-  },
-  components: {
-    Pagination,
   },
   methods: {
     getCoupons(page = 1) {

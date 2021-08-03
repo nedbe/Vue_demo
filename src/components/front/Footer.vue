@@ -1,16 +1,5 @@
 <template>
   <div class="bg-footerColor fixed-buttom">
-    <!-- vue-loading -->
-    <loading :active.sync="status.pageIsLoading">
-      <div class="loadingio-spinner-dual-ball-mx4nrrd19pi">
-        <div class="ldio-l6eq6mvdt0s">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </loading>
-
     <footer class="container pt-3 pt-sm-5 pb-3">
       <ul class="row d-flex justify-content-around align-items-center">
         <li class="icon">
@@ -141,8 +130,6 @@ export default {
         showMessage: false,
         // 按鈕讀取動畫
         buttonIsLoading: false,
-        // 整頁讀取動畫
-        pageIsLoading: false,
       },
     };
   },

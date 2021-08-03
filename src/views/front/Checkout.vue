@@ -1,15 +1,6 @@
 <template>
   <div>
-    <!-- vue-loading -->
-    <loading :active.sync="status.pageIsLoading">
-      <div class="loadingio-spinner-dual-ball-mx4nrrd19pi">
-        <div class="ldio-l6eq6mvdt0s">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </loading>
+    <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
 
     <div class="checkout_box">
       <div class="container">
@@ -297,8 +288,13 @@
 // 將$開頭給jquery使用
 import $ from 'jquery';
 
+import LoadingPage from '@/components/common/Loading_page.vue';
+
 export default {
   name: 'Checkout',
+  components: {
+    LoadingPage,
+  },
   data() {
     return {
       // 購物車資料

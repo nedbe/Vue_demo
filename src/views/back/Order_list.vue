@@ -1,15 +1,6 @@
 <template>
   <div>
-    <!-- vue-loading -->
-    <loading :active.sync="status.pageIsLoading">
-      <div class="loadingio-spinner-dual-ball-mx4nrrd19pi">
-        <div class="ldio-l6eq6mvdt0s">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </loading>
+    <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
 
     <div class="container-fluid mt-5">
       <!-- 標題 -->
@@ -355,10 +346,15 @@
 // 將$開頭給jquery使用
 import $ from 'jquery';
 
+import LoadingPage from '@/components/common/Loading_page.vue';
 import Pagination from '@/components/back/PaginationBack.vue';
 
 export default {
   name: 'Order_list',
+  components: {
+    LoadingPage,
+    Pagination,
+  },
   data() {
     return {
       // 訂單
@@ -377,9 +373,6 @@ export default {
       // 頁數，這裡由後端設定每10筆顯示1頁
       pagination: {},
     };
-  },
-  components: {
-    Pagination,
   },
   methods: {
     // 取得訂單列表
