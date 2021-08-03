@@ -140,7 +140,7 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/scss/rwdMixin";
+@import "@/assets/styles/scss/_rwdMixin";
 
 .title {
   font-size: 80px;

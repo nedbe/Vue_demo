@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/scss/rwdMixin";
+@import "@/assets/styles/scss/_rwdMixin";
 
 .jumbotron_bg {
   height: 300px;

@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scope>
-@import "@/assets/styles/scss/rwdMixin";
+@import "@/assets/styles/scss/_rwdMixin";
 
 // 品牌故事區塊
 .about {

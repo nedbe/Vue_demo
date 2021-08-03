@@ -413,7 +413,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/scss/rwdMixin";
+@import "@/assets/styles/scss/_rwdMixin";
 
 $secColor: #87775c;
 $thirdColor: #cacd4a;
