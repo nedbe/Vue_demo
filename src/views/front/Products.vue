@@ -1,17 +1,8 @@
 <template>
   <div>
-    <!-- vue-loading -->
-    <loading :active.sync="status.pageIsLoading">
-      <div class="loadingio-spinner-dual-ball-mx4nrrd19pi">
-        <div class="ldio-l6eq6mvdt0s">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </loading>
-
+    <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
     <Jumbotron />
+
     <div class="container mb-1 pt-1 pt-sm-3" id="show">
       <div class="row">
         <!-- 左側選單 -->
@@ -115,6 +106,7 @@
 // 將$開頭給jquery使用
 import $ from 'jquery';
 
+import LoadingPage from '@/components/common/Loading_page.vue';
 import Jumbotron from '@/components/front/Jumbotron.vue';
 import Sidebar from '@/components/front/Sidebar.vue';
 import Pagination from '@/components/front/Pagination.vue';
@@ -122,6 +114,7 @@ import Pagination from '@/components/front/Pagination.vue';
 export default {
   name: 'Products',
   components: {
+    LoadingPage,
     Jumbotron,
     Sidebar,
     Pagination,

@@ -1,5 +1,5 @@
 /* vue-loading套件樣式 */
-@keyframes ldio-l6eq6mvdt0s-o {
+@keyframes loading__item-o {
   0% {
     opacity: 1;
     transform: translate(0 0);
@@ -17,7 +17,7 @@
     transform: translate(0, 0);
   }
 }
-@keyframes ldio-l6eq6mvdt0s {
+@keyframes loading__item {
   0% {
     transform: translate(0, 0);
   }
@@ -28,7 +28,7 @@
     transform: translate(0, 0);
   }
 }
-.ldio-l6eq6mvdt0s div {
+.loading__item div {
   position: absolute;
   width: 56px;
   height: 56px;
@@ -36,28 +36,28 @@
   top: 72px;
   left: 44px;
 }
-.ldio-l6eq6mvdt0s div:nth-child(1) {
+.loading__item div:nth-child(1) {
   background: $mainColor;
-  animation: ldio-l6eq6mvdt0s 1s linear infinite;
+  animation: loading__item 1s linear infinite;
   animation-delay: -0.5s;
 }
-.ldio-l6eq6mvdt0s div:nth-child(2) {
+.loading__item div:nth-child(2) {
   background: #b83a17;
-  animation: ldio-l6eq6mvdt0s 1s linear infinite;
+  animation: loading__item 1s linear infinite;
   animation-delay: 0s;
 }
-.ldio-l6eq6mvdt0s div:nth-child(3) {
+.loading__item div:nth-child(3) {
   background: $mainColor;
-  animation: ldio-l6eq6mvdt0s-o 1s linear infinite;
+  animation: loading__item-o 1s linear infinite;
   animation-delay: -0.5s;
 }
-.loadingio-spinner-dual-ball-mx4nrrd19pi {
+.loading {
   width: 200px;
   height: 200px;
   display: inline-block;
   overflow: hidden;
 }
-.ldio-l6eq6mvdt0s {
+.loading__item {
   width: 100%;
   height: 100%;
   position: relative;
@@ -65,6 +65,6 @@
   backface-visibility: hidden;
   transform-origin: 0 0; /* see note above */
 }
-.ldio-l6eq6mvdt0s div {
+.loading__item div {
   box-sizing: content-box;
 }

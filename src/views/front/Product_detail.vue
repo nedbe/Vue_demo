@@ -1,15 +1,6 @@
 <template>
   <div>
-    <!-- vue-loading -->
-    <loading :active.sync="status.pageIsLoading">
-      <div class="loadingio-spinner-dual-ball-mx4nrrd19pi">
-        <div class="ldio-l6eq6mvdt0s">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </loading>
+    <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
 
     <div class="container mt-3 mt-sm-5 mb-5 Whole_box">
       <div class="row">
@@ -193,6 +184,7 @@
 // 將$開頭給jquery使用
 import $ from 'jquery';
 
+import LoadingPage from '@/components/common/Loading_page.vue';
 import Sidebar from '@/components/front/Sidebar.vue';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
@@ -200,6 +192,7 @@ import 'swiper/css/swiper.css';
 export default {
   name: 'Product_detail',
   components: {
+    LoadingPage,
     Sidebar,
     Swiper,
     SwiperSlide,
