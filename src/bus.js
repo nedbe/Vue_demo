@@ -21,7 +21,7 @@ Vue.prototype.$bus = new Vue();
 
 // 外層用$on註冊
 // vm.$bus.$on('upateCartQty', () => {
-//   vm.getCart();
+//   vm.showQty();
 // });
 
 // 內層用$emit觸發

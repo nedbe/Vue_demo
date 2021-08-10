@@ -62,31 +62,26 @@
               <div class="dropdown-menu bg-mainColor">
                 <router-link
                   class="dropdown-item mr-2"
-                  href="#"
                   to="/products/all"
                   >全部商品</router-link
                 >
                 <router-link
                   class="dropdown-item mr-2"
-                  href="#"
                   to="/products/beds"
                   >床</router-link
                 >
                 <router-link
                   class="dropdown-item mr-2"
-                  href="#"
                   to="/products/sofas"
                   >沙發</router-link
                 >
                 <router-link
                   class="dropdown-item mr-2"
-                  href="#"
                   to="/products/chairs"
                   >椅子</router-link
                 >
                 <router-link
                   class="dropdown-item mr-2"
-                  href="#"
                   to="/products/tables"
                   >桌子</router-link
                 >
@@ -111,25 +106,24 @@ export default {
     };
   },
   methods: {
-    // 取得購物車資料
-    getCart() {
+    // 顯示購物車商品數量
+    showQty() {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$http.get(api).then((response) => {
-        // 如果取得資料成功
-        if (response.data.success) {
-          let total = 0;
-          // 加總商品數量
-          response.data.data.carts.forEach((item) => {
-            total += item.qty;
-          });
-          // 存入計算結果並顯示
-          vm.qty = total;
+      // 從 localStorage取瀏覽資料
+      const data = JSON.parse(localStorage.getItem('cart'));
+      // 如果有資料則加總商品數量並存入計算結果
+      if (data) {
+        let total = 0;
+        data.forEach((item) => {
+          total += item.qty;
+        });
+        vm.qty = total;
+      } else {
+        vm.qty = '';
+      }
 
-          // 顯示動畫
-          vm.cartIsLoading = true;
-        }
-      });
+      // 顯示購物車數量動畫
+      vm.cartIsLoading = true;
     },
   },
   watch: {
@@ -141,14 +135,13 @@ export default {
   },
   created() {
     const vm = this;
-    // 取得購物車數量
-    vm.getCart();
+    vm.showQty();
 
     // 使用 event bus跨組件溝通
     // 使用方式詳 '/bus.js'
     vm.$bus.$on('upateCartQty', () => {
       // 取得購物車數量
-      vm.getCart();
+      vm.showQty();
     });
   },
 };

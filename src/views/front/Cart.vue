@@ -37,7 +37,7 @@
               </thead>
               <tbody>
                 <!-- 購物車無商品時顯示 -->
-                <tr class="text-center" v-if="cart.final_total === 0">
+                <tr class="text-center" v-if="cart.length === 0">
                   <td colspan="6" class="align-middle text-secColor">
                     您尚未加入商品
                   </td>
@@ -46,9 +46,9 @@
                 <!-- 購物車商品 -->
                 <tr
                   class="text-center"
-                  v-for="(item, index) in cart.carts"
+                  v-for="(item, index) in cart"
                   :key="index"
-                  v-show="cart.final_total > 0"
+                  v-show="cart.length > 0"
                 >
                   <td class="align-middle">
                     <a href="#!" @click.prevent="deleteCartItem(item.id)"
@@ -62,17 +62,17 @@
                       @click.prevent="goToProductDetail(item.product_id)"
                     >
                       <img
-                        :src="item.product.imageUrl"
+                        :src="item.imageUrl"
                         alt="商品圖片"
                         class="cart_img d-block d-sm-inline-block"
                       />
                       <span class="pl-sm-2 text-secColor">{{
-                        item.product.title
+                        item.title
                       }}</span>
                     </a>
                   </td>
                   <td class="align-middle text-right">
-                    {{ item.product.price | currency }}
+                    {{ item.price | currency }}
                   </td>
                   <td class="align-middle text-right text-sm-center">
                     <span class="input_group d-inline-block">
@@ -101,27 +101,36 @@
                     </span>
                   </td>
                   <td class="align-middle d-none d-sm-table-cell text-right">
-                    {{ item.final_total | currency }}
+                    {{ (item.qty * item.price) | currency }}
                   </td>
                 </tr>
 
-                <tr v-show="cart.final_total > 0">
+                <tr v-show="cart.length > 0">
                   <td colspan="3" class="align-middle">總計</td>
                   <td
                     colspan="3"
                     class="align-middle text-right font-weight-bold"
                   >
-                    {{ cart.final_total | currency }}
+                    {{ cartTotal | currency }}
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr class="last_tr">
+                  <!-- 購物車無商品時顯示 -->
                   <td colspan="3" class="pl-0">
+                    <router-link
+                      class="btn customize_btn btn_color mr-3"
+                      to="/products/all"
+                      v-if="cart.length === 0"
+                      >前往挑選商品</router-link
+                    >
+                    <!-- 購物車有商品 -->
                     <a
                       href="#!"
                       class="btn customize_btn btn_outline_color mr-3"
                       @click.prevent="goBack"
+                      v-else
                       >返回上一頁</a
                     >
                     <a
@@ -132,13 +141,14 @@
                     >
                   </td>
                   <td colspan="3" class="text-right pr-0">
-                    <router-link
+                    <button
                       href="#!"
                       class="btn customize_btn btn_main_color"
-                      :to="{ name: 'Checkout' }"
-                      v-if="cart.final_total > 0"
-                      >前往結帳</router-link
+                      @click.prevent="checkout"
+                      v-if="cart.length > 0"
                     >
+                      前往結帳
+                    </button>
                   </td>
                 </tr>
               </tfoot>
@@ -164,7 +174,7 @@ export default {
   data() {
     return {
       // 購物車資料
-      cart: {},
+      cart: [],
       // 暫存商品數量
       tempQty: 1,
       // 判斷是否啟用狀態
@@ -174,6 +184,18 @@ export default {
       },
     };
   },
+  computed: {
+    // 計算購物車總額
+    cartTotal() {
+      const vm = this;
+      // 加總商品金額
+      let total = 0;
+      vm.cart.forEach((item) => {
+        total += item.qty * item.price;
+      });
+      return total;
+    },
+  },
   methods: {
     // 取得購物車列表
     getCart() {
@@ -181,31 +203,36 @@ export default {
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
 
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$http.get(api).then((response) => {
+      // 從 localStorage取資料
+      const data = JSON.parse(localStorage.getItem('cart'));
+      // 如果有資料，則直接將資料存入
+      if (data) {
+        vm.cart = data;
+
+        // 加總商品數量
+        let total = 0;
+        vm.cart.forEach((item) => {
+          total += item.qty;
+        });
+
         // 更新導覽列購物車數量
-        vm.$bus.$emit('upateCartQty');
+        vm.$bus.$emit('upateCartQty', total);
 
         // 關閉整頁讀取動畫
+        setTimeout(() => {
+          vm.status.pageIsLoading = false;
+        }, 800);
+      } else {
         vm.status.pageIsLoading = false;
-
-        // 存入購物車資料
-        vm.cart = response.data.data;
-      });
+      }
     },
     // 刪除購物車商品
     deleteCartItem(id) {
       const vm = this;
-      // 啟動整頁讀取動畫
-      vm.status.pageIsLoading = true;
 
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.$http.delete(api).then(() => {
-        // 關閉整頁讀取動畫
-        vm.status.pageIsLoading = false;
-        // 重新取得購物車資料
-        vm.getCart();
-      });
+      // 找出要刪除的商品並刪除
+      const deleteItem = vm.cart.findIndex((item) => item.id === id);
+      vm.cart.splice(deleteItem, 1);
     },
     // 調整商品數量
     addCartQty(num, index, event) {
@@ -213,7 +240,7 @@ export default {
       // 如果是使用按鈕增減數量
       if (num !== true) {
         // 暫存傳入的當前商品數
-        vm.tempQty = vm.cart.carts[index].qty;
+        vm.tempQty = vm.cart[index].qty;
         // 將商品數量增減
         vm.tempQty += parseInt(num, 10);
       } else {
@@ -233,7 +260,7 @@ export default {
         vm.tempQty = 99;
       }
       // 存入當前數量
-      vm.cart.carts[index].qty = vm.tempQty;
+      vm.cart[index].qty = vm.tempQty;
     },
     // 更新購物車
     upateCart() {
@@ -241,25 +268,26 @@ export default {
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
 
-      // 先將購物車刪除再重新加入
-      vm.cart.carts.forEach((item) => {
-        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
-        vm.$http.delete(url).then(() => {
-          // 後端格式
-          const cart = {
-            product_id: item.product_id,
-            qty: item.qty,
-          };
-          const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-          vm.$http.post(api, { data: cart }).then((res) => {
-            // 如果新增購物車成功
-            if (res.data.success) {
-              // 重新取得購物車資料
-              vm.getCart();
-            }
-          });
-        });
+      // 將購物車存入localStorage
+      new Promise((resolve) => {
+        resolve(localStorage.setItem('cart', JSON.stringify(vm.cart)));
+      }).then(() => {
+        setTimeout(() => {
+          // 關閉整頁讀取動畫
+          vm.status.pageIsLoading = false;
+        }, 800);
       });
+
+      // 重新取得購物車資料
+      vm.getCart();
+    },
+    // 結帳處理
+    checkout() {
+      const vm = this;
+      // 啟動整頁讀取動畫
+      vm.status.pageIsLoading = true;
+
+      vm.$router.push({ name: 'Checkout' });
     },
     // 轉址到商品細節頁面
     goToProductDetail(productId) {

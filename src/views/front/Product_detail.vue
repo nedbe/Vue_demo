@@ -52,7 +52,7 @@
                 <button
                   type="submit"
                   class="btn customize_btn btn_color"
-                  @click.prevent="checkCart(product.id, $event)"
+                  @click.prevent="addtoCart(product, $event)"
                   v-if="product.is_enabled === 1"
                 >
                   加入購物車
@@ -163,7 +163,7 @@
                   <span class="pt-2 pb-2">NT{{ item.price | currency }}元</span>
                   <button
                     class="btn btn-block customize_btn btn_color"
-                    @click="checkCart(item.id, $event, (tempQty = 1))"
+                    @click="addtoCart(item, $event, (tempQty = 1))"
                   >
                     加入購物車
                   </button>
@@ -228,8 +228,8 @@ export default {
       },
       // 商品
       product: {},
-      // 暫存購物車商品
-      tempCart: [],
+      // 購物車商品
+      cart: [],
       // 暫存商品數量
       tempQty: 1,
       // 瀏覽過的商品
@@ -288,14 +288,24 @@ export default {
     // 取得購物車列表
     getCart() {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$http.get(api).then((response) => {
-        // 將購物車資料存入
-        vm.tempCart = response.data.data;
-      });
+      // 從 localStorage取資料
+      const data = JSON.parse(localStorage.getItem('cart'));
+      // 如果有資料，則直接將資料存入
+      if (data) {
+        vm.cart = data;
+
+        // 加總商品數量
+        let total = 0;
+        vm.cart.forEach((item) => {
+          total += item.qty;
+        });
+
+        // 更新導覽列購物車數量
+        vm.$bus.$emit('upateCartQty', total);
+      }
     },
-    // 檢查購物車商品
-    checkCart(id, event) {
+    // 將商品加入購物車
+    addtoCart(data, event) {
       const vm = this;
       // 顯示按鈕讀取動畫
       const i = '<i class="fas fa-spinner fa-spin"></i>';
@@ -303,45 +313,38 @@ export default {
       // 關閉按鈕以免連續點擊
       $(event.target).attr('disabled', true);
 
-      // 後端格式
-      const cart = {
-        product_id: id,
-        qty: vm.tempQty,
-      };
-      // 查看是否有重複的資料
-      const check = vm.tempCart.carts.find((item) => item.product_id === id);
-      // 如果購物車有重複的商品，先刪除後再重新加入否則直接加入購物車
-      if (check !== undefined) {
-        // 讓該商品數量加上新填入的數量
-        cart.qty = check.qty + vm.tempQty;
-
-        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${check.id}`;
-        vm.$http.delete(url).then(() => {
-          vm.addtoCart(cart, event);
-        });
+      // 查看購物車裡是否有重複的資料
+      const check = vm.cart.findIndex((item) => item.product_id === data.id);
+      // 如果沒重複則直接將商品加入購物車
+      if (check === -1) {
+        const product = {
+          product_id: data.id,
+          qty: vm.tempQty,
+          title: data.title,
+          price: data.price,
+          imageUrl: data.imageUrl,
+        };
+        vm.cart.push(product);
       } else {
-        vm.addtoCart(cart, event);
+        // 有重複則將數量加總
+        vm.cart[check].qty += vm.tempQty;
       }
-    },
-    // 將商品加入購物車
-    addtoCart(cart, event) {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$http.post(api, { data: cart }).then((response) => {
-        // 如果加入購物車成功
-        if (response.data.success) {
-          // 更新導覽列購物車數量
-          vm.$bus.$emit('upateCartQty');
-          // 重新取得購物車資料
-          vm.getCart();
-        }
 
-        // 移除按鈕讀取動畫
-        $(event.target)
-          .children()
-          .remove();
-        // 重新開啟按鈕
-        $(event.target).attr('disabled', false);
+      // 將購物車存入localStorage
+      new Promise((resolve) => {
+        resolve(localStorage.setItem('cart', JSON.stringify(vm.cart)));
+      }).then(() => {
+        // 更新導覽列購物車數量
+        vm.$bus.$emit('upateCartQty');
+
+        setTimeout(() => {
+          // 移除按鈕讀取動畫
+          $(event.target)
+            .children()
+            .remove();
+          // 重新開啟按鈕
+          $(event.target).attr('disabled', false);
+        }, 1000);
       });
     },
     // 存瀏覽資料
@@ -362,7 +365,7 @@ export default {
       // 從 localStorage取瀏覽資料
       const data = JSON.parse(localStorage.getItem('save'));
       // 如果有資料，則直接將資料存入
-      if (data.length !== null) {
+      if (data) {
         this.recordProducts = data;
       }
     },
@@ -395,6 +398,7 @@ export default {
       const vm = this;
       // 重新取得商品列表
       vm.getProductDetail();
+
       // 轉換頁面置頂
       $('html,body').scrollTop(0);
     },

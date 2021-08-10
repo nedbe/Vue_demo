@@ -91,7 +91,7 @@
                   </td>
                 </tr>
 
-                <tr class="last_tr">
+                <tr class="last_tr" v-if="cart.carts">
                   <td colspan="2" class="align-middle">總計</td>
                   <td
                     colspan="3"
@@ -102,7 +102,7 @@
                 </tr>
               </tbody>
               <!-- 折扣碼 -->
-              <tfoot>
+              <tfoot v-if="cart.carts">
                 <tr>
                   <td colspan="5" class="coupon pl-0 pr-0">
                     <p class="pl-2 pb-1">
@@ -298,7 +298,9 @@ export default {
   data() {
     return {
       // 購物車資料
-      cart: {},
+      cart: [],
+      // 暫存購物車資料
+      tempCart: [],
       // 折扣碼
       coupon: '',
       // 套用折扣碼訊息回饋
@@ -326,22 +328,66 @@ export default {
     };
   },
   methods: {
-    // 取得購物車列表
-    getCart() {
+    // 清除購物車以免有之前的資料
+    cleanCart() {
       const vm = this;
       // 啟動整頁讀取動畫
       vm.status.pageIsLoading = true;
 
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       vm.$http.get(api).then((response) => {
-        // 更新導覽列購物車數量
-        vm.$bus.$emit('upateCartQty');
+        // 暫存入購物車資料
+        vm.tempCart = response.data.data;
+        // 如果購物車API有資料
+        if (vm.tempCart.carts.length > 0) {
+          // 將購物車清空
+          vm.tempCart.carts.forEach((item) => {
+            const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
+            vm.$http.delete(url).then();
+          });
 
-        // 關閉整頁讀取動畫
-        vm.status.pageIsLoading = false;
+          vm.getCart();
+        } else if (JSON.parse(localStorage.getItem('cart'))) {
+          // 如果localStorage有資料
+          vm.getCart();
+        } else {
+          vm.$router.push({ path: 'Home' });
+        }
+      });
+    },
+    // 取得購物車列表
+    getCart() {
+      const vm = this;
+      // 從 localStorage取資料
+      const data = JSON.parse(localStorage.getItem('cart'));
+      // 如果有資料，則直接將資料存入
+      if (data) {
+        vm.cart = data;
+      }
 
-        // 存入購物車資料
-        vm.cart = response.data.data;
+      // 將購物車資料送往後端API
+      vm.cart.forEach((item) => {
+        // 後端格式
+        const cart = {
+          product_id: item.product_id,
+          qty: item.qty,
+        };
+
+        const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+        // 送出到後端後再取回確認資料無誤
+        vm.$http.post(api, { data: cart }).then((response) => {
+          if (response.data.success) {
+            vm.$http.get(api).then((res) => {
+              if (res.data.success) {
+                // 關閉整頁讀取動畫
+                vm.status.pageIsLoading = false;
+
+                // 存入購物車資料
+                vm.cart = res.data.data;
+              }
+            });
+          }
+        });
       });
     },
     // 折扣碼處理
@@ -363,11 +409,17 @@ export default {
           vm.couponFeedBack = '折扣碼過期或輸入錯誤！';
         }
 
-        // 關閉整頁讀取動畫
-        vm.status.pageIsLoading = false;
-
         // 重新取得購物車資料
-        vm.getCart();
+        const cartAPI = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+        vm.$http.get(cartAPI).then((res) => {
+          if (res.data.success) {
+            // 關閉整頁讀取動畫
+            vm.status.pageIsLoading = false;
+
+            // 存入購物車資料
+            vm.cart = res.data.data;
+          }
+        });
       });
     },
     // 提交結帳資料
@@ -398,13 +450,14 @@ export default {
                 // 切換成付款後畫面
                 vm.status.is_paid = true;
 
+                localStorage.clear();
                 // 更新導覽列購物車數量
                 vm.$bus.$emit('upateCartQty');
 
                 // 轉換頁面置頂
                 $('html,body').scrollTop(0);
                 // 5秒後跳轉首頁
-                setTimeout(() => vm.$router.push({ path: '/home' }), 10000);
+                setTimeout(() => vm.$router.push({ path: '/home' }), 5000);
               }
             });
           });
@@ -421,7 +474,7 @@ export default {
     $('html,body').scrollTop(0);
   },
   created() {
-    this.getCart();
+    this.cleanCart();
   },
 };
 </script>
@@ -526,5 +579,10 @@ $secColor: #87775c;
   .form-row {
     padding-top: 8px;
   }
+}
+
+// 確認結帳按鈕
+.btn:disabled{
+  cursor: not-allowed;
 }
 </style>
