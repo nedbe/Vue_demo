@@ -1,35 +1,39 @@
-// 修改bootstrap btn原樣式
-.btn:hover{
-  color: $white;
-}
-
-// 按鈕基礎樣式
-.customize_btn {
-  font-size: 16px;
-  border-radius: 0px;
-  padding: 6px 20px;
-}
-
 // 實心按鈕樣式
 @mixin btn($color) {
   color: $white;
   background-color: $color;
   &:hover {
     background-color: darken($color, 5%);
+    color: $white;
   }
   &:focus {
     box-shadow: 0 0 0 0;
   }
 }
 
-// 實心按鈕-主色
-.btn_main_color {
-  @include btn($mainColor);
+.btn {
+  // 按鈕基礎樣式
+  &--baseSet {
+    font-size: 16px;
+    border-radius: 0px;
+    padding: 9px 20px 6px;
+  }
+
+  // 實心按鈕-主色
+  &--mainColor{
+    @include btn($mainColor);
+  }
+
+  // 實心按鈕-輔色
+  &--secColor{
+    @include btn($secColor);
+  }
+
 }
 
-// 實心按鈕
-.btn_color {
-  @include btn($secColor);
+// 完成表單前按鈕不可點選指標
+.btn:disabled{
+  cursor: not-allowed;
 }
 
 // 外框線按鈕樣式
@@ -47,14 +51,17 @@
   }
 }
 
-// 外框線按鈕-主色
-.btn_outline_main_color {
-  @include btn_outline($mainColor);
-}
+.btn-outline{
+  // 外框線按鈕-主色
+  &--mainColor {
+    @include btn_outline($mainColor);
+  }
+  
+  // 外框線按鈕-輔色
+  &--secColor {
+    @include btn_outline($secColor);
+  }
 
-// 外框線按鈕
-.btn_outline_color {
-  @include btn_outline($secColor);
 }
 
 // 分頁按鈕

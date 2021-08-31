@@ -582,7 +582,7 @@ $secColor: #87775c;
 }
 
 // 確認結帳按鈕
-.btn:disabled{
+.btn:disabled {
   cursor: not-allowed;
 }
 </style>

@@ -10,14 +10,22 @@
       }"
     >
       <div class="text-white">
-        <h1 class="title">THE NAP STORE</h1>
-        <p class="content" data-swiper-parallax="-140" v-show="index === 0">
+        <h1 class="swiper__title">THE NAP STORE</h1>
+        <p
+          class="swiper__content"
+          data-swiper-parallax="-140"
+          v-show="index === 0"
+        >
           歡慶開幕 全館八折
         </p>
-        <p class="content" data-swiper-parallax="-140" v-show="index === 1">
+        <p
+          class="swiper__content"
+          data-swiper-parallax="-140"
+          v-show="index === 1"
+        >
           - DESIGN FURNITURE -
         </p>
-        <router-link class="btn btn-lg pick_btn" to="/products/all"
+        <router-link class="btn btn-lg pickBtn mt-2" to="/products/all"
           >挑選商品</router-link
         >
       </div>
@@ -91,20 +99,10 @@ export default {
   text-align: center;
   font-size: 18px;
   height: 100vh;
-  background-position: 50% 70%;
-
-  /* Center slide text vertically */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
+  background-position: 50% 60%;
+  background-size: cover;
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
   align-items: center;
 }
 
@@ -142,32 +140,34 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/scss/_rwdMixin";
 
-.title {
-  font-size: 80px;
-  @include sm{
-    font-size: 60px;
+$secColor: #87775c;
+$thirdColor: #cacd4a;
+
+.swiper {
+  &__title {
+    font-size: 80px;
+    @include sm {
+      font-size: 60px;
+    }
+  }
+
+  &__content {
+    font-size: 50px;
+    @include sm {
+      font-size: 30px;
+    }
   }
 }
 
-.content {
-  font-size: 50px;
-    @include sm{
-    font-size: 30px;
-  }
-}
-
-$text_color: #cacd4a;
-
-.pick_btn {
+.pickBtn {
   border-radius: 99px;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  color: #87775c;
+  padding-top: 11px;
+  color: $secColor;
   background-color: #fff;
   &:hover {
-    color: $text_color;
+    color: $thirdColor;
     background-color: rgba(255, 255, 255, 0);
-    border: 1px $text_color solid;
+    border: 1px $thirdColor solid;
   }
 }
 </style>

@@ -25,8 +25,7 @@ const routes = [
     redirect: '/home',
   },
   {
-    // 路徑建議開頭不要大寫
-    path: '/home',
+    path: '/home/:loaction?',
     // 因有 children 還加 name,DevTools會跳警示訊息
     // name: 'Layout',
     component: Layout,
@@ -104,9 +103,9 @@ router.beforeEach((to, from, next) => {
     axios.post(api).then((response) => {
       // 如果還是登入狀態則放行
       if (response.data.success) {
-        next();
+        // next();
         // 登入modal關閉
-        $('#loginModal').modal('hide');
+        $('#loginModal').modal('show');
       } else {
         // 登入modal開啟
         $('#loginModal').modal('show');

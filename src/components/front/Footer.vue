@@ -2,23 +2,21 @@
   <div class="bg-footerColor fixed-buttom">
     <footer class="container pt-3 pt-sm-5 pb-3">
       <ul class="row d-flex justify-content-around align-items-center">
+        <!-- 社群 icon -->
         <li class="icon">
-          <!-- Facebook -->
-          <a class="btn icon_link" href="#!"
+          <a class="btn icon__link" href="#!"
             ><i class="fab fa-facebook-f"></i
           ></a>
 
-          <!-- Twitter -->
-          <a class="btn icon_link" href="#!"><i class="fab fa-twitter"></i></a>
+          <a class="btn icon__link" href="#!"><i class="fab fa-twitter"></i></a>
 
-          <!-- Google -->
-          <a class="btn icon_link" href="#!"><i class="fab fa-google"></i></a>
+          <a class="btn icon__link" href="#!"><i class="fab fa-google"></i></a>
 
-          <!-- Instagram -->
-          <a class="btn icon_link" href="#!"
+          <a class="btn icon__link" href="#!"
             ><i class="fab fa-instagram"></i
           ></a>
         </li>
+        <!-- End 社群 icon -->
         <li>
           <span class="text-white d-none d-sm-block"
             >聯絡電話：04-2244-6688</span
@@ -29,7 +27,7 @@
             >ⓒ僅個人作品練習，無任何商業用途
             <span class="divider">
               <a
-                class="user icon_link"
+                class="icon__link pl-2"
                 href="#"
                 title="管理者登入"
                 data-target="#loginModal"
@@ -52,9 +50,9 @@
       data-backdrop="static"
     >
       <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title text-mainColor" id="modalLabel">
+        <div class="modal-content rounded-0">
+          <div class="modal-header bg-mainColor modal__header--bt rounded-0 border-0">
+            <h4 class="modal-title text-white" id="modalLabel">
               管理者登入
             </h4>
             <button
@@ -90,13 +88,13 @@
               </div>
             </div>
             <div
-              class="modal-footer justify-content-end"
+              class="modal-footer justify-content-end border-top-0"
               :class="{ 'justify-content-between': status.showMessage }"
             >
               <span class="text-danger" v-if="status.showMessage"
                 >帳號或密碼錯誤，請重新登入。</span
               >
-              <button type="submit" class="btn customize_btn btn_main_color">
+              <button type="submit" class="btn btn--baseSet btn--mainColor">
                 登入
                 <i
                   class="fas fa-spinner fa-spin"
@@ -108,6 +106,7 @@
         </div>
       </div>
     </div>
+    <!-- End 管理者登入 -->
   </div>
 </template>
 
@@ -183,7 +182,7 @@ export default {
 @import "@/assets/styles/scss/_rwdMixin";
 
 // icon
-.icon_link {
+.icon__link {
   width: 40px;
   margin-left: 5px;
   color: #fff;
@@ -208,26 +207,13 @@ export default {
   border-left: 1px solid rgb(253, 159, 18);
   height: 30px;
   margin: 0 7.5px;
-
-  .user {
-    padding-left: 5px;
-  }
 }
 
 // 管理者登入視窗
 .modal {
-  // 視窗外框
-  .modal-content {
-    border-radius: 0;
-  }
-
   // 底線
-  .modal-header {
+  .modal__header--bt {
     border-bottom: 2px solid #dee2e6;
-  }
-
-  .modal-footer {
-    border-top: 0;
   }
 }
 </style>
