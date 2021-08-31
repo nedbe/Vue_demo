@@ -2,37 +2,41 @@
   <div>
     <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
 
-    <div class="container mt-3 mt-sm-5 mb-5 Whole_box">
+    <div class="container mt-3 mt-sm-5 mb-5 page--pt">
       <div class="row">
         <!-- 左側選單 -->
-        <div class="col-md-3 sticky_container d-none d-sm-block">
+        <div class="col-md-3 sidebar--sticky d-none d-sm-block">
           <Sidebar />
         </div>
         <!-- 右側商品資訊 -->
         <div class="col-md-9">
-          <div class="row">
+          <div class="row product">
             <div class="col-md-6 text-center">
-              <img :src="product.imageUrl" alt="商品圖片" class="product_img" />
+              <img
+                :src="product.imageUrl"
+                alt="商品圖片"
+                class="product__img"
+              />
             </div>
-            <div class="col-md-6 card_content">
-              <h1 class="text-secColor">{{ product.title }}</h1>
-              <span class="card-text text-left mt-3">
+            <div class="col-md-6 pt-5">
+              <h1 class="text-secColor product__title">{{ product.title }}</h1>
+              <span class="card-text text-left mt-3 product__price">
                 NT{{ product.price | currency }}元
               </span>
               <p class="text-justify text-secColor mt-4">
                 {{ product.description }}
               </p>
               <div class="d-flex justify-content-between mt-4">
-                <div class="input_group">
+                <div class="input">
                   <input
                     type="button"
                     value="-"
-                    class="input_button"
+                    class="input__button"
                     @click="addCartQty(tempQty - 1)"
                   />
                   <input
                     type="number"
-                    class="text-center input_number"
+                    class="text-center input__number"
                     step="1"
                     min="1"
                     max="99"
@@ -45,19 +49,21 @@
                   <input
                     type="button"
                     value="+"
-                    class="input_button"
+                    class="input__button"
                     @click="addCartQty(tempQty + 1)"
                   />
                 </div>
                 <button
                   type="submit"
-                  class="btn customize_btn btn_color"
+                  class="btn btn--baseSet btn--secColor"
                   @click.prevent="addtoCart(product, $event)"
                   v-if="product.is_enabled === 1"
                 >
                   加入購物車
                 </button>
-                <a class="btn customize_btn btn_color disabled" v-else
+                <a
+                  class="btn btn--baseSet btn-outline--secColor disabled"
+                  v-else
                   >缺貨中</a
                 >
               </div>
@@ -101,7 +107,7 @@
                   aria-labelledby="specification-tab"
                 >
                   <p
-                    class="text-justify content content_pre p-3"
+                    class="text-justify content content--pre p-3"
                     v-text="product.content"
                   ></p>
                 </div>
@@ -112,19 +118,19 @@
                   aria-labelledby="notice-tab"
                 >
                   <ul class="text-justify content p-3">
-                    <li>
+                    <li class="content__item">
                       <strong>送貨時間：</strong>
                       <br />
                       我們將於訂單完成後3日內(不含例假日)與您聯繫送貨時間。請務必於訂單中填寫您正確的連絡電話，
                       在無法聯繫上您的情況下，我們將不會安排出貨。
                       若您於下單後有任何問題，可與我們聯絡。
                     </li>
-                    <li>
+                    <li class="content__item">
                       <strong>配送運費：</strong>
                       <br />
                       運費已包含在售價裡，並不會再另外向您收費。
                     </li>
-                    <li>
+                    <li class="content__item">
                       <strong>線上購物七天鑑賞期：</strong>
                       <br />
                       線上購買之商品於到貨日起算之7日內為鑑賞期(鑑賞期並非試用期)，若非商品品質瑕疵問題於鑑賞期內退換貨之情形，
@@ -132,7 +138,7 @@
                       ，及所有相關之購買發票、配件、價標、贈品等也需保持其完整性，
                       若有損壞、遺失、配件不全或商品有使用痕跡，恕無法接受退換貨。
                     </li>
-                    <li>
+                    <li class="content__item">
                       <strong>其他服務：</strong>
                       <br />
                       如您有其他關於訂購、商品等相關問題，
@@ -147,22 +153,24 @@
           <!-- 瀏覽紀錄 -->
           <div class="row mt-4 mt-sm-3 mb-3">
             <div class="col">
-              <h2 class="h4">瀏覽紀錄</h2>
+              <h2 class="records">瀏覽紀錄</h2>
               <swiper class="swiper pt-3" :options="swiperOption">
                 <swiper-slide
                   v-for="(item, index) in recordProducts"
                   :key="index"
                 >
-                  <div class="position">
+                  <div class="swiper__body">
                     <a href="#!" @click.prevent="goToProductDetail(item.id)">
-                      <img :src="item.imageUrl" alt="" class="swiper_img" />
-                      <div class="overlay p-2">查看商品</div>
+                      <img :src="item.imageUrl" alt="" class="swiper__img" />
+                      <div class="swiper__img--overlay p-2">查看商品</div>
                     </a>
                   </div>
                   <h3 class="h5 text-secColor pt-2 pb-2">{{ item.title }}</h3>
-                  <span class="pt-2 pb-2">NT{{ item.price | currency }}元</span>
+                  <span class="pt-2 pb-2 swiper__price"
+                    >NT{{ item.price | currency }}元</span
+                  >
                   <button
-                    class="btn btn-block customize_btn btn_color"
+                    class="btn btn-block btn--baseSet btn--secColor"
                     @click="addtoCart(item, $event, (tempQty = 1))"
                   >
                     加入購物車
@@ -423,45 +431,44 @@ $secColor: #87775c;
 $thirdColor: #cacd4a;
 
 // 整個頁面
-.Whole_box {
+.page--pt {
   padding-top: 76px;
 }
 
 // 側邊欄
-.sticky_container {
+.sidebar--sticky {
   position: sticky;
   top: 100px;
   left: 0;
   height: 300px;
 }
 
-// 商品名稱
-.card_content {
-  h1 {
+// 商品資訊
+.product {
+  // 商品圖
+  &__img {
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+    @include sm {
+      margin-bottom: 16px;
+    }
+  }
+
+  // 商品名稱
+  &__title {
     @include md {
       font-size: 32px;
     }
   }
 
-  .card-text {
+  // 商品價格
+  &__price {
+    font-size: 25px;
     @include md {
       font-size: 24px;
     }
   }
-}
-
-// 商品圖
-.product_img {
-  max-width: 100%;
-  max-height: 450px;
-  @include sm {
-    margin-bottom: 16px;
-  }
-}
-
-// 商品價格
-.card-text {
-  font-size: 25px;
 }
 
 // 商品規格與注意事項標籤切換效果
@@ -486,19 +493,20 @@ $thirdColor: #cacd4a;
   line-height: 2rem;
   border-bottom: 1px solid $thirdColor;
 
-  li {
+  &__item {
     list-style-type: none;
     padding-bottom: 12px;
   }
-}
 
-.content_pre {
-  white-space: pre;
-  overflow: auto;
+  &--pre {
+    white-space: pre;
+    overflow: auto;
+  }
 }
 
 // 瀏覽紀錄
-h4 {
+.records {
+  font-size: 24px;
   padding: 16px 8px;
   border-bottom: 1px solid $thirdColor;
 }
@@ -507,49 +515,52 @@ h4 {
 .swiper {
   width: 100%;
 
-  .swiper-slide {
-    height: 100%;
-    flex-direction: column;
-
-    .position {
-      position: relative;
-      overflow: hidden;
-      box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
-
-      .overlay {
-        position: absolute;
-        bottom: 0;
-        background: $thirdColor;
-        color: #fff;
-        width: 100%;
-        transition: 0.5s ease;
-        opacity: 0;
-        font-size: 16px;
-        text-align: center;
-        transition: opacity 0.7s ease-in;
-      }
-      &:hover .overlay {
-        opacity: 1;
-        transition: opacity 0.7s ease-out;
-      }
-
-      // 圖片
-      .swiper_img {
-        width: 100%;
-        height: 180px;
-        transform: scale(1, 1);
-        transition: transform 0.7s ease-in;
-      }
-      &:hover .swiper_img {
-        transform: scale(1.05, 1.05);
-        transition: transform 0.7s ease-out;
-      }
-    }
-
-    // 文字
-    span {
-      font-size: 16px;
-    }
+  &__body {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
   }
+
+  // 圖片
+  &__img {
+    width: 250px;
+    height: 180px;
+    object-fit: cover;
+    transform: scale(1, 1);
+    transition: transform 0.7s ease-in;
+  }
+
+  &__body:hover &__img {
+    transform: scale(1.05, 1.05);
+    transition: transform 0.7s ease-out;
+  }
+
+  &__img--overlay {
+    position: absolute;
+    bottom: 0;
+    background: $thirdColor;
+    color: #fff;
+    width: 100%;
+    transition: 0.5s ease;
+    opacity: 0;
+    font-size: 16px;
+    text-align: center;
+    transition: opacity 0.7s ease-in;
+  }
+
+  &__body:hover &__img--overlay {
+    opacity: 1;
+    transition: opacity 0.7s ease-out;
+  }
+
+  // 價格
+  &__price {
+    font-size: 16px;
+  }
+}
+
+.swiper-slide {
+  height: 100%;
+  flex-direction: column;
 }
 </style>

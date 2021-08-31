@@ -6,7 +6,7 @@
     <div class="container mb-1 pt-1 pt-sm-3" id="show">
       <div class="row">
         <!-- 左側選單 -->
-        <div class="col-md-3 sticky_container d-none d-sm-block">
+        <div class="col-md-3 sidebar--sticky d-none d-sm-block">
           <Sidebar />
         </div>
         <!-- 右側排序 -->
@@ -17,18 +17,13 @@
               for="sort"
               >顯示方法</label
             >
-            <select
-              name="sort"
-              id="sort"
-              class="custom-select"
-              v-model="sortMethod"
-            >
+            <select name="sort" id="sort" class="sort" v-model="sortMethod">
               <option value="價格排序低到高">價格排序：低到高</option>
               <option value="價格排序高到低">價格排序：高到低</option>
             </select>
           </div>
           <!-- 主要商品列表 -->
-          <div class="products_content">
+          <div class="products">
             <div class="row">
               <div
                 class="col-md-4 mb-4"
@@ -36,7 +31,7 @@
                 :key="index"
               >
                 <div class="card border-0 text-center">
-                  <div class="card_img">
+                  <div class="card-top">
                     <!-- 正常商品 -->
                     <a
                       href="#!"
@@ -48,12 +43,14 @@
                         :src="item.imageUrl"
                         alt="商品圖片"
                       />
-                      <div class="overlay text-white text-center w-100 p-2">
+                      <div
+                        class="card-img--overlay text-white text-center w-100 p-2"
+                      >
                         查看商品
                       </div>
                     </a>
                     <!-- 缺貨商品 -->
-                    <a href="javascript:;" class="disabled_link" v-else>
+                    <a href="javascript:;" class="disabled-link" v-else>
                       <img
                         class="card-img-top"
                         :src="item.imageUrl"
@@ -62,7 +59,7 @@
                     </a>
                   </div>
                   <div class="card-body">
-                    <h3 class="h4 card-title text-center text-secColor">
+                    <h3 class="card-title text-center text-secColor">
                       {{ item.title }}
                     </h3>
                     <span class="card-text text-center">
@@ -71,7 +68,7 @@
                   </div>
                   <div class="card-footer border-top-0 p-0">
                     <button
-                      class="btn btn-block customize_btn btn_color"
+                      class="btn btn-block btn--baseSet btn--secColor"
                       @click="addToCart(item, (qty = 1), $event)"
                       v-if="item.is_enabled === 1"
                     >
@@ -79,7 +76,7 @@
                     </button>
                     <a
                       href="#"
-                      class="btn btn-block customize_btn btn_outline_color disabled"
+                      class="btn btn-block btn--baseSet btn-outline--secColor disabled"
                       v-else
                     >
                       缺貨中
@@ -204,18 +201,6 @@ export default {
           vm.getPagination();
         }
       });
-    },
-    // Sidebar 商品分類連結處理
-    productLink(link) {
-      const vm = this;
-      // 存入路由參數
-      const name = vm.$route.params.category;
-      // 如果點擊不同連結時
-      if (name !== link) {
-        vm.$router.push({ path: `/products/${link}` });
-        // 重新取得商品列表
-        vm.getProducts();
-      }
     },
     // 商品頁數判斷與顯示
     getPagination(page = 1) {
@@ -360,7 +345,7 @@ export default {
 $thirdColor: #cacd4a;
 
 // 側邊欄
-.sticky_container {
+.sidebar--sticky {
   position: sticky !important;
   top: 100px;
   left: 0;
@@ -368,7 +353,7 @@ $thirdColor: #cacd4a;
 }
 
 // 排序
-.custom-select {
+.sort {
   max-width: 25%;
   border-radius: 0;
   &:focus {
@@ -385,21 +370,35 @@ $thirdColor: #cacd4a;
 }
 
 // 商品文字
-.card-body {
-  h3 {
-    @include md {
-      font-size: 20px;
-    }
+.card-title {
+  font-size: 24px;
+  @include md {
+    font-size: 20px;
   }
 }
 
 // 商品卡片
-.card_img {
-  position: relative;
-  box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
-  overflow: hidden;
+.card {
+  &-top {
+    position: relative;
+    box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
+    overflow: hidden;
+  }
 
-  .overlay {
+  &-img-top {
+    height: 180px;
+    object-fit: cover;
+    border-radius: 0px;
+    transform: scale(1, 1);
+    transition: transform 0.7s ease-in;
+  }
+
+  &:hover &-img-top {
+    transform: scale(1.05, 1.05);
+    transition: transform 0.7s ease-out;
+  }
+
+  &-img--overlay {
     position: absolute;
     bottom: 0;
     background: $thirdColor;
@@ -407,26 +406,15 @@ $thirdColor: #cacd4a;
     opacity: 0;
     transition: opacity 0.7s ease-in;
   }
-  &:hover .overlay {
+
+  &:hover &-img--overlay {
     opacity: 1;
     transition: opacity 0.7s ease-out;
-  }
-
-  img {
-    height: 180px;
-    object-fit: cover;
-    border-radius: 0px;
-    transform: scale(1, 1);
-    transition: transform 0.7s ease-in;
-  }
-  &:hover img {
-    transform: scale(1.05, 1.05);
-    transition: transform 0.7s ease-out;
   }
 }
 
 // 缺貨商品連結指標樣式
-.disabled_link {
+.disabled-link {
   cursor: default;
 }
 </style>
