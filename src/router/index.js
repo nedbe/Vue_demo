@@ -103,7 +103,7 @@ router.beforeEach((to, from, next) => {
     axios.post(api).then((response) => {
       // 如果還是登入狀態則放行
       if (response.data.success) {
-        // next();
+        next();
         // 登入modal關閉
         $('#loginModal').modal('show');
       } else {

@@ -16,7 +16,7 @@
   &--baseSet {
     font-size: 16px;
     border-radius: 0px;
-    padding: 9px 20px 6px;
+    padding: 8px 20px 5px;
   }
 
   // 實心按鈕-主色
@@ -112,21 +112,47 @@
   border: 0;
 }
 
-// 數量按鈕
-.input__number {
-  padding: 6px 1rem;
-  &:focus {
-    outline: none;
+// 產品詳細頁的按鈕
+.product{
+  // 數量按鈕
+  .input__number {
+    padding: 6px 1rem;
+    &:focus {
+      outline: none;
+    }
   }
+  
+  // 增減按鈕
+  .input__button {
+    height: 38px;
+    width: 38px;
+    font-weight: bold;
+    &:hover {
+      background-color: $secColor;
+      color: $white;
+    }
+  }
+
 }
 
-// 增減按鈕
-.input__button {
-  height: 38px;
-  width: 38px;
-  font-weight: bold;
-  &:hover {
-    background-color: $secColor;
-    color: $white;
+// 購物車頁的按鈕
+.cart{
+  // 數量按鈕
+  .input__number {
+    padding: 6px;
+    &:focus {
+      outline: none;
+    }
   }
+  
+  // 增減按鈕
+  .input__button {
+    padding: 6px;
+    font-weight: bold;
+    &:hover {
+      background-color: $secColor;
+      color: $white;
+    }
+  }
+
 }

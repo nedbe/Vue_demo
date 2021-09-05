@@ -2,12 +2,12 @@
   <div>
     <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
 
-    <div class="cart_box">
+    <div class="cart mb-5">
       <div class="container">
         <div class="row mb-1">
           <div class="col">
-            <h1 class="h3 text-center mt-3 text-mainColor">購物車</h1>
-            <hr />
+            <h1 class="title text-center mt-3 text-mainColor">購物車</h1>
+            <hr class="divider" />
           </div>
         </div>
 
@@ -29,6 +29,7 @@
                   <th scope="col" class="font-weight-normal">數量</th>
                   <th
                     scope="col"
+                    width="200"
                     class="d-none d-sm-table-cell font-weight-normal text-right"
                   >
                     小計
@@ -58,13 +59,13 @@
                   <td class="align-middle text-left p-0 p-sm-3">
                     <a
                       href="#!"
-                      class="product_link"
+                      class="table__link"
                       @click.prevent="goToProductDetail(item.product_id)"
                     >
                       <img
                         :src="item.imageUrl"
                         alt="商品圖片"
-                        class="cart_img d-block d-sm-inline-block"
+                        class="table__img d-block d-sm-inline-block"
                       />
                       <span class="pl-sm-2 text-secColor">{{
                         item.title
@@ -75,16 +76,16 @@
                     {{ item.price | currency }}
                   </td>
                   <td class="align-middle text-right text-sm-center">
-                    <span class="input_group d-inline-block">
+                    <span class="input d-inline-block">
                       <input
                         type="button"
                         value="-"
-                        class="input_button"
+                        class="input__button"
                         @click="addCartQty(-1, index)"
                       />
                       <input
                         type="text"
-                        class="text-center input_number"
+                        class="text-center input__number"
                         name="quantity"
                         :value="item.qty"
                         title="數量"
@@ -95,7 +96,7 @@
                       <input
                         type="button"
                         value="+"
-                        class="input_button"
+                        class="input__button"
                         @click="addCartQty(+1, index)"
                       />
                     </span>
@@ -115,27 +116,17 @@
                   </td>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr class="last_tr">
-                  <!-- 購物車無商品時顯示 -->
-                  <td colspan="3" class="pl-0">
-                    <router-link
-                      class="btn customize_btn btn_color mr-3"
+              <tfoot class="tfoot">
+                <tr>
+                  <td colspan="3" class="pl-0 pb-0">
+                     <router-link
+                      class="btn btn--baseSet btn-outline--secColor mr-3"
                       to="/products/all"
-                      v-if="cart.length === 0"
-                      >前往挑選商品</router-link
-                    >
-                    <!-- 購物車有商品 -->
-                    <a
-                      href="#!"
-                      class="btn customize_btn btn_outline_color mr-3"
-                      @click.prevent="goBack"
-                      v-else
-                      >返回上一頁</a
+                      >前往商品區</router-link
                     >
                     <a
                       href="#!"
-                      class="btn customize_btn btn_color"
+                      class="btn btn--baseSet btn--secColor"
                       @click.prevent="upateCart"
                       >更新購物車</a
                     >
@@ -143,7 +134,7 @@
                   <td colspan="3" class="text-right pr-0">
                     <button
                       href="#!"
-                      class="btn customize_btn btn_main_color"
+                      class="btn btn--baseSet btn--mainColor"
                       @click.prevent="checkout"
                       v-if="cart.length > 0"
                     >
@@ -293,10 +284,6 @@ export default {
     goToProductDetail(productId) {
       this.$router.push({ path: `/product_detail/${productId}` });
     },
-    // 返回上一頁
-    goBack() {
-      this.$router.back();
-    },
   },
   mounted() {
     // 轉換頁面時置頂
@@ -313,33 +300,30 @@ export default {
 
 $secColor: #87775c;
 
-// 整個頁面
-.cart_box {
-  min-height: 100vh;
-  margin: 70px auto 25px;
+// 頁面表頭
+.cart {
+  min-height: calc(100vh - 195px);
+  margin: 76px auto 0px;
   padding-top: 25px;
-  padding-bottom: 25px;
   background-color: #fff;
-  @include md {
-    min-height: 85vh;
-  }
 
   // 頁面標題
-  h1 {
+  .title {
+    font-size: 28px;
     @include sm {
       font-size: 24px;
     }
   }
 
-  hr {
+  // 分隔線
+  .divider {
     border-top: 2px solid rgba(0, 0, 0, 0.1);
   }
 }
 
-// 表格表頭底線
 .table {
+  // 表格表頭底線
   th {
-    border-bottom: 0;
     @include sm {
       font-size: 14px;
     }
@@ -350,41 +334,40 @@ $secColor: #87775c;
       font-size: 14px;
     }
   }
-}
 
-// 表尾
-tfoot {
-  // 最後一個表格線條
-  .last_tr {
-    border-top: 2px solid #dee2e6;
-  }
-
-  // 按鈕大小
-  a {
+  // 商品超連結
+  &__link {
     @include sm {
-      padding: 4px 12px;
+      color: $secColor;
+      text-decoration: underline;
+    }
+    &:hover {
+      color: $secColor;
     }
   }
-}
 
-// 購物車圖片
-.cart_img {
-  width: 100px;
-  height: 80px;
-  @include sm {
-    width: 40px;
-    height: 30px;
+  // 購物車圖片
+  &__img {
+    width: 100px;
+    height: 80px;
+    @include sm {
+      width: 40px;
+      height: 30px;
+    }
   }
-}
 
-// 商品超連結
-.product_link {
-  @include sm {
-    color: $secColor;
-    text-decoration: underline;
-  }
-  &:hover {
-    color: $secColor;
+  .tfoot {
+    // 最後一列表格線條
+    tr {
+      border-top: 2px solid #dee2e6;
+    }
+
+    // 按鈕大小
+    .btn {
+      @include sm {
+        padding: 4px 12px;
+      }
+    }
   }
 }
 </style>
