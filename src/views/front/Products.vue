@@ -17,7 +17,7 @@
               for="sort"
               >顯示方法</label
             >
-            <select name="sort" id="sort" class="sort" v-model="sortMethod">
+            <select name="sort" id="sort" class="custom-select" v-model="sortMethod">
               <option value="價格排序低到高">價格排序：低到高</option>
               <option value="價格排序高到低">價格排序：高到低</option>
             </select>
@@ -353,7 +353,7 @@ $thirdColor: #cacd4a;
 }
 
 // 排序
-.sort {
+.custom-select {
   max-width: 25%;
   border-radius: 0;
   &:focus {

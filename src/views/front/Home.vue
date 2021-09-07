@@ -196,9 +196,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div
-                class="modal-body d-flex align-items-center modal__body"
-              >
+              <div class="modal-body d-flex align-items-center modal__body">
                 <p class="mb-0 modal__content">
                   系統已收到您的訊息，我們將會派專人與您聯繫，謝謝。
                 </p>
@@ -268,11 +266,11 @@ export default {
     goTo() {
       const vm = this;
       const goTo = vm.$route.params.loaction;
-      // 如果有指定位置
+      // 如果有網址參數
       if (goTo !== undefined) {
         // 取得待顯示內容的位置
         let target = $(`#${goTo}`).offset().top;
-        // 將座標減76px
+        // 將座標減去頁首px
         target -= 76;
 
         // 平滑捲動
@@ -289,6 +287,8 @@ export default {
     },
   },
   mounted() {
+    // 轉換頁面時置頂
+    $('html,body').scrollTop(0);
     this.goTo();
   },
 };
