@@ -3,17 +3,15 @@
     <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
 
     <div class="container-fluid mt-5">
-      <!-- 標題 -->
       <div class="row">
         <div class="col mt-5">
           <h1 class="h3 text-center mt-3 text-mainColor">優惠券列表</h1>
         </div>
       </div>
 
-      <!-- 建立新優惠券 -->
       <div class="row">
         <div class="col mt-3">
-          <button class="btn customize_btn btn_color" @click="openModal(true)">
+          <button class="btn btn--baseSet btn--secColor" @click="openModal(true)">
             建立新的優惠券
           </button>
         </div>
@@ -72,9 +70,9 @@
           </table>
         </div>
       </div>
+      <!-- End 優惠券列表 -->
     </div>
 
-    <!-- 分頁 -->
     <Pagination :pages="pagination" @emitPages="getCoupons"></Pagination>
 
     <!-- edit Modal -->
@@ -180,14 +178,14 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn customize_btn btn_outline_color"
+                class="btn btn--baseSet btn-outline--secColor"
                 data-dismiss="modal"
               >
                 取消
               </button>
               <button
                 type="submit"
-                class="btn customize_btn btn_main_color updateBtn"
+                class="btn btn--baseSet btn--mainColor updateBtn"
               >
                 確認
                 <i
@@ -200,6 +198,7 @@
         </div>
       </div>
     </div>
+    <!-- End edit Modal -->
 
     <!-- delete Modal -->
     <div
@@ -229,14 +228,14 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn customize_btn btn_outline_color"
+              class="btn btn--baseSet btn-outline--secColor"
               data-dismiss="modal"
             >
               取消
             </button>
             <button
               type="button"
-              class="btn customize_btn btn_main_color updateBtn"
+              class="btn btn--baseSet btn--mainColor updateBtn"
               @click="deleteCoupon"
             >
               確認
@@ -249,6 +248,7 @@
         </div>
       </div>
     </div>
+    <!-- End delete Modal -->
   </div>
 </template>
 

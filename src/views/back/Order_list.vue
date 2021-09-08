@@ -3,7 +3,6 @@
     <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
 
     <div class="container-fluid mt-5">
-      <!-- 標題 -->
       <div class="row">
         <div class="col mt-5">
           <h1 class="h3 text-center mt-3 text-mainColor">訂單列表</h1>
@@ -78,8 +77,7 @@
           </table>
         </div>
       </div>
-
-      <!-- 分頁 -->
+      <!-- End 訂單列表 -->
       <Pagination :pages="pagination" @emitPages="getAllOrders"></Pagination>
     </div>
 
@@ -170,8 +168,9 @@
                           {{ item.final_total | currency }}
                         </td>
                       </tr>
-
-                      <tr class="last_tr">
+                    </tbody>
+                    <tfoot class="tfoot">
+                      <tr>
                         <td colspan="3" class="align-middle">總計</td>
                         <td
                           colspan="3"
@@ -180,9 +179,10 @@
                           {{ tempOrder.total | currency }}
                         </td>
                       </tr>
-                    </tbody>
+                    </tfoot>
                   </table>
                 </div>
+                <!-- End 訂單詳情 -->
 
                 <!-- 收件人 -->
                 <div class="col-6" v-if="tempOrder.hasOwnProperty('create_at')">
@@ -265,19 +265,20 @@
                     </select>
                   </div>
                 </div>
+                <!-- End 收件人 -->
               </div>
             </div>
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn customize_btn btn_outline_color"
+                class="btn btn--baseSet btn-outline--secColor"
                 data-dismiss="modal"
               >
                 取消
               </button>
               <button
                 type="submit"
-                class="btn customize_btn btn_main_color updateBtn"
+                class="btn btn--baseSet btn--mainColor updateBtn"
               >
                 修改
                 <i
@@ -290,6 +291,7 @@
         </div>
       </div>
     </div>
+    <!-- End edit Modal -->
 
     <!-- cancel Modal -->
     <div
@@ -319,14 +321,14 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn customize_btn btn_outline_color"
+              class="btn btn--baseSet btn-outline--secColor"
               data-dismiss="modal"
             >
               取消
             </button>
             <button
               type="button"
-              class="btn customize_btn btn_main_color updateBtn"
+              class="btn btn--baseSet btn--mainColor updateBtn"
               @click="updateOrder"
             >
               確認
@@ -339,6 +341,7 @@
         </div>
       </div>
     </div>
+    <!-- End cancel Modal -->
   </div>
 </template>
 
@@ -469,7 +472,7 @@ export default {
 
 // 訂單詳情
 // 最後一個表格線條
-.last_tr {
+.tfoot {
   border-bottom: 2px solid #dee2e6;
 }
 </style>

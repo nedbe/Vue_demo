@@ -51,10 +51,10 @@
     >
       <div class="modal-dialog">
         <div class="modal-content rounded-0">
-          <div class="modal-header bg-mainColor modal__header--bt rounded-0 border-0">
-            <h4 class="modal-title text-white" id="modalLabel">
-              管理者登入
-            </h4>
+          <div
+            class="modal-header bg-mainColor modal__header--bt rounded-0 border-0"
+          >
+            <h4 class="modal-title text-white" id="modalLabel">管理者登入</h4>
             <button
               type="button"
               class="close"

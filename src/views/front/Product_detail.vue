@@ -8,8 +8,9 @@
         <div class="col-md-3 sidebar--sticky d-none d-sm-block">
           <Sidebar />
         </div>
-        <!-- 右側商品資訊 -->
+        <!-- End 左側選單 -->
         <div class="col-md-9">
+          <!-- 右側商品資訊 -->
           <div class="row product">
             <div class="col-md-6 text-center">
               <img
@@ -69,6 +70,7 @@
               </div>
             </div>
           </div>
+          <!-- End右側商品資訊 -->
           <!-- 商品規格與注意事項 -->
           <div class="row mt-5 mb-3">
             <div class="col">
@@ -150,6 +152,7 @@
               </div>
             </div>
           </div>
+          <!-- End 商品規格與注意事項 -->
           <!-- 瀏覽紀錄 -->
           <div class="row mt-4 mt-sm-3 mb-3">
             <div class="col">
@@ -176,12 +179,12 @@
                     加入購物車
                   </button>
                 </swiper-slide>
-                <!-- 前進後退按鈕 -->
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-button-next" slot="button-next"></div>
               </swiper>
             </div>
           </div>
+          <!-- End 瀏覽紀錄 -->
         </div>
       </div>
     </div>

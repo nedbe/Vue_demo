@@ -160,6 +160,7 @@
                     <button
                       type="submit"
                       class="btn btn--baseSet btn--mainColor"
+                      id="submitBtn"
                       :disabled="invalid"
                     >
                       確認送出
@@ -192,6 +193,7 @@
                   class="close"
                   data-dismiss="modal"
                   aria-label="Close"
+                  @click.prevent="closeModal"
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -241,7 +243,7 @@ export default {
     LoadingPage,
   },
   methods: {
-    // 提交結帳資料
+    // 提交表單資料
     submitContactData() {
       const vm = this;
       // vee-validate的api validate()
@@ -255,12 +257,20 @@ export default {
             vm.status.pageIsLoading = false;
 
             $('#contactModal').modal('show');
-
-            // 清除表單資料
-            $('#contactData')[0].reset();
           }, 800);
         }
       });
+    },
+    // 關閉 modal
+    closeModal() {
+      $('#contactModal').modal('hide');
+
+      // 清除表單資料
+      $('#submitBtn').attr('disabled', true);
+      this.$refs.contactForm.reset();
+      setTimeout(() => {
+        $('#contactData')[0].reset();
+      }, 500);
     },
     // 將畫面前往指定位置
     goTo() {
@@ -290,6 +300,8 @@ export default {
     // 轉換頁面時置頂
     $('html,body').scrollTop(0);
     this.goTo();
+
+    $('body').addClass('front');
   },
 };
 </script>
@@ -435,13 +447,14 @@ export default {
 }
 
 // bootstrap modal
-body,
+.front,
 #nav {
   padding-right: 0px !important;
 }
 
-.modal-open {
+.front.modal-open {
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .modal {

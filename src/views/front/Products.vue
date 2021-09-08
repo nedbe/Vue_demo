@@ -9,19 +9,26 @@
         <div class="col-md-3 sidebar--sticky d-none d-sm-block">
           <Sidebar />
         </div>
-        <!-- 右側排序 -->
+        <!-- End 左側選單 -->
         <div class="col-md-9">
+          <!-- 右側排序 -->
           <div class="d-flex justify-content-end mb-4">
             <label
               class="d-flex align-items-center text-secColor my-1 mr-2"
               for="sort"
               >顯示方法</label
             >
-            <select name="sort" id="sort" class="custom-select" v-model="sortMethod">
+            <select
+              name="sort"
+              id="sort"
+              class="custom-select"
+              v-model="sortMethod"
+            >
               <option value="價格排序低到高">價格排序：低到高</option>
               <option value="價格排序高到低">價格排序：高到低</option>
             </select>
           </div>
+          <!-- End 右側排序 -->
           <!-- 主要商品列表 -->
           <div class="products">
             <div class="row">
@@ -93,6 +100,7 @@
               ></Pagination>
             </div>
           </div>
+          <!-- End 主要商品列表 -->
         </div>
       </div>
     </div>

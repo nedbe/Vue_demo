@@ -43,7 +43,7 @@
                     您尚未加入商品
                   </td>
                 </tr>
-
+                <!-- End 購物車無商品時顯示 -->
                 <!-- 購物車商品 -->
                 <tr
                   class="text-center"
@@ -105,7 +105,7 @@
                     {{ (item.qty * item.price) | currency }}
                   </td>
                 </tr>
-
+                <!-- End 購物車商品 -->
                 <tr v-show="cart.length > 0">
                   <td colspan="3" class="align-middle">總計</td>
                   <td
@@ -302,7 +302,7 @@ $secColor: #87775c;
 
 // 頁面表頭
 .cart {
-  min-height: calc(100vh - 195px);
+  min-height: calc(100vh - 243px);
   margin: 76px auto 0px;
   padding-top: 25px;
   background-color: #fff;

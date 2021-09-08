@@ -3,17 +3,15 @@
     <LoadingPage :loadingStatus="status.pageIsLoading"></LoadingPage>
 
     <div class="container-fluid mt-5">
-      <!-- 標題 -->
       <div class="row">
         <div class="col mt-5">
           <h1 class="h3 text-center mt-3 text-mainColor">產品列表</h1>
         </div>
       </div>
 
-      <!-- 建立產品 -->
       <div class="row">
         <div class="col mt-3">
-          <button class="btn customize_btn btn_color" @click="openModal(true)">
+          <button class="btn btn--baseSet btn--secColor" @click="openModal(true)">
             建立新的產品
           </button>
         </div>
@@ -36,11 +34,10 @@
               <tr class="text-center" v-for="item in products" :key="item.id">
                 <td class="align-middle">{{ item.category }}</td>
                 <td class="align-middle text-left pl-5">
-                  <img
-                    :src="item.imageUrl"
-                    alt="商品圖片"
-                    class="product_img"
-                  /><span class="pl-2 text-secColor">{{ item.title }}</span>
+                  <img :src="item.imageUrl" alt="商品圖片" class="img" /><span
+                    class="pl-2 text-secColor"
+                    >{{ item.title }}</span
+                  >
                 </td>
                 <td class="align-middle text-right">
                   {{ item.price | currency }}
@@ -74,9 +71,9 @@
           </table>
         </div>
       </div>
+      <!-- End 產品列表 -->
     </div>
 
-    <!-- 分頁 -->
     <Pagination :pages="pagination" @emitPages="getProducts"></Pagination>
 
     <!-- edit Modal -->
@@ -236,14 +233,14 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn customize_btn btn_outline_color"
+                class="btn btn--baseSet btn-outline--secColor"
                 data-dismiss="modal"
               >
                 取消
               </button>
               <button
                 type="submit"
-                class="btn customize_btn btn_main_color updateBtn"
+                class="btn btn--baseSet btn--mainColor updateBtn"
               >
                 確認
                 <i
@@ -256,6 +253,7 @@
         </div>
       </div>
     </div>
+    <!-- End edit Modal -->
 
     <!-- delete Modal -->
     <div
@@ -285,19 +283,19 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn customize_btn btn_outline_color"
+              class="btn btn--baseSet btn-outline--secColor"
               data-dismiss="modal"
             >
               取消
             </button>
             <button
               type="button"
-              class="btn customize_btn btn_main_color"
+              class="btn btn--baseSet btn--mainColor updateBtn"
               @click="deleteProduct()"
             >
               確認
               <i
-                class="fas fa-spinner fa-spin updateBtn"
+                class="fas fa-spinner fa-spin"
                 v-if="status.buttonIsLoading"
               ></i>
             </button>
@@ -305,6 +303,7 @@
         </div>
       </div>
     </div>
+    <!-- End delete Modal -->
   </div>
 </template>
 
@@ -514,7 +513,7 @@ export default {
 // table 樣式
 .table {
   // 產品圖片
-  .product_img {
+  .img {
     width: 100px;
     height: 80px;
   }

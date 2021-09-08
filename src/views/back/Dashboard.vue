@@ -7,6 +7,9 @@
 </template>
 
 <script>
+// 將$開頭給jquery使用
+import $ from 'jquery';
+
 import NavbarBack from '@/components/back/NavbarBack.vue';
 import AlertMessage from '@/components/common/AlertMessage.vue';
 
@@ -15,6 +18,9 @@ export default {
   components: {
     NavbarBack,
     AlertMessage,
+  },
+  mounted() {
+    $('body').removeClass('front');
   },
   created() {
     // 取出Cookie
