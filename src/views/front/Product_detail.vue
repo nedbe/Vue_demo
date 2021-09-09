@@ -9,17 +9,17 @@
           <Sidebar />
         </div>
         <!-- End 左側選單 -->
+        <!-- 右側商品資訊 -->
         <div class="col-md-9">
-          <!-- 右側商品資訊 -->
           <div class="row product">
-            <div class="col-md-6 text-center">
+            <div class="col-md-6 text-center pt-2 pt-sm-0">
               <img
                 :src="product.imageUrl"
                 alt="商品圖片"
                 class="product__img"
               />
             </div>
-            <div class="col-md-6 pt-5">
+            <div class="col-md-6 pt-0 pt-lg-5">
               <h1 class="text-secColor product__title">{{ product.title }}</h1>
               <span class="card-text text-left mt-3 product__price">
                 NT{{ product.price | currency }}元
@@ -227,12 +227,12 @@ export default {
             slidesPerView: 3,
             spaceBetween: 40,
           },
-          769: {
+          768: {
             slidesPerView: 2,
             spaceBetween: 30,
           },
           375: {
-            slidesPerView: 2,
+            slidesPerView: 1,
             spaceBetween: 20,
           },
         },
@@ -382,7 +382,18 @@ export default {
     },
     // 轉址到商品細節頁面
     goToProductDetail(productId) {
-      this.$router.push({ path: `/product_detail/${productId}` });
+      const vm = this;
+      let id = '';
+      id = vm.$route.params.id;
+
+      // 如果點擊的連結與目前頁面相同
+      if (id === productId) {
+        // 轉換頁面置頂
+        $('html,body').scrollTop(0);
+      } else {
+        // 不同則直接跳轉
+        vm.$router.push({ path: `/product_detail/${productId}` });
+      }
     },
   },
   watch: {
@@ -453,7 +464,13 @@ $thirdColor: #cacd4a;
     width: 400px;
     height: 300px;
     object-fit: cover;
+    @include md {
+      width: 240px;
+      height: 180px;
+    }
     @include sm {
+      width: 100%;
+      height: 300px;
       margin-bottom: 16px;
     }
   }
@@ -531,6 +548,9 @@ $thirdColor: #cacd4a;
     object-fit: cover;
     transform: scale(1, 1);
     transition: transform 0.7s ease-in;
+    @include sm {
+      min-width: 100%;
+    }
   }
 
   &__body:hover &__img {

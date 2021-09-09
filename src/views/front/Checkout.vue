@@ -21,7 +21,7 @@
 
         <div class="row m-1 m-sm-0">
           <!-- 訂單詳情 -->
-          <div class="col-12 col-lg-6 table pb-5 mb-0">
+          <div class="col-12 col-lg-6 table mb-0">
             <h2 class="subtitle text-center pt-3 pb-3">訂單詳情</h2>
             <table class="w-100">
               <thead>
@@ -151,7 +151,7 @@
             class="col-12 col-lg-6 mt-1 mt-lg-1"
             v-if="status.is_paid === false"
           >
-            <h2 class="subtitle text-center pt-3 pb-3">收件人資訊</h2>
+            <h2 class="subtitle text-center pt-5 pt-3-md pb-3">收件人資訊</h2>
             <validation-observer v-slot="{ invalid }" ref="checkoutForm">
               <form class="checkout-form" @submit.prevent="submitCheckoutData">
                 <div class="form-row checkout-form--pt">
@@ -292,21 +292,21 @@
           <!-- 訂單完成資訊 -->
           <div class="order col-12 col-lg-6" v-else>
             <div>
-              <p class="h5 text-center text-secColor pt-3 pb-3">
+              <p class="order__text text-sm-center text-secColor pt-3 pb-3">
                 感謝您的訂購，如訂單有問題請與我們聯繫。
               </p>
               <ul>
-                <li class="pt-3">
+                <li class="order__item pt-3">
                   訂單編號：<span class="text-secColor pl-1">{{
                     order.orderId
                   }}</span>
                 </li>
-                <li class="pt-3">
+                <li class="order__item pt-3">
                   訂單日期：<span class="text-secColor pl-1">{{
                     order.date | date
                   }}</span>
                 </li>
-                <li class="pt-3">
+                <li class="order__item pt-3">
                   訂單金額：<span class="text-secColor pl-1">{{
                     order.total | currency
                   }}</span>
@@ -614,6 +614,19 @@ $secColor: #87775c;
 .checkout-form {
   &--pt {
     padding-top: 8px;
+  }
+}
+
+.order {
+  font-size: 24px;
+  @include sm {
+    font-size: 20px;
+  }
+  &__item {
+    font-size: 20px;
+    @include sm {
+      font-size: 16px;
+    }
   }
 }
 </style>

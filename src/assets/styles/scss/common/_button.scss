@@ -1,3 +1,6 @@
+// 載入rwd
+@import "@/assets/styles/scss/_rwdMixin";
+
 // 實心按鈕樣式
 @mixin btn($color) {
   color: $white;
@@ -120,6 +123,9 @@
     &:focus {
       outline: none;
     }
+    @include md {
+      padding: 6px;
+    }
   }
   
   // 增減按鈕
@@ -130,6 +136,10 @@
     &:hover {
       background-color: $secColor;
       color: $white;
+    }
+    @include md {
+      height: 38px;
+      width: 20px;
     }
   }
 

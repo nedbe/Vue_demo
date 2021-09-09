@@ -29,8 +29,14 @@
                   <th scope="col" class="font-weight-normal">數量</th>
                   <th
                     scope="col"
+                    class="d-none d-sm-table-cell d-md-none font-weight-normal text-right"
+                  >
+                    小計
+                  </th>
+                  <th
+                    scope="col"
                     width="200"
-                    class="d-none d-sm-table-cell font-weight-normal text-right"
+                    class="d-none d-md-table-cell font-weight-normal text-right"
                   >
                     小計
                   </th>

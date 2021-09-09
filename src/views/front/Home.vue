@@ -7,13 +7,13 @@
         <div class="row">
           <div class="col">
             <h1 class="text-mainColor about__title">
-              THE NAP STORE 設計傢俱品牌
+              THE NAP STORE <br class="d-block d-sm-none"> 設計傢俱品牌
             </h1>
             <h2 class="text-mainColor about__subtitle">
               Create a space that welcomes a lifetime of comfort and style.
             </h2>
             <br />
-            <p class="text-secColor about__content">
+            <p class="text-secColor about__content pb-4">
               The Nap Store 創始於1989年，如今已成為一個知名的設計傢俱品牌。
               我們設計、生產並銷售適合於客廳、臥室和戶外空間等的一系列現代設計傢俱，
               同時我們也可以提供專業室內傢俱布置建議給客戶，
@@ -59,19 +59,19 @@
         </div>
       </div>
 
-      <div class="contact" id="contact">
+      <div class="contact pt-5 pb-5" id="contact">
         <span class="mask"></span>
-        <div class="container pt-5 pb-md-5">
+        <div class="container">
           <div class="row">
-            <div class="col-12 col-sm-7 text-white align-self-center">
+            <div class="col-12 col-lg-7 text-white align-self-center">
               <h3 class="contact__title">傢俱訂製 & 租借服務</h3>
-              <p class="contact__content p-5">
+              <p class="contact__content p-1 pb-5 p-sm-5">
                 若您有傢俱訂製、租借的需求，或是對我們的服務上有任何的疑問，歡迎直接聯繫我們或填寫線上表單，我們的工作團隊將會盡快為您回覆。
               </p>
             </div>
 
             <!-- 聯繫表單 -->
-            <div class="col-12 col-sm-5 bg-secColor pt-3 pb-3">
+            <div class="col-10 offset-1 col-lg-5 offset-lg-0 bg-secColor pt-3 pb-3">
               <validation-observer v-slot="{ invalid }" ref="contactForm">
                 <form id="contactData" @submit.prevent="submitContactData">
                   <div class="form-group col-md">
@@ -313,7 +313,7 @@ export default {
 .about {
   &__title {
     @include sm {
-      font-size: 22px;
+      font-size: 26px;
     }
   }
 
@@ -326,10 +326,8 @@ export default {
   &__content {
     font-size: 20px;
     text-align: justify;
-    margin-bottom: 50px;
     @include sm {
       font-size: 16px;
-      margin-bottom: 25px;
     }
   }
 }
@@ -421,17 +419,15 @@ export default {
     font-size: 40px;
     text-align: center;
     @include sm {
-      font-size: 22px;
+      font-size: 26px;
     }
   }
 
   &__content {
     font-size: 20px;
     text-align: justify;
-    margin-bottom: 50px;
     @include sm {
       font-size: 16px;
-      margin-bottom: 25px;
     }
   }
 
