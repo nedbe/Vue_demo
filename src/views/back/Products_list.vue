@@ -11,7 +11,10 @@
 
       <div class="row">
         <div class="col mt-3">
-          <button class="btn btn--baseSet btn--secColor" @click="openModal(true)">
+          <button
+            class="btn btn--baseSet btn--secColor"
+            @click="openModal(true)"
+          >
             建立新的產品
           </button>
         </div>
@@ -361,6 +364,20 @@ export default {
           vm.products = response.data.products;
           // 存入頁碼資料
           vm.pagination = response.data.pagination;
+        } else {
+          // 執行登出
+          vm.signout();
+        }
+      });
+    },
+    // 登出
+    signout() {
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/logout`;
+      vm.$http.post(api).then((response) => {
+        // 如果登出成功返回首頁
+        if (response.data.success) {
+          vm.$router.push({ name: 'Home' });
         }
       });
     },
