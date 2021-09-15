@@ -6,31 +6,26 @@
       >商品分類</a
     >
     <router-link
-      href="#!"
       class="list-group-item list-group-item-action"
       to="/products/all"
       >全部商品</router-link
     >
     <router-link
-      href="#!"
       class="list-group-item list-group-item-action"
       to="/products/beds"
       >床</router-link
     >
     <router-link
-      href="#!"
       class="list-group-item list-group-item-action"
       to="/products/sofas"
       >沙發</router-link
     >
     <router-link
-      href="#!"
       class="list-group-item list-group-item-action"
       to="/products/chairs"
       >椅子</router-link
     >
     <router-link
-      href="#!"
       class="list-group-item list-group-item-action"
       to="/products/tables"
       >桌子</router-link

@@ -40,12 +40,20 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item mr-2">
-            <router-link class="nav-link" :to="{ name: 'Home' }"
+            <router-link
+              class="nav-link"
+              data-toggle="collapse"
+              data-target=".show.navbar-collapse"
+              :to="{ name: 'Home' }"
               >首頁</router-link
             >
           </li>
           <li class="nav-item mr-2">
-            <router-link class="nav-link" to="/home/contact"
+            <router-link
+              class="nav-link"
+              data-toggle="collapse"
+              data-target=".show.navbar-collapse"
+              to="/home/contact"
               >訂製&租借</router-link
             >
           </li>
@@ -62,19 +70,39 @@
               找商品
             </a>
             <div class="dropdown-menu bg-mainColor">
-              <router-link class="dropdown-item mr-2" to="/products/all"
+              <router-link
+                class="dropdown-item mr-2"
+                data-toggle="collapse"
+                data-target=".show.navbar-collapse"
+                to="/products/all"
                 >全部商品</router-link
               >
-              <router-link class="dropdown-item mr-2" to="/products/beds"
+              <router-link
+                class="dropdown-item mr-2"
+                data-toggle="collapse"
+                data-target=".show.navbar-collapse"
+                to="/products/beds"
                 >床</router-link
               >
-              <router-link class="dropdown-item mr-2" to="/products/sofas"
+              <router-link
+                class="dropdown-item mr-2"
+                data-toggle="collapse"
+                data-target=".show.navbar-collapse"
+                to="/products/sofas"
                 >沙發</router-link
               >
-              <router-link class="dropdown-item mr-2" to="/products/chairs"
+              <router-link
+                class="dropdown-item mr-2"
+                data-toggle="collapse"
+                data-target=".show.navbar-collapse"
+                to="/products/chairs"
                 >椅子</router-link
               >
-              <router-link class="dropdown-item mr-2" to="/products/tables"
+              <router-link
+                class="dropdown-item mr-2"
+                data-toggle="collapse"
+                data-target=".show.navbar-collapse"
+                to="/products/tables"
                 >桌子</router-link
               >
             </div>

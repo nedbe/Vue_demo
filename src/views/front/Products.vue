@@ -6,7 +6,7 @@
     <div class="container mb-1 pt-1 pt-sm-3" id="show">
       <div class="row">
         <!-- 左側選單 -->
-        <div class="col-md-3 sidebar--sticky d-none d-sm-block">
+        <div class="col-md-3 sidebar--sticky d-none d-md-block">
           <Sidebar />
         </div>
         <!-- End 左側選單 -->

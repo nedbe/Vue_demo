@@ -139,7 +139,6 @@
                   </td>
                   <td colspan="3" class="text-right pr-0">
                     <button
-                      href="#!"
                       class="btn btn--baseSet btn--mainColor"
                       @click.prevent="checkout"
                       v-if="cart.length > 0"

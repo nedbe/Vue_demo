@@ -5,7 +5,7 @@
     <div class="container mt-3 mt-sm-5 mb-5 page--pt">
       <div class="row">
         <!-- 左側選單 -->
-        <div class="col-md-3 sidebar--sticky d-none d-sm-block">
+        <div class="col-md-3 sidebar--sticky d-none d-md-block">
           <Sidebar />
         </div>
         <!-- End 左側選單 -->
@@ -465,8 +465,8 @@ $thirdColor: #cacd4a;
     height: 300px;
     object-fit: cover;
     @include md {
-      width: 240px;
-      height: 180px;
+      width: 100%;
+      height: 200px;
     }
     @include sm {
       width: 100%;

@@ -21,7 +21,10 @@
 
         <div class="row m-1 m-sm-0">
           <!-- 訂單詳情 -->
-          <div class="col-12 col-lg-6 table mb-0">
+          <div
+            class="col-12 col-lg-6 table mb-0"
+            :class="{ 'pb-5': status.is_paid }"
+          >
             <h2 class="subtitle text-center pt-3 pb-3">訂單詳情</h2>
             <table class="w-100">
               <thead>
@@ -312,6 +315,13 @@
                   }}</span>
                 </li>
               </ul>
+            </div>
+            <div class="text-right pt-3">
+              <router-link
+                class="btn btn--baseSet btn-outline--secColor"
+                to="/products/all"
+                >繼續購物</router-link
+              >
             </div>
           </div>
           <!-- End 訂單完成資訊 -->
@@ -622,6 +632,7 @@ $secColor: #87775c;
   @include sm {
     font-size: 20px;
   }
+
   &__item {
     font-size: 20px;
     @include sm {
