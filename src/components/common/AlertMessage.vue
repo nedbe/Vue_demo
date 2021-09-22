@@ -67,10 +67,12 @@ export default {
   created() {
     const vm = this;
     // 使用 event bus跨組件溝通
-    // 使用方式詳 '/bus.js'
     vm.$bus.$on('messsage:push', (message, status = 'warning') => {
       vm.updateMessage(message, status);
     });
+  },
+  beforeDestroy() {
+    this.$bus.$off('messsage:push');
   },
 };
 </script>

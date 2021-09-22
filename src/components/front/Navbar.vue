@@ -178,11 +178,13 @@ export default {
     vm.showQty();
 
     // 使用 event bus跨組件溝通
-    // 使用方式詳 '/bus.js'
     vm.$bus.$on('upateCartQty', () => {
       // 取得購物車數量
       vm.showQty();
     });
+  },
+  beforeDestroy() {
+    this.$bus.$off('upateCartQty');
   },
 };
 </script>
