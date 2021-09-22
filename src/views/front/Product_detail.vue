@@ -12,14 +12,14 @@
         <!-- 右側商品資訊 -->
         <div class="col-md-9">
           <div class="row product">
-            <div class="col-md-6 text-center pt-2 pt-sm-0">
+            <div class="col-sm-6 text-center pt-2 pt-sm-0">
               <img
                 :src="product.imageUrl"
                 alt="商品圖片"
                 class="product__img"
               />
             </div>
-            <div class="col-md-6 pt-0 pt-lg-5">
+            <div class="col-sm-6 pt-0 pt-lg-5">
               <h1 class="text-secColor product__title">{{ product.title }}</h1>
               <span class="card-text text-left mt-3 product__price">
                 NT{{ product.price | currency }}元
@@ -55,7 +55,6 @@
                   />
                 </div>
                 <button
-                  type="submit"
                   class="btn btn--baseSet btn--secColor"
                   @click.prevent="addtoCart(product, $event)"
                   v-if="product.is_enabled === 1"
@@ -63,6 +62,7 @@
                   加入購物車
                 </button>
                 <a
+                  href="#"
                   class="btn btn--baseSet btn-outline--secColor disabled"
                   v-else
                   >缺貨中</a
@@ -227,12 +227,8 @@ export default {
             slidesPerView: 3,
             spaceBetween: 40,
           },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 30,
-          },
           375: {
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 20,
           },
         },
@@ -461,17 +457,16 @@ $thirdColor: #cacd4a;
 .product {
   // 商品圖
   &__img {
-    width: 400px;
+    width: 600px;
+    max-width: 100%;
     height: 300px;
     object-fit: cover;
     @include md {
-      width: 100%;
       height: 200px;
+      margin-bottom: 16px;
     }
     @include sm {
-      width: 100%;
       height: 300px;
-      margin-bottom: 16px;
     }
   }
 
@@ -536,6 +531,7 @@ $thirdColor: #cacd4a;
   width: 100%;
 
   &__body {
+    width: 100%;
     position: relative;
     overflow: hidden;
     box-shadow: 3px 1px 12px rgba(0, 0, 0, 0.301);
@@ -543,13 +539,13 @@ $thirdColor: #cacd4a;
 
   // 圖片
   &__img {
-    width: 250px;
+    width: 100%;
     height: 180px;
     object-fit: cover;
     transform: scale(1, 1);
     transition: transform 0.7s ease-in;
     @include sm {
-      min-width: 100%;
+      height: 150px;
     }
   }
 

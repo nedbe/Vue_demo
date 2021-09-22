@@ -2,6 +2,8 @@
 $sm: 376px;
 // iPad
 $md: 769px;
+// other
+$lg:991.5px;
 
 @mixin sm() {
   @media screen and (max-width: $sm) {
@@ -11,6 +13,12 @@ $md: 769px;
 
 @mixin md() {
   @media screen and (max-width: $md) {
+    @content;
+  }
+}
+
+@mixin lg() {
+  @media screen and (max-width: $lg) {
     @content;
   }
 }

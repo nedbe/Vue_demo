@@ -210,11 +210,7 @@ export default {
   .icon {
     position: absolute;
     right: -20px;
-    @include sm {
-      right: 90px;
-      top: 18px;
-    }
-    @include md {
+    @include lg {
       right: 90px;
       top: 18px;
     }
@@ -228,10 +224,7 @@ export default {
       height: 20px;
       padding: 5px;
       border-radius: 100%;
-      @include sm {
-        right: -5px;
-      }
-      @include md {
+      @include lg {
         right: -8px;
       }
     }

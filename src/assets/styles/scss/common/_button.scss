@@ -123,6 +123,9 @@
     &:focus {
       outline: none;
     }
+    @include lg {
+      padding: 6px 0.3rem;
+    }
     @include md {
       padding: 6px 0.5rem;
     }
@@ -140,7 +143,7 @@
       background-color: $secColor;
       color: $white;
     }
-    @include md {
+    @include lg {
       width: 28px;
     }
     @include sm {
